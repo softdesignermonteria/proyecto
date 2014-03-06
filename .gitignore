@@ -1,4 +1,3 @@
 tmp/*
-app/
 app/default/config/environment.ini
 !empty
