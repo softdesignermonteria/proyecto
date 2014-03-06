@@ -1,0 +1,7 @@
+<?php echo View::getContent(); ?>
+<?php
+foreach(View::getValidationMessages() as $message){
+	Flash::error($message->getMessage());
+}
+?>    
+<font size="15px">Usuario o perfil no autorizado para realizar la accion solicitada. Por favor contactar al administrador del sistema</font>

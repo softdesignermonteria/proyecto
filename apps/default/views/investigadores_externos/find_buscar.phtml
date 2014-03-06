@@ -1,0 +1,50 @@
+<table id="tablainv"></table>
+<div id="pagerinv"></div>
+<script>
+jQuery(document).ready(function(){
+
+		
+		jQuery("#tablainv").jqGrid(
+		{ 
+			ajaxGridOptions : {type:"POST"},
+			url:'<?php echo core::getInstancePath().Router::getController(); ?>/find_detalle_buscar', 
+			datatype: "json", 
+			colNames:['Idetificacion','Primer nombre','Segundo nombre','Primer Apellido','Segundo Apellido'], 
+			colModel:[ 
+				{ name:'identificacion',index:'Identificacion', width:150}, 
+				{ name:'primer_nombre',index:'PrimerNombre', width:150},
+				{ name:'segundo_nombre',index:'SegundoNombre', width:150}, 
+				{ name:'primer_apellido',index:'PrimerApellido', width:150},
+				{ name:'segundo_apellido',index:'SegundoApellido', width:150}
+			], 
+			autoWidth:true,
+			width: 550,
+			height: 250,
+			rowNum:50, 
+			/*rowList:[10,20,30,40,50], */
+			pager: '#pagerinv', 
+			sortname: 'Identificacion', 
+			/*shrinkToFit :false,*/
+			viewrecords: true, 
+			sortorder: "asc", 
+			caption:"listado de los Investigadores Externos Registrados",
+			ondblClickRow:function(rowid,iRow,iCol,e){
+				
+				var fila = jQuery(this).jqGrid('getRowData',rowid);
+					
+					if( jQuery("#codigo_investigador")    ){ jQuery("#codigo_investigador").val(fila['identificacion']); }
+					if( jQuery("#nombre_investigador")    ){ jQuery("#nombre_investigador").val(fila['primer_nombre'] + ' ' + fila['segundo_nombre'] + ' ' + fila['primer_apellido'] + ' ' + fila['segundo_apellido']); } 
+					
+					jQuery("#dialogo_investigadores").dialog("close");											
+       		 }
+		}); 
+		/*jQuery("#tablainv").jqGrid('navGrid','#pagerinv',{edit:false,add:false,del:false}); 
+		jQuery("#tablainv").jqGrid('navButtonAdd','#pagerinv',{
+		caption: "Columnas",
+		title: "Reordena Columnas",
+		onClickButton : function (){
+			jQuery("#stablainv").jqGrid('columnChooser');
+		
+	});}*/
+});
+</script>

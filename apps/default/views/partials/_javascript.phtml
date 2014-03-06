@@ -1,0 +1,330 @@
+
+
+
+
+<link rel="stylesheet" type="text/css" href="<?php echo core::getInstancePath(); ?>css/error.css">
+
+<!--<link rel="stylesheet" href="<?php //echo core::getInstancePath(); ?>javascript/development-bundle/themes/start/jquery.ui.all.css">-->
+
+<!--<link rel="stylesheet" href="<?php echo core::getInstancePath(); ?>javascript/development-bundle/themes/blitzer/jquery.ui.all.css">-->
+
+<link rel="stylesheet" href="<?php echo core::getInstancePath(); ?>javascript/development-bundle/themes/redmond/jquery.ui.all.css">
+
+<!--<link rel="stylesheet" href="<?php echo core::getInstancePath(); ?>javascript/development-bundle/themes/base/jquery.ui.all.css">-->
+
+<link rel="stylesheet" href="<?php echo core::getInstancePath(); ?>javascript/development-bundle/demos/demos.css">
+
+<link rel="stylesheet" href="<?php echo core::getInstancePath(); ?>javascript/timepicker/jquery-ui-timepicker-addon.css">
+
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo core::getInstancePath(); ?>javascript/jqgrid/css/ui.jqgrid.css" />
+
+
+
+<style>
+
+.ui-autocomplete-loading { background: white url('<?php echo core::getInstancePath(); ?>/img/ui-anim_basic_16x16.gif') right center no-repeat; }
+
+</style>
+
+
+
+<style>
+
+.ui-progressbar .ui-progressbar-value { background-image: url('<?php echo core::getInstancePath(); ?>/img/pbar-ani.gif'); }
+
+</style>
+
+
+
+
+
+<?php  
+
+
+
+	Tag::addJavascript('core/base-source');
+
+	//Tag::addJavascript('core/calendar');
+
+	//Tag::addJavascript('core/calendar-source');
+
+
+
+	Tag::addJavascript('core/validator');
+
+	Tag::addJavascript('core/validations');
+
+	Tag::addJavascript('core/base');
+
+	
+
+	Tag::addJavascriptFramework('scriptaculous');
+
+	Tag::addJavascript('development-bundle/jquery-1.9.1');
+
+	
+
+	//Tag::addJavascriptFramework('prototype');
+
+	echo Tag::getJavascriptLocation();
+
+	echo Tag::javascriptSources();
+
+	
+
+	
+
+	
+
+	?>
+
+	<script src="<?php echo core::getInstancePath(); ?>javascript/development-bundle/ui/jquery-ui.custom.js"></script>
+
+	<script src="<?php echo core::getInstancePath(); ?>javascript/development-bundle/ui/jquery.ui.datepicker.js"></script>
+
+
+	<script type="text/javascript" src="<?php echo core::getInstancePath(); ?>javascript/development-bundle/ui/jquery.ui.accordion.js"></script>
+
+	<script type="text/javascript" src="<?php echo core::getInstancePath(); ?>javascript/development-bundle/ui/jquery.ui.autocomplete.js"></script>
+
+	<script type="text/javascript" src="<?php echo core::getInstancePath(); ?>javascript/development-bundle/ui/jquery.ui.button.js"></script>
+
+	<script type="text/javascript" src="<?php echo core::getInstancePath(); ?>javascript/development-bundle/ui/jquery.ui.core.js"></script>
+
+	<script type="text/javascript" src="<?php echo core::getInstancePath(); ?>javascript/development-bundle/ui/jquery.ui.dialog.js"></script>
+
+	<script type="text/javascript" src="<?php echo core::getInstancePath(); ?>javascript/development-bundle/ui/jquery.ui.draggable.js"></script>
+
+	<script type="text/javascript" src="<?php echo core::getInstancePath(); ?>javascript/development-bundle/ui/jquery.ui.droppable.js"></script>
+
+	<script type="text/javascript" src="<?php echo core::getInstancePath(); ?>javascript/development-bundle/ui/jquery.ui.mouse.js"></script>
+
+	<script type="text/javascript" src="<?php echo core::getInstancePath(); ?>javascript/development-bundle/ui/jquery.ui.position.js"></script>
+
+	<script type="text/javascript" src="<?php echo core::getInstancePath(); ?>javascript/development-bundle/ui/jquery.ui.progressbar.js"></script>
+
+	<script type="text/javascript" src="<?php echo core::getInstancePath(); ?>javascript/development-bundle/ui/jquery.ui.resizable.js"></script>
+
+	<script type="text/javascript" src="<?php echo core::getInstancePath(); ?>javascript/development-bundle/ui/jquery.ui.selectable.js"></script>
+
+    <script type="text/javascript" src="<?php echo core::getInstancePath(); ?>javascript/development-bundle/ui/jquery.ui.slider.js"></script>
+
+    <script type="text/javascript" src="<?php echo core::getInstancePath(); ?>javascript/development-bundle/ui/jquery.ui.sortable.js"></script>
+
+    <script type="text/javascript" src="<?php echo core::getInstancePath(); ?>javascript/development-bundle/ui/jquery.ui.tabs.js"></script>
+
+	<script type="text/javascript" src="<?php echo core::getInstancePath(); ?>javascript/development-bundle/ui/jquery.ui.widget.js"></script>
+
+    <script type="text/javascript" src="<?php echo core::getInstancePath(); ?>javascript/timepicker/jquery-ui-timepicker-addon.js"></script>
+
+	<script type="text/javascript" src="<?php echo core::getInstancePath(); ?>javascript/jqgrid/js/i18n/grid.locale-es.js" type="text/javascript"></script>
+
+	<script type="text/javascript" src="<?php echo core::getInstancePath(); ?>javascript/jqgrid/js/jquery.jqGrid.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="<?php echo core::getInstancePath(); ?>javascript/jqgrid/src/grid.celledit.js" type="text/javascript"> </script>
+
+
+
+
+
+
+
+
+
+<script>
+
+
+
+
+
+jQuery(document).ready(function(){
+
+	
+
+	jQuery(".content2").find("input,section,textarea").attr("class","ui-widget ui-widget-content ui-corner-all");
+
+	jQuery(".content2").find("input,section,textarea").css("height","25px");
+
+	jQuery(".content2").find("table").attr("cellpadding","2");
+
+	jQuery(".content2").find("table").attr("cellspacing","2");
+
+	jQuery(".content2").find("select").attr("class","ui-widget ui-widget-content ui-corner-all");
+
+	jQuery(".content2").find("table").attr("class","ui-widget ui-widget-content ui-corner-all");
+
+	
+
+	jQuery(".content2").find("td").css("height","25px");
+
+	jQuery(".content2").find("thead").attr("class","ui-widget ui-widget-content ui-corner-all ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-front");
+
+	//ui-widget ui-widget-content ui-corner-all ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-front
+
+	jQuery(".content2").find("th").css("height","30px");
+
+	//jQuery(".content2").find("select").attr("class","text ui-widget-content ui-corner-all");
+
+	jQuery(".content2").find("result").attr("class","ui-widget ui-widget-content ui-corner-all");
+
+	jQuery(".content2").find("h4").attr("class","ui-widget ui-widget-content ui-corner-all ui-widget-header ui-icon-circle-arrow-e");
+
+	jQuery(".content2").find("h1").attr("class","ui-widget ui-widget-content ui-corner-all ui-widget-header ui-icon-circle-arrow-e");
+
+	jQuery(".content2").find(".result").attr("style","width: 500px;");
+
+	
+
+	jQuery("input[type=button]").button(
+
+		{ 
+
+			icons: { 
+
+				primary: "ui-icon-gear" 
+
+			} 
+
+		});
+
+	
+
+	
+
+	
+
+});
+
+
+
+</script>
+
+
+
+<script>
+
+function redireccionar_action(url){
+
+		var url = "<?php echo core::getInstancePath(); ?>"+url; 
+
+		jQuery(location).attr('href',url); 
+
+	}
+
+function quitar_mensajes(){
+		jQuery(".kumbiaDisplay").fadeOut(2000, function () {
+		  jQuery(this).remove();
+		  jQuery('#fx').each (function(){
+			  this.reset();
+			});
+		});
+	}
+
+function aplicar_css(nombre){
+
+		jQuery("."+nombre).find("input,section,textarea").attr("class","ui-widget ui-widget-content ui-corner-all");
+
+		jQuery("."+nombre).find("input,section,textarea").css("height","25px");
+
+		jQuery("."+nombre).find("table").attr("cellpadding","2");
+
+		jQuery("."+nombre).find("table").attr("cellspacing","2");
+
+		jQuery("."+nombre).find("select").attr("class","ui-widget ui-widget-content ui-corner-all");
+
+		jQuery("."+nombre).find("table").attr("class","ui-widget ui-widget-content ui-corner-all");
+
+		jQuery("."+nombre).find("td").css("height","25px");
+
+		jQuery("."+nombre).find("thead").attr("class","ui-widget ui-widget-content ui-corner-all ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-front");
+
+		jQuery("."+nombre).find("th").css("height","30px");
+
+		jQuery("."+nombre).find("h4").attr("class","ui-widget ui-widget-content ui-corner-all ui-widget-header ui-icon-circle-arrow-e");
+
+		jQuery("."+nombre).find("h1").attr("class","ui-widget ui-widget-content ui-corner-all ui-widget-header ui-icon-circle-arrow-e");
+
+	
+
+	}	
+	
+
+	function buscar_dialogo(controlador,opcion,valor){
+
+					jQuery("#dialogo_"+controlador).html("");
+
+					var datos = "";
+
+					jQuery.ajax({
+
+						type:"POST"
+
+						,url:"<?php echo core::getInstancePath(); ?>"+controlador+"/find_buscar/?"+opcion+"="+valor
+
+						,async:true
+
+						,data:{
+								opcion: true
+							}
+
+						,success: function(data){
+
+								jQuery("#dialogo_"+controlador).html(data);
+
+								jQuery("#dialogo_"+controlador).dialog("open");
+
+							}
+
+						,error: function(data){
+
+								jQuery("#dialogo_"+controlador).html("Error Cargando este Elemento" + data);
+
+								jQuery("#dialogo_"+controlador).dialog("open");
+
+							}	
+
+					});		
+
+
+		}
+		
+function tableToJson(table) {
+    var data = [];
+
+    // first row needs to be headers
+    var headers = [];
+    for (var i=0; i<table.rows[0].cells.length; i++) {
+        headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/ /gi,'');
+    }
+
+    // go through cells
+    for (var i=1; i<table.rows.length; i++) {
+
+        var tableRow = table.rows[i];
+        var rowData = {};
+
+        for (var j=0; j<tableRow.cells.length; j++) {
+
+            rowData[ headers[j] ] = tableRow.cells[j].innerHTML;
+
+        }
+
+        data.push(rowData);
+    }       
+
+    return data;
+}
+
+
+function solonumeros(obj){
+		patron = /[^0-9]/;
+		var s = obj.value;
+		obj.value = s.replace(patron,'');
+	}
+
+
+</script>
+
+	
+
+    

@@ -1,0 +1,28 @@
+
+
+<?php echo Tag::form('administrador/actualizar') ?> 
+
+<table width="90%" align="center" cellpadding="1" class="ui-widget ui-widget-content ui-corner-all">
+  <tr>
+    <th colspan="2" scope="col" class="ui-jqgrid-titlebar ui-widget-header ui-corner-top ui-helper-clearfix" align="left">Agregar Usuario al Sistema</th>
+  </tr>
+  <tr>
+    <td width="41%">Nombre Usuario</td>
+    <td width="59%"><input type="hidden" id="id" name="id" value="<?php echo $usuario->id; ?>" /><?php echo Tag::textField("username", "size: 25","maxlength: 20","value: $usuario->username","readonly: true") ?></td>
+  </tr>
+  <tr>
+    <td>Clave</td>
+    <td><?php echo Tag::PasswordField("password", "size: 25","maxlength: 20","value: $usuario->password") ?></td>
+  </tr>
+  
+  <tr>
+    <td>Confirmar Clave</td>
+    <td><?php echo Tag::PasswordField("confirmar", "size: 25","maxlength: 20","value: $usuario->password") ?></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><button id="guardar">Modificar</button></td>
+  </tr>
+</table>
+<?php echo Tag::endForm() ?>
+
+

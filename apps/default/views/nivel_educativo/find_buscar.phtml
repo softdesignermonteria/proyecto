@@ -1,0 +1,47 @@
+<table id="tablaniveleduc"></table>
+<div id="pagerniveleduc"></div>
+<script>
+jQuery(document).ready(function(){
+
+		
+		jQuery("#tablaniveleduc").jqGrid(
+		{ 
+			ajaxGridOptions : {type:"POST"},
+			url:'<?php echo core::getInstancePath().Router::getController(); ?>/find_detalle_buscar', 
+			datatype: "json", 
+			colNames:['Codigo Nivel Educativo','Nombre Nivel Educativo'], 
+			colModel:[ 
+				{ name:'codigo_nivel_educativo',index:'id', width:200}, 
+				{ name:'nombre_nivel_educativo',index:'Descripcion', width:350}
+			], 
+			autoWidth:true,
+			width: 550,
+			height: 250,
+			rowNum:50, 
+			/*rowList:[10,20,30,40,50], */
+			pager: '#pagerniveleduc', 
+			sortname: 'id', 
+			/*shrinkToFit :false,*/
+			viewrecords: true, 
+			sortorder: "asc", 
+			caption:"listado de los Niveles Educativos Registrados",
+			ondblClickRow:function(rowid,iRow,iCol,e){
+				
+				var fila = jQuery(this).jqGrid('getRowData',rowid);
+					
+					if( jQuery("#codigo_nivel_educativo")    ){ jQuery("#codigo_nivel_educativo").val(fila['codigo_nivel_educativo']); }
+					if( jQuery("#nombre_nivel_educativo")    ){ jQuery("#nombre_nivel_educativo").val(fila['nombre_nivel_educativo']); } 
+					
+					jQuery("#dialogo_nivel_educativo").dialog("close");											
+       		 }
+		}); 
+		/*jQuery("#tablaniveleduc").jqGrid('navGrid','#pagerniveleduc',{edit:false,add:false,del:false}); 
+		jQuery("#tablaniveleduc").jqGrid('navButtonAdd','#pagerniveleduc',{
+		caption: "Columnas",
+		title: "Reordena Columnas",
+		onClickButton : function (){
+			jQuery("#stablaniveleduc").jqGrid('columnChooser');
+		
+	});}*/
+});
+</script>

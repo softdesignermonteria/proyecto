@@ -1,0 +1,155 @@
+<?php echo Tag::formRemote(Router::getController()."/delete", "update: mensajes", "id: fx","name: fx"); ?>
+
+<h1>ELIMINAR <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?></h1>
+
+<table width="100%">
+    	<tr>
+    	  <th height="25" colspan="4">FORMULARIO PARA ELIMINAR <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?></th>
+   	  </tr>
+      <tr>
+    	  
+    	  <th width="30%" align="right">TIPO IDENTIFICACION <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?>:</th>
+    	  <td width="64%" align="left">
+		  		<?php $tp = new TipoIdentificacion();  echo Tag::select('tipo_identificacion',$tp->find(), 'using: tipo_identificacion,descripcion', 'useDummy: yes'); ?>
+          </td>
+    	  
+   	  </tr>
+    	<tr>
+    	  
+    	  <th width="30%" align="right">IDENTIFICACION <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?>:</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("identificacion","size: 30","maxlength: 15"); ?></td>
+    	  
+   	  </tr>
+        <tr>
+    	  
+    	  <th width="30%" align="right">PRIMER NOMBRE:</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("primer_nombre","size: 50","maxlength: 200"); ?></td>
+    	  
+   	  </tr>
+      <tr>
+    	  
+    	  <th width="30%" align="right">SEGUNDO NOMBRE:</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("segundo_nombre","size: 50","maxlength: 200"); ?></td>
+    	  
+   	  </tr>
+      <tr>
+    	  
+    	  <th width="30%" align="right">PRIMER APELLIDO:</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("primer_apellido","size: 50","maxlength: 200"); ?></td>
+    	  
+   	  </tr>
+      <tr>
+    	  
+    	  <th width="30%" align="right">SEGUNDO APELLIDO:</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("segundo_apellido","size: 50","maxlength: 200"); ?></td>
+    	  
+   	  </tr>
+      <tr>
+    	  
+    	  <th width="30%" align="right">CORREO</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("correo","size: 50","maxlength: 200"); ?></td>
+    	  
+   	  </tr>
+      <tr>
+    	  
+    	  <th width="30%" align="right">TELEFONO</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("telefono","size: 50","maxlength: 200"); ?></td>
+    	  
+   	  </tr>
+      <tr>
+    	  
+    	  <th width="30%" align="right">FAX</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("fax","size: 50","maxlength: 200"); ?></td>
+    	  
+   	  </tr>
+       <tr>
+    	  
+    	  <th width="30%" align="right">IES:</th>
+    	  <td width="64%" align="left">
+		  		<?php  echo Tag::textField("cod_ies","size: 10","maxlength: 200"); ?>
+                <?php  echo Tag::textField("nombre_ies","size: 50","maxlength: 200"); ?>
+                <button id="buscar_ies" name="buscar_ies" type="button">Buscar</button>
+          </td>
+    	  
+   	  </tr>
+       <tr>
+    	  
+    	  <th width="30%" align="right">NBC:</th>
+    	  <td width="64%" align="left">
+		  		<?php  echo Tag::textField("codigo_nbc","size: 10","maxlength: 200"); ?>
+                <?php  echo Tag::textField("nombre_nbc","size: 50","maxlength: 200"); ?>
+                <button id="buscar_nbc" name="buscar_nbc" type="button">Buscar</button>
+			</td>
+    	  
+   	  </tr>
+       <tr>
+    	  
+    	  <th width="30%" align="right">NIVEL EDUCATIVO:</th>
+    	  <td width="64%" align="left">
+		  		<?php  echo Tag::textField("codigo_nivel_educativo","size: 10","maxlength: 200"); ?>
+                <?php  echo Tag::textField("nombre_nivel_educativo","size: 50","maxlength: 200"); ?>
+                <button id="buscar_nivel_educativo" name="buscar_nivel_educativo" type="button">Buscar</button>
+			</td>
+    	  
+   	  </tr>
+      <tr>	  
+    	  <th width="30%" align="right">TIPO PARTICIPACION PROYECTO:</th>
+    	  <td width="64%" align="left">
+		  		<?php  echo Tag::textField("codigo_tipo_participacion_proyecto","size: 10","maxlength: 200"); ?>
+                <?php  echo Tag::textField("nombre_tipo_participacion_proyecto","size: 50","maxlength: 200"); ?>
+                <button id="buscar_tipo_participacion_proyecto" name="buscar_tipo_participacion_proyecto" type="button">Buscar</button>
+			</td>
+    	  
+   	  </tr>
+       
+      <tr>
+    	  
+    	  <th width="30%" align="right">SECTOR ENTIDAD:</th>
+    	  <td width="64%" align="left">
+		  	<?php  echo Tag::textField("codigo_sector_entidad","size: 10","maxlength: 50","readonly: readonly"); ?>
+            <?php  echo Tag::textField("nombre_sector_entidad","size: 50","maxlength: 50","readonly: readonly"); ?>
+            	<button id="buscar_sector_entidad" name="buscar_sector_entidad" type="button">Buscar</button>
+            </td>
+    	  
+   	  </tr>
+      <tr>
+    	  <td colspan="4" align="center"><button id="guardar" name="guardar">Eliminar</button></td>
+   	  </tr>
+  </table>
+
+<?php echo Tag::endForm(); ?>
+<div id="mensajes"></div>
+<?php echo view::getContent(); ?>
+
+<script>
+	
+	
+	jQuery(document).ready(function(e) {
+        jQuery("#identificacion").attr("readOnly","ReadOnly");
+		jQuery("#primer_nombre").attr("readOnly","ReadOnly");
+		jQuery("#segundo_nombre").attr("readOnly","ReadOnly");
+		jQuery("#primer_apellido").attr("readOnly","ReadOnly");
+		jQuery("#correo").attr("readOnly","ReadOnly");
+		jQuery("#telefono").attr("readOnly","ReadOnly");
+		jQuery("#fax").attr("readOnly","ReadOnly");
+		jQuery("#segundo_apellido").attr("readOnly","ReadOnly");
+		jQuery("#buscar_ies").attr("disabled","disabled");
+		jQuery("#buscar_sector_entidad").attr("disabled","disabled");
+		jQuery("#tipo_identificacion").attr("disabled","disabled");
+		jQuery("#buscar_nivel_educativo").attr("disabled","disabled");
+		jQuery("#buscar_nbc").attr("disabled","disabled");
+		jQuery("#buscar_tipo_participacion_proyecto").attr("disabled","disabled");
+		 jQuery("#cod_ies").attr("readOnly","ReadOnly");
+		jQuery("#nombre_ies").attr("readOnly","ReadOnly");
+		jQuery("#codigo_nbc").attr("readOnly","ReadOnly");
+		jQuery("#nombre_nbc").attr("readOnly","ReadOnly");
+		jQuery("#codigo_nivel_educativo").attr("readOnly","ReadOnly");
+		jQuery("#nombre_nivel_educativo").attr("readOnly","ReadOnly");
+		jQuery("#codigo_tipo_participacion_proyecto").attr("readOnly","ReadOnly");
+		jQuery("#nombre_tipo_participacion_proyecto").attr("readOnly","ReadOnly");
+		jQuery("#codigo_sector_entidad").attr("readOnly","ReadOnly");
+		jQuery("#nombre_sector_entidad").attr("readOnly","ReadOnly");
+		//jQuery("#nombre_pais").attr("readOnly","ReadOnly");
+		//jQuery("#cod_ies").css("background-color","#333");
+    });
+</script>

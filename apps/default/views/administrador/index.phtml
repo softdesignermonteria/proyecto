@@ -1,0 +1,35 @@
+<?php echo View::getContent(); ?>
+<?php
+foreach(View::getValidationMessages() as $message){
+	Flash::error($message->getMessage());
+}
+$sw=1;
+if(Session::get("role")=='administrador'){ $sw=0; }
+
+?>    
+
+<table width="600px" cellpadding="2" cellspacing="2" class="ui-widget ui-widget-content ui-corner-all ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-front">
+
+    	<tr>
+
+        	<td align="center"><?php if($sw!=1){ echo Tag::linkTo(Router::getController()."/agregar",Tag::image("aplicaciones/agregar.jpg","width: 50px")); } ?></td>
+			<td align="center"><?php echo Tag::linkTo(Router::getController()."/buscar",Tag::image("aplicaciones/buscar.jpg","width: 50px")); ?></td>
+            <td align="center"><?php if($sw!=1){ echo Tag::linkTo(Router::getController()."/permisos",Tag::image("iconos/bd.png","width: 50px")); } ?></td>
+
+            <td align="center"><?php if($sw!=1){ echo Tag::linkTo(Router::getController()."/buscar/?opcion=modificar",Tag::image("iconos/entrar.png","width: 50px")); } ?></td>
+			<td align="center"><?php if($sw!=1){ echo Tag::linkTo(Router::getController()."/buscar/?opcion=eliminar",Tag::image("iconos/entrar.png","width: 50px")); } ?></td>
+
+        </tr>
+
+        <tr>
+
+        	<td align="center"><?php if($sw!=1){ ?> Agregar <?php } ?></td>
+            <td align="center">Listar Todas</td>
+            <td align="center"><?php if($sw!=1){ ?>Cambiar Permisos de Usuario <?php } ?></td>
+			<td align="center"><?php if($sw!=1){ ?>Modificar <?php } ?></td>
+            <td align="center"><?php if($sw!=1){ ?>Eliminar  <?php } ?></td>
+
+        </tr>
+
+    </table>
+    

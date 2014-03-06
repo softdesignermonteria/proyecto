@@ -1,0 +1,47 @@
+<?php if(Session::get("usuario_autenticado")==true){ ?>
+
+<div id='cssmenu' class="t-rigth" align="right">
+    <ul>
+       <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>	
+       <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>	
+       <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>	
+        <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>	
+       <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>	
+       <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>	
+        <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>	
+       <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>	
+       <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>	
+       <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>	
+       <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>	
+       <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>	
+       <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>	
+       <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>	
+       <!--<li><a href="<?php //echo core::getInstancePath().Router::getApplication();  ?>/menu/"><span>Inicio</span></a></li>-->
+       <?php 
+        $menu = new Menu();
+        $s_menu = new Menu();
+        
+        foreach($menu->find("aplicacion = '".Router::getApplication()."' and posicion='encabezado' and posicion_x<>0 and aplicacion = '".Router::getApplication()."' ","order: orden") as $menu):
+        
+        echo "<li class='has-sub '>
+                <a href='".core::getInstancePath().Router::getApplication()."/$menu->url' title='$menu->tittle'><span>$menu->descripcion</span></a>
+                    <ul>";
+                    if($s_menu->count("posicion_y='$menu->posicion_x' and aplicacion = '".Router::getApplication()."' ")){			
+                            foreach($s_menu->find("posicion_y='$menu->posicion_x'","order: orden") as $s_menu):
+                            echo "<li>";
+                                echo "<span><a href='".core::getInstancePath().Router::getApplication()."/$s_menu->url' title='$s_menu->tittle'>$s_menu->descripcion</a></span>";
+                            echo "</li>";
+                            endforeach;
+                    }
+                echo "</ul>";
+        echo "</li>";
+        endforeach;
+        
+      ?>		
+      <!--<li><a href="<?php //echo core::getInstancePath().Router::getApplication(); ?>/administrador/salir/"><span>Cerrar</span></a></li>-->
+    </ul>
+</div>
+
+   
+
+<?php } ?>

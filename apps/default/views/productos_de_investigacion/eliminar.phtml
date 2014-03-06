@@ -1,0 +1,74 @@
+<?php echo Tag::formRemote(Router::getController()."/delete", "update: mensajes", "id: fx","name: fx"); ?>
+
+<h1>ELIMINAR <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?></h1>
+
+<table width="100%">
+    	<tr>
+    	  <th height="25" colspan="4">FORMULARIO PARA ELIMINAR <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?></th>
+   	  </tr>
+    	      	<tr>
+    	  
+    	  <th width="30%" align="right">CODIGO <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?>:</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("cod_producto_investigacion","size: 50","maxlength: 50","readonly: readonly"); ?></td>
+    	  
+   	  </tr>
+        <tr>
+    	  
+    	  <th width="30%" align="right">NOMBRE <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?>:</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("nombre_producto_investigacion","size: 50"); ?></td>
+    	  
+   	  </tr>
+      <tr>
+    	  
+    	  <th width="30%" align="right">AÑO DE OBTENCION:</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("ano_obtencion","size: 10","maxlength: 4"); ?></td>
+    	  
+   	  </tr>
+        <tr>
+    	  
+    	  <th width="30%" align="right">MES DE OBTENCION:</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("mes_obtencion","size: 20","maxlength: 10"); ?></td>
+    	  
+   	  </tr>
+        <tr>
+    	  
+    	  <th width="30%" align="right">TIPO PRODUCTO DE INVESTIGACION:</th>
+    	  <td width="64%" align="left">
+		  		<?php  echo Tag::textField("codigo_tipo_productos_de_investigacion","size: 20","maxlength: 50","readonly: readonly"); ?>
+          		<?php  echo Tag::textField("nombre_tipo_productos_de_investigacion","size: 50","maxlength: 50","readonly: readonly"); ?>
+          		<button type="button" id="buscar_tipo_productos_de_investigacion" name="buscar_tipo_productos_de_investigacion">Buscar</button>
+          </td>
+   	  </tr>
+       <tr>
+    	  
+    	  <th width="30%" align="right">NBC:</th>
+    	  <td width="64%" align="left">
+		  		<?php  echo Tag::textField("codigo_nbc","size: 20","maxlength: 50","readonly: readonly"); ?>
+          		<?php  echo Tag::textField("nombre_nbc","size: 50","maxlength: 50","readonly: readonly"); ?>
+          		<button  type="button" id="buscar_nbc" name="buscar_nbc">Buscar</button>
+          </td>
+    	  
+   	  </tr>
+      <tr>
+    	  <td colspan="4" align="center"><button id="guardar" name="guardar">Eliminar</button></td>
+   	  </tr>
+  </table>
+
+<?php echo Tag::endForm(); ?>
+<div id="mensajes"></div>
+<?php echo view::getContent(); ?>
+
+<script>
+	
+	
+	jQuery(document).ready(function(e) {
+        jQuery("#cod_producto_investigacion").attr("readOnly","ReadOnly");
+		jQuery("#nombre_producto_investigacion").attr("readOnly","ReadOnly");
+		jQuery("#ano_obtencion").attr("readOnly","ReadOnly");
+		jQuery("#mes_obtencion").attr("readOnly","ReadOnly");
+		jQuery("#buscar_tipo_productos_de_investigacion").attr("disabled","disabled");
+		jQuery("#buscar_nbc").attr("disabled","disabled");
+		
+		//jQuery("#cod_ies").css("background-color","#333");
+    });
+</script>

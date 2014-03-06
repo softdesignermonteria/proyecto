@@ -1,0 +1,46 @@
+<table id="tablasobjsocioecono"></table>
+<div id="pagobjsocioecono"></div>
+<script>
+jQuery(document).ready(function(){
+
+		
+		jQuery("#tablasobjsocioecono").jqGrid(
+		{ 
+			ajaxGridOptions : {type:"POST"},
+			url:'<?php echo core::getInstancePath().Router::getController(); ?>/find_detalle_buscar', 
+			datatype: "json", 
+			colNames:['Codigo Objetivo','Nombre Objetivo Socioeconomico'], 
+			colModel:[ 
+				{ name:'Cod_Objetivo_Socioeconomico',index:'Cod_Objetivo_Socioeconomico', width:200}, 
+				{ name:'Descripcion_Objetivo_Socioeconomico',index:'Descripcion_Objetivo_Socioeconomico', width:350}
+			], 
+			autoWidth:true,
+			width: 550,
+			height: 350,
+			rowNum:50, 
+			/*rowList:[10,20,30,40,50], */
+			pager: '#pagobjsocioecono', 
+			sortname: 'Cod_Objetivo_Socioeconomico', 
+			/*shrinkToFit :false,*/
+			viewrecords: true, 
+			sortorder: "asc", 
+			caption:"listado de las Objetivos Socioeconomico Registrados",
+			ondblClickRow:function(rowid,iRow,iCol,e){
+				
+				var fila = jQuery(this).jqGrid('getRowData',rowid);
+					
+					if( jQuery("#cod_objetivo")    ){ jQuery("#cod_objetivo").val(fila['Cod_Objetivo_Socioeconomico']); }
+					if( jQuery("#nombre_objetivo") ){ jQuery("#nombre_objetivo").val(fila['Descripcion_Objetivo_Socioeconomico']); } 
+					jQuery("#dialogo_objetivo_socioeconomico").dialog("close");						
+       		 }
+		}); 
+		/*jQuery("#tablasobjsocioecono").jqGrid('navGrid','#pagobjsocioecono',{edit:false,add:false,del:false}); 
+		jQuery("#tablasobjsocioecono").jqGrid('navButtonAdd','#pagobjsocioecono',{
+		caption: "Columnas",
+		title: "Reordena Columnas",
+		onClickButton : function (){
+			jQuery("#tablasobjsocioecono").jqGrid('columnChooser');
+		
+	});}*/
+});
+</script>

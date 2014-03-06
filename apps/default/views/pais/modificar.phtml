@@ -1,0 +1,36 @@
+<?php echo Tag::formRemote(Router::getController()."/update", "update: mensajes", "id: fx","name: fx"); ?>
+
+<h1>MODIFICAR <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?></h1>
+
+<table width="100%">
+    	<tr>
+    	  <th height="25" colspan="4">FORMULARIO PARA MODIFICAR <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?></th>
+   	  </tr>
+    	<tr>
+    	  
+    	  <th width="30%" align="right">CODIGO <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?>:</th>
+    	  <td width="64%" align="left"><?php  echo Tag::numericField("codigo_pais_mod","size: 50","readonly: readonly"); ?></td>
+    	  
+   	  </tr>
+        <tr>
+    	  
+    	  <th width="30%" align="right">NOMBRE <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?>:</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textUpperField("nombre_pais","size: 50"); ?></td>
+    	  
+   	  </tr>
+      <tr>
+    	  <td colspan="4" align="center"><button id="guardar" name="guardar">Modificar Datos</button></td>
+   	  </tr>
+  </table>
+
+<?php echo Tag::endForm(); ?>
+<div id="mensajes"></div>
+<?php echo view::getContent(); ?>
+
+<script>
+	
+	
+	jQuery(document).ready(function(e) {
+      
+    });
+</script>

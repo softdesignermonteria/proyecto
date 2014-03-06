@@ -1,0 +1,75 @@
+<table id="exportexcel" align="center" cellpadding="2" cellspacing="2" class="ui-widget ui-widget-content ui-corner-all">
+  
+<tr class="ui-jqgrid-titlebar ui-widget-header ui-corner-top">
+    	<td align="center">CODIGO PROYECTO</td>
+        <td align="center">TITULO PROYECTO</td>
+        <td align="center">FECHA INICIO</td>
+        <td align="center">DURACCION</td>
+        <td align="center" style="display: none">CODIGO IES</td>
+        <td align="center">NOMBRE IES</td>
+        <td align="center" style="display: none">CODIGO TIPO</td>
+        <td align="center">TIPO PROYECTO</td>
+        <td align="center" style="display: none">OBJETIVO SOCIOECONOMICO</td>
+        <td align="center">OBJETIVO DEL PROYECTO</td>
+        <td align="center">RESUMEN DEL PROYECTO</td>
+        <td>RESULTADOS ESPERADOS</td>
+        <td>VALOR PROYECTO</td>
+    </tr> 
+    <tr style="display: none">
+    	<td align="center">CODIGO PROYECTO</td>
+        <td align="center">TITULO PROYECTO</td>
+        <td align="center">FECHA INICIO</td>
+        <td align="center">DURACCION</td>
+        <td align="center" style="display: none">CODIGO IES</td>
+        <td align="center">NOMBRE IES</td>
+        <td align="center" style="display: none">CODIGO TIPO</td>
+        <td align="center">TIPO PROYECTO</td>
+        <td align="center" style="display: none">OBJETIVO SOCIOECONOMICO</td>
+        <td align="center">OBJETIVO DEL PROYECTO</td>
+        <td align="center">RESUMEN DEL PROYECTO</td>
+        <td>RESULTADOS ESPERADOS</td>
+        <td>VALOR PROYECTO</td>
+    </tr> 
+<?php 
+	$ies        = new TblIes();
+	$tproyecto  = new TblTipoProyecto();
+	$objetivo   = new TblObjetivoSocioeconomico();
+	$valort     = 0;
+	foreach($detalles as $filas):
+			$ies->findFirst(" Cod_IES = '".$filas->getFKCodIES()."' ");
+			$tproyecto->findFirst(" Cod_Tipo_Proyecto = '".$filas->getFKTipoProyecto()."' ");
+			$objetivo->findFirst(" Cod_Objetivo_Socioeconomico = '".$filas->getFKCodObjetoSocieconomico()."' ");
+?>    
+
+	<tr>
+    	<td><?php echo $filas->getCodProyecto();?></td>
+        <td><?php echo utf8_encode($filas->getTituloProyecto());?></td>
+        <td><?php echo $filas->getFechaInicioProyecto();?></td>
+        <td><?php echo $filas->getDuracionProyecto();?></td>
+        <td style="display: none"><?php echo $ies->getCodIES();?></td>
+        <td><?php echo utf8_encode($ies->getNombreIES());?></td>
+      	<td style="display: none"><?php echo $tproyecto->getCodTipoProyecto();?></td>
+        <td><?php echo utf8_encode($tproyecto->getDescripcionTipoProyecto()); ?></td>
+        <td style="display: none"><?php echo $objetivo->getCodObjetivoSocioeconomico();?></td>
+        <td><?php echo utf8_encode($objetivo->getDescripcionObjetivoSocioeconomico());?></td>
+        <td><?php echo $filas->getResumenProyecto();?></td>
+        <td><?php echo $filas->getResultadosEsperados();?></td>
+        <td><?php echo $filas->getValorProyecto(); $valort += $filas->getValorProyecto(); ?></td>
+    </tr>
+    
+<?php endforeach; ?>
+	<tr style="display: none">
+   	  <td colspan="12" align="right">Total:</td>
+      <td><?php echo $valort;?></td>
+    </tr> 
+</table>
+
+
+<button  id="btnexportar"  type="submit">Exportar Execl</button>
+
+<script>
+   jQuery( "#btnexportar"  ).button({ icons: {primary:'ui-icon ui-icon-search'     ,secondary:'ui-icon ui-icon-newwin'} });
+</script>
+
+
+

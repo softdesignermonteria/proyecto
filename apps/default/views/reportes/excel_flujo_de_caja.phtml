@@ -1,0 +1,254 @@
+<?php 
+
+// require_once 'Classes/PHPExcel.php';
+$objPHPExcel = new PHPExcel();
+$objPHPExcelcalc = new PHPExcel_Calculation();
+//Informacion del excel
+$objPHPExcel->
+getProperties()
+	->setCreator("Proyecto Sies")
+	->setLastModifiedBy("Proyecto Sies")
+	->setTitle("Exportar excel desde Proyecto Sies")
+	->setSubject("Proyecto Sies")
+	->setDescription("Documento generado de Proyecto Sies")
+	->setKeywords("Proyecto Sies")
+	->setCategory("reportes");    
+
+ 
+
+$styleArray = array(
+	'font' => array(
+		'bold' => true,
+	),
+	'alignment' => array(
+		'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+	),
+	'borders' => array(
+		'allborders' => array(
+			'style' => PHPExcel_Style_Border::BORDER_THIN,
+			'color' => array('argb' => 'FF9900')
+		),
+	),
+	'fill' => array(
+		'type' => PHPExcel_Style_Fill::FILL_SOLID,
+		'rotation' => 90,
+		'startcolor' => array(
+			'argb' => 'FF9900',
+		),
+		'endcolor' => array(
+			'argb' => 'FF9900',
+		),
+	),
+);
+     
+
+$FlujoCaja  = new FlujoCaja();
+$enc = $FlujoCaja->findFirst(" id =  '".$_REQUEST["id"]."' ");
+$proyecto  = new TblProyecto();
+$inv = new TblInvestigador();
+$ies  = new TblIes();
+$detalles  = new FlujoCajaDetalles();
+$detalles_v  = new FlujoCajaDetalles();
+$detalles_x  = new FlujoCajaDetalles();
+$detalles_xx  = new FlujoCajaDetalles();
+$detalles_z  = new FlujoCajaDetalles();
+
+$detalles_zz  = new FlujoCajaDetalles();
+$detalles_zz2  = new FlujoCajaDetalles();
+$detalles_zz3  = new FlujoCajaDetalles();
+
+$rubros  = new Rubros();
+$mes = new Meses();
+
+$condicion = "";
+if($_REQUEST["id"]!=''){ $condicion = " and flujo_caja_id = '". $_REQUEST["id"]."' "; }
+
+
+
+$proyecto  = $proyecto->findFirst(" Cod_Proyecto = '".$enc->getCod_Proyecto()."' ");
+$ies       = $ies->findFirst(" Cod_IES = '".$proyecto->getFKCodIES()."' ");
+$inv       = $inv->findFirst(" Identificacion = '".$enc->getIdentificacion()."' ");
+
+$i=1;
+$objPHPExcel->setActiveSheetIndex(0)->mergeCells("A$i:Z$i");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("A$i", $ies->getNombreIES() );
+$objPHPExcel->getActiveSheet()->getStyle("A$i")->applyFromArray($styleArray);		
+
+$i=2;
+$objPHPExcel->setActiveSheetIndex(0)->mergeCells("A$i:Z$i");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("A$i", "DIRECCIÓN DE INVESTIGACIONES E INNOVACION" );
+$objPHPExcel->getActiveSheet()->getStyle("A$i")->applyFromArray($styleArray);
+
+$i=3;
+$objPHPExcel->setActiveSheetIndex(0)->mergeCells("A$i:Z$i");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("A$i", "CRONOGRAMA PROYECTOS DE INVESTIGACION" );
+$objPHPExcel->getActiveSheet()->getStyle("A$i")->applyFromArray($styleArray);
+
+$i=6;
+$objPHPExcel->setActiveSheetIndex(0)->mergeCells("B$i:Z$i");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("A$i", "NOMBRE DEL PROYECTO" );
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("B$i", $proyecto->getTituloProyecto() );
+$objPHPExcel->getActiveSheet()->getStyle("A$i")->applyFromArray($styleArray);
+$objPHPExcel->getActiveSheet()->getStyle("B$i")->applyFromArray($styleArray);
+
+$i=8;
+$objPHPExcel->setActiveSheetIndex(0)->mergeCells("B$i:Z$i");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("A$i", "DURACION DEL PROYECTO" );
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("B$i", $proyecto->getDuracionProyecto()." MESES ");
+$objPHPExcel->getActiveSheet()->getStyle("A$i")->applyFromArray($styleArray);
+$objPHPExcel->getActiveSheet()->getStyle("B$i")->applyFromArray($styleArray);
+
+$i=9;
+$objPHPExcel->setActiveSheetIndex(0)->mergeCells("B$i:Z$i");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("A$i", "DURACION DEL PROYECTO" );
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("B$i", $proyecto->getDuracionProyecto()." MESES ");
+$objPHPExcel->getActiveSheet()->getStyle("A$i")->applyFromArray($styleArray);
+$objPHPExcel->getActiveSheet()->getStyle("B$i")->applyFromArray($styleArray);
+
+$i=10;
+$objPHPExcel->setActiveSheetIndex(0)->mergeCells("B$i:Z$i");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("A$i", "INVESTIGADOR RESPONSABLE" );
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("B$i", $inv->getPrimerNombre()." ".$inv->getSegundoNombre()." ".$inv->getPrimerApellido()." ".$inv->getSegundoApellido()." " );
+$objPHPExcel->getActiveSheet()->getStyle("A$i")->applyFromArray($styleArray);
+$objPHPExcel->getActiveSheet()->getStyle("B$i")->applyFromArray($styleArray);
+
+$i=11;
+$objPHPExcel->setActiveSheetIndex(0)->mergeCells("B$i:Z$i");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("A$i", "INICIO" );
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("B$i", $proyecto->getFechaInicioProyecto() );
+$objPHPExcel->getActiveSheet()->getStyle("A$i")->applyFromArray($styleArray);
+$objPHPExcel->getActiveSheet()->getStyle("B$i")->applyFromArray($styleArray);
+
+$i=12;
+$inicio =  $proyecto->getFechaInicioProyecto();
+
+
+$res = mysql_query("SELECT DATE_ADD('".$proyecto->getFechaInicioProyecto()."', interval ".$proyecto->getDuracionProyecto()." Month ) as fecha");
+while($filas = mysql_fetch_array($res) ) {
+	$fecha = $filas["fecha"]; 
+}
+
+$objPHPExcel->setActiveSheetIndex(0)->mergeCells("B$i:Z$i");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("A$i", "TERMINACION" );
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("B$i", $fecha );
+$objPHPExcel->getActiveSheet()->getStyle("A$i")->applyFromArray($styleArray);
+$objPHPExcel->getActiveSheet()->getStyle("B$i")->applyFromArray($styleArray);
+
+$i=16;		
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("A".$i, "RUBROS");
+$objPHPExcel->getActiveSheet()->getStyle("A".$i)->applyFromArray($styleArray);
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("B".$i, "VALOR APROBADO");
+$objPHPExcel->getActiveSheet()->getStyle("B".$i)->applyFromArray($styleArray);
+$j=1;
+$l=17;
+$k=$j;
+$temp = '';
+foreach($detalles->find("annos","conditions: 1 = 1 $condicion ","group: annos") as $detalles):
+	for($xx=1;$xx<=12;$xx++){
+		if($k > 25 && $temp == '' ){ $temp = 'A'; $k=0;	}
+			$objPHPExcel->setActiveSheetIndex(0)->setCellValue($temp.chr($k+65+1).$i, "MES ".$j);
+			$objPHPExcel->getActiveSheet()->getStyle($temp.chr($k+65+1).$i)->applyFromArray($styleArray);
+			$meses_temp = $mes->findFirst(" meses = '".$detalles->getMeses()."' ");
+			$objPHPExcel->setActiveSheetIndex(0)->setCellValue($temp.chr($k+65+1).$l, $detalles->getAnnos().$xx);
+			$objPHPExcel->getActiveSheet()->getStyle($temp.chr($k+65+1).$l)->applyFromArray($styleArray);
+			$j++;
+			$k++;
+	}
+	
+endforeach;
+
+$i=18;
+
+
+foreach($detalles->find("rubro_id","conditions: 1 = 1 $condicion ","group: rubro_id") as $detalles):
+	$i++;
+	$r = new Rubros();
+	$r = $rubros->findFirst(" id = '".$detalles->getRubro_id()."' ");
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("A".$i, $r->getRubro() );
+	$objPHPExcel->getActiveSheet()->getStyle("A".$i)->applyFromArray($styleArray);
+	$i = $objPHPExcel->getActiveSheet()->getHighestRow();	
+	$k=1;
+	$l = $i+1;
+
+	foreach($detalles_z->find("rubro_id,descripcion_gastos","conditions: 1 = 1 $condicion and rubro_id = '".$detalles->getRubro_id()."' ","group: rubro_id,descripcion_gastos") as $detalles_z):
+		$i++;
+		$objPHPExcel->setActiveSheetIndex(0)->setCellValue("A".$i, $detalles_z->getDescripcion_gastos() );
+		$objPHPExcel->setActiveSheetIndex(0)->setCellValue("B".$i, $detalles_zz2->sum("valor","conditions: 1 = 1 $condicion and rubro_id = '".$detalles->getRubro_id()."' ") );
+		//$objPHPExcel->getActiveSheet()->getStyle("A".$i)->applyFromArray($styleArray);
+
+		foreach($detalles_v->find("annos","conditions: 1 = 1 $condicion and rubro_id = '".$detalles->getRubro_id()."' ","group: annos") as $detalles_v):
+			for($xx=1;$xx<=12;$xx++){
+				if($k > 25 && $temp == '' ){ $temp = 'A'; $k=0;	}
+				/*$valor = $detalles_xx->sum("valor","conditions: 1 = 1 $condicion and rubro_id = '".$detalles->getRubro_id()."' ");
+				$objPHPExcel->setActiveSheetIndex(0)->setCellValue("B".$l,  $valor );*/
+				$det_valor = $detalles_x->sum("valor","conditions: 1 = 1 $condicion and rubro_id = '".$detalles->getRubro_id()."' and annos = '".$detalles_v->getAnnos()."' and meses = '".$xx."' ");
+				if($det_valor==''){ $det_valor=0; }
+			
+				$objPHPExcel->setActiveSheetIndex(0)->setCellValue($temp.chr($k+65+1).$l, $det_valor );
+				$k++;
+			}
+		endforeach;
+		$i = $objPHPExcel->getActiveSheet()->getHighestRow();	
+	endforeach;
+		$i = $objPHPExcel->getActiveSheet()->getHighestRow();	
+endforeach; //fin Find rubros
+
+$j=1;
+$i++;
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("A".$i, "TOTAL GENERAL");
+$objPHPExcel->getActiveSheet()->getStyle("A".$i)->applyFromArray($styleArray);
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("B".$i, $detalles_zz3->sum("valor","conditions: 1 = 1 $condicion  ") );
+$objPHPExcel->getActiveSheet()->getStyle("B".$i)->applyFromArray($styleArray);
+
+$k=$j;
+$temp = '';
+
+foreach($detalles->find("annos","conditions: 1 = 1 $condicion ","group: annos") as $detalles):
+	for($xx=1;$xx<=12;$xx++){
+		if($k > 25 && $temp == '' ){ $temp = 'A'; $k=0;	}
+			
+			$objPHPExcel->setActiveSheetIndex(0)->setCellValue($temp.chr($k+65+1).$i, $detalles_zz->sum("valor","conditions: 1 = 1 $condicion and annos = '".$detalles->getAnnos()."' and meses = '".$xx."' ") );
+			$objPHPExcel->getActiveSheet()->getStyle($temp.chr($k+65+1).$i)->applyFromArray($styleArray);
+			$j++;
+			$k++;
+	}
+	
+endforeach;
+
+$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('F')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('G')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('H')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('I')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('J')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('k')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('l')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('m')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('n')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('o')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('p')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('q')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('r')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('s')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('t')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('u')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('v')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('w')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('x')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('y')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('z')->setAutoSize('true');
+
+
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment;filename="reportes.xlsx"');
+header('Cache-Control: max-age=0');
+ 
+$objWriter=PHPExcel_IOFactory::createWriter($objPHPExcel,'Excel2007');
+$objWriter->save('php://output');
+exit;
+
+?>

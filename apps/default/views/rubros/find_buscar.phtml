@@ -1,0 +1,48 @@
+<table id="tablarubros"></table>
+<div id="pagerrubros"></div>
+<script>
+jQuery(document).ready(function(){
+
+		
+		jQuery("#tablarubros").jqGrid(
+		{ 
+			ajaxGridOptions : {type:"POST"},
+			url:'<?php echo core::getInstancePath(); ?>rubros/find_detalle_buscar', 
+			datatype: "json", 
+			colNames:['Codigo rubros','Nombre rubros'], 
+			colModel:[ 
+				{ name:'id',index:'id', width:200}, 
+				{ name:'rubro',index:'rubro', width:350}
+			], 
+			autoWidth:true,
+			width: 550,
+			height: 250,
+			rowNum:50, 
+			/*rowList:[10,20,30,40,50], */
+			pager: '#pagerrubros', 
+			sortname: 'id', 
+			/*shrinkToFit :false,*/
+			viewrecords: true, 
+			sortorder: "asc", 
+			caption:"listado de las rubros Registradas",
+			ondblClickRow:function(rowid,iRow,iCol,e){
+				
+				var fila = jQuery(this).jqGrid('getRowData',rowid);
+					
+					if( jQuery("#codigo_rubros")    ){ jQuery("#codigo_rubros").val(fila['id']); }
+					if( jQuery("#nombre_rubros") ){ jQuery("#nombre_rubros").val(fila['rubro']); } 
+					jQuery("#dialogo_rubros").dialog("close");
+					
+					
+       		 }
+		}); 
+		/*jQuery("#tablarubros").jqGrid('navGrid','#pagerrubros',{edit:false,add:false,del:false}); 
+		jQuery("#tablarubros").jqGrid('navButtonAdd','#pagerrubros',{
+		caption: "Columnas",
+		title: "Reordena Columnas",
+		onClickButton : function (){
+			jQuery("#tablarubros").jqGrid('columnChooser');
+		
+	});}*/
+});
+</script>

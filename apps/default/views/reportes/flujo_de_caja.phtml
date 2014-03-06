@@ -1,0 +1,111 @@
+<table width="900px" align="center" cellpadding="2" cellspacing="2">
+	<tr>
+    	<th colspan="2" align="center">Filtros</th>
+    </tr>
+	<tr>
+	  <td align="right">IES</td>
+	  <td> <?php  echo Tag::textField("cod_ies","size: 10","maxlength: 50","readonly: readonly"); ?>
+        <?php  echo Tag::textField("nombre_ies","size: 50","maxlength: 50","readonly: readonly"); ?>
+        <button type="button" id="buscar_ies" name="buscar_ies">Buscar</button></td>
+  </tr>
+ 		
+	<tr>
+    	<td align="right">Fecha Inicio Proyecto : </td>
+      <td>Desde        <input type="text" id="desde" name="desde" />        Hasta: 
+      <input type="text" id="hasta" name="hasta" /></td>
+    </tr>
+    
+    <tr>
+    	<td align="right">Cedula Investigador: </td>
+      <td><input type="text" id="cedula" name="cedula" />        Nombre Investigador:
+      <input name="nombre" type="text" id="nombre" size="50" maxlength="200" /></td>
+  </tr>
+  <tr>
+    	<td colspan="2" align="center"><button type="button" id="buscar" name="buscar" >Buscar</button></td>
+    </tr>
+</table>
+
+<br />
+<?php 
+		Flash::notice("Doble Click en la Fila para Generar el Archivo"); 
+?>
+<table id="tablaflujo_caja"></table>
+<div id="pagerflujo_caja"></div>
+<script>
+jQuery(document).ready(function(){
+
+	/*/* flujo_caja.id,
+			  flujo_caja.Cod_Proyecto,
+			  tbl_investigador.Identificacion,
+			  tbl_investigador.PrimerNombre,
+			  tbl_investigador.SegundoNombre,
+			  tbl_investigador.PrimerApellido,
+			  tbl_investigador.SegundoApellido,
+			  tbl_proyecto.Titulo_Proyecto,
+			  tbl_proyecto.Fecha_Inicio_Proyecto,
+			  tbl_proyecto.Duracion_Proyecto,
+			  tbl_proyecto.Valor_Proyecto,
+			  tbl_ies.Cod_IES,
+			  tbl_ies.Nombre_IES*/
+			  
+	
+		jQuery("#buscar").click(function() {
+			//alert("entro");
+            jQuery("#tablaflujo_caja").jqGrid('setGridParam',{ 
+				postData:{ 
+							desde:        jQuery("#desde").val(), 
+							hasta:        jQuery("#hasta").val(), 
+							cod_ies:      jQuery("#cod_ies").val(), 
+							cedula:       jQuery("#cedula").val(),
+							nombre:       jQuery("#nombre").val()
+						 } 
+			}).trigger('reloadGrid');
+        });		  
+			  
+		jQuery("#tablaflujo_caja").jqGrid(
+		{ 
+			ajaxGridOptions : {type:"POST"},
+			url:'<?php echo core::getInstancePath(); ?>flujo_de_caja/find_detalle_buscar', 
+			datatype: "json", 
+			colNames:['Codigo','Ies','Nombre Ies','Cod Proyecto','Titulo Proyecto','Fecha','Duracion','Valor','Identificacion','Nombre Inv'], 
+			colModel:[ 
+				{ name:'id'                    ,index:'id'                      }, 
+				{ name:'Cod_IES'               ,index:'Cod_IES'                 },
+				{ name:'Nombre_IES'            ,index:'Nombre_IES'              },
+				{ name:'Cod_Proyecto'          ,index:'Cod_Proyecto'            },
+				{ name:'Titulo_Proyecto'       ,index:'Titulo_Proyecto'         },
+				{ name:'Fecha_Inicio_Proyecto' ,index:'Fecha_Inicio_Proyecto'   },
+				{ name:'Duracion_Proyecto'     ,index:'Duracion_Proyecto'       },
+				{ name:'Valor_Proyecto'        ,index:'Valor_Proyecto'          },
+				{ name:'Identificacion'        ,index:'Identificacion'          },
+				{ name:'nombre'                ,index:'nombre'                  }
+			], 
+			autoWidth:true,
+			width: 1000,
+			height: 500,
+			rowNum:50, 
+			/*rowList:[10,20,30,40,50], */
+			pager: '#pagerflujo_caja', 
+			sortname: 'id', 
+			/*shrinkToFit :false,*/
+			viewrecords: true, 
+			sortorder: "asc", 
+			caption:"listado de los Flujos de Caja",
+			ondblClickRow:function(rowid,iRow,iCol,e){
+				
+				var fila = jQuery(this).jqGrid('getRowData',rowid);
+					window.open("<?php echo core::getInstancePath(); ?>/reportes/excel_flujo_de_caja/?id=" + fila['id']);
+					//redireccionar_action("reportes/excel_flujo_de_caja/?id=" + fila['id'] );
+       		 }
+		}); 
+		/*jQuery("#tablaflujo_caja").jqGrid('navGrid','#pagerflujo_caja',{edit:false,add:false,del:false}); 
+		jQuery("#tablaflujo_caja").jqGrid('navButtonAdd','#pagerflujo_caja',{
+		caption: "Columnas",
+		title: "Reordena Columnas",
+		onClickButton : function (){
+			jQuery("#tablaflujo_caja").jqGrid('columnChooser');
+		
+	});}*/
+});
+</script>
+<br />

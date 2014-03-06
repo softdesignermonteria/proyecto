@@ -1,0 +1,47 @@
+<table id="tablaproyecto"></table>
+<div id="pagerproyecto"></div>
+<script>
+jQuery(document).ready(function(){
+
+		
+		jQuery("#tablaproyecto").jqGrid(
+		{ 
+			ajaxGridOptions : {type:"POST"},
+			url:'<?php echo core::getInstancePath().Router::getController(); ?>/find_detalle_buscar', 
+			datatype: "json", 
+			colNames:['Codigo proyecto','Nombre proyecto'], 
+			colModel:[ 
+				{ name:'cod_proyecto'    ,index:'cod_proyecto'    , width:200}, 
+				{ name:'titulo_proyecto' ,index:'titulo_proyecto' , width:350}
+			], 
+			autoWidth:true,
+			width: 550,
+			height: 250,
+			rowNum:50, 
+			/*rowList:[10,20,30,40,50], */
+			pager: '#pagerproyecto', 
+			sortname: 'Cod_proyecto', 
+			/*shrinkToFit :false,*/
+			viewrecords: true, 
+			sortorder: "asc", 
+			caption:"listado de los Proyectos Registrados",
+			ondblClickRow:function(rowid,iRow,iCol,e){
+				
+				var fila = jQuery(this).jqGrid('getRowData',rowid);
+					
+					if( jQuery("#codigo_proyecto") ){ jQuery("#codigo_proyecto").val(fila['cod_proyecto']); }
+					if( jQuery("#nombre_proyecto") ){ jQuery("#nombre_proyecto").val(fila['titulo_proyecto']); } 
+					
+					jQuery("#dialogo_proyecto_de_investigacion").dialog("close");											
+       		 }
+		}); 
+		/*jQuery("#tablaproyecto").jqGrid('navGrid','#pagerproyecto',{edit:false,add:false,del:false}); 
+		jQuery("#tablaproyecto").jqGrid('navButtonAdd','#pagerproyecto',{
+		caption: "Columnas",
+		title: "Reordena Columnas",
+		onClickButton : function (){
+			jQuery("#stablaproyecto").jqGrid('columnChooser');
+		
+	});}*/
+});
+</script>

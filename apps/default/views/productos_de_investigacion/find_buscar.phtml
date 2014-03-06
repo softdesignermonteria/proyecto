@@ -1,0 +1,65 @@
+<table id="tablaproducinv"></table>
+<div id="pagerprodinv"></div>
+<script>
+jQuery(document).ready(function(){
+
+		
+		jQuery("#tablaproducinv").jqGrid(
+		{ 
+			ajaxGridOptions : {type:"POST"},
+			url:'<?php echo core::getInstancePath().Router::getController(); ?>/find_detalle_buscar', 
+			datatype: "json", 
+			colNames:['Codigo Producto de Investigacion','Nombre Producto de Investigacion'], 
+			colModel:[ 
+				{ name:'cod_producto_investigacion',index:'cod_producto_investigacion', width:200}, 
+				{ name:'nombre_producto_investigacion',index:'nombre_producto_investigacion', width:350}
+			], 
+			autoWidth:true,
+			width: 550,
+			height: 250,
+			rowNum:50, 
+			/*rowList:[10,20,30,40,50], */
+			pager: '#pagerprodinv', 
+			sortname: 'Cod_Producto_Investigacion', 
+			/*shrinkToFit :false,*/
+			viewrecords: true, 
+			sortorder: "asc", 
+			caption:"listado de los Productos de Investigacion",
+			ondblClickRow:function(rowid,iRow,iCol,e){
+				
+				var fila = jQuery(this).jqGrid('getRowData',rowid);
+					
+					if( jQuery("#cod_producto_investigacion") ){ jQuery("#cod_producto_investigacion").val(fila['cod_producto_investigacion']); }
+					if( jQuery("#nombre_producto_investigacion") ){ jQuery("#nombre_producto_investigacion").val(fila['nombre_producto_investigacion']); } 
+						if(jQuery("#proyecto_productos_investigacion")){
+	
+									if( jQuery("#ppi_" + fila['cod_producto_investigacion'] ).length ){
+											
+											jQuery("#dialogo_mensajes").html("");
+											jQuery("#dialogo_mensajes").html("<strong>Error Productos de Invetigacion ya Agreado para este Proyecto</strong>" );
+											jQuery("#dialogo_mensajes").dialog("open");
+											
+									}else{
+											html ="";
+											html +="<tr id=ppi_" + fila['cod_producto_investigacion'] + ">"
+												html += "<td>" + fila['cod_producto_investigacion'] + "</td>"
+												html += "<td colspan='2'>" + fila['nombre_producto_investigacion'] + "</td>"
+												html += "<td><button type=\"button\" id='ppi_eliminar_"+fila['cod_producto_investigacion']+"' onClick='jQuery(\"#ppi_" + fila['cod_producto_investigacion'] + "\").remove();' >Borrar Fila</button> </td>"
+											html +="</tr>"
+											jQuery('#proyecto_productos_investigacion tr:last').after(html);
+											jQuery("#ppi_eliminar_"+fila['cod_producto_investigacion']).button({ icons: {primary:'ui-icon ui-icon-circle-minus' ,secondary:'ui-icon ui-icon-trash'} });
+										}
+							}
+					jQuery("#dialogo_productos_de_investigacion").dialog("close");											
+       		 }
+		}); 
+		/*jQuery("#tablaproducinv").jqGrid('navGrid','#pagerprodinv',{edit:false,add:false,del:false}); 
+		jQuery("#tablaproducinv").jqGrid('navButtonAdd','#pagerprodinv',{
+		caption: "Columnas",
+		title: "Reordena Columnas",
+		onClickButton : function (){
+			jQuery("#tablaproducinv").jqGrid('columnChooser');
+		
+	});}*/
+});
+</script>

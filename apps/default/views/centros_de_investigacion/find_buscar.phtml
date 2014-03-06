@@ -1,0 +1,61 @@
+<table id="tablacentroinv"></table>
+<div id="pagercentroinv"></div>
+<script>
+jQuery(document).ready(function(){
+
+		
+		jQuery("#tablacentroinv").jqGrid(
+		{ 
+			ajaxGridOptions : {type:"POST"},
+			url:'<?php echo core::getInstancePath().Router::getController(); ?>/find_detalle_buscar', 
+			datatype: "json", 
+			colNames:['Codigo Centro Investigacion','Nombre Centro Investigacion'], 
+			colModel:[ 
+				{ name:'codigo_centro_investigacion',index:'codigo_centro_investigacion', width:200}, 
+				{ name:'nombre_centro_investigacion',index:'nombre_centro_investigacion', width:350}
+			], 
+			autoWidth:true,
+			width: 550,
+			height: 250,
+			rowNum:50, 
+			/*rowList:[10,20,30,40,50], */
+			pager: '#pagercentroinv', 
+			sortname: 'Cod_Centro_Investigacion', 
+			/*shrinkToFit :false,*/
+			viewrecords: true, 
+			sortorder: "asc", 
+			caption:"listado de los Centro de Investigacion Registrados",
+			ondblClickRow:function(rowid,iRow,iCol,e){
+				
+				var fila = jQuery(this).jqGrid('getRowData',rowid);
+					
+					if( jQuery("#codigo_centro_investigacion")    ){ jQuery("#codigo_centro_investigacion").val(fila['codigo_centro_investigacion']); }
+					if( jQuery("#nombre_centro_investigacion")    ){ jQuery("#nombre_centro_investigacion").val(fila['nombre_centro_investigacion']); } 
+									
+									if( jQuery("#pci_" + fila['codigo_centro_investigacion'] ).length ){
+											jQuery("#dialogo_mensajes").html("");
+											jQuery("#dialogo_mensajes").html("<strong>Error Centro de Invetigacion ya Agreado para este Proyecto</strong>" );
+											jQuery("#dialogo_mensajes").dialog("open");
+									}else{
+											html ="";
+											html +="<tr id=pci_" + fila['codigo_centro_investigacion'] + ">"
+												html += "<td>" + fila['codigo_centro_investigacion'] + "</td>"
+												html += "<td colspan='2'>" + fila['nombre_centro_investigacion'] + "</td>"
+												html += "<td><button type=\"button\" id='pci_eliminar_"+fila['codigo_centro_investigacion']+"' onClick='jQuery(\"#pci_" + fila['codigo_centro_investigacion'] + "\").remove();' >Borrar Fila</button> </td>"
+											html +="</tr>"
+											jQuery('#proyecto_centros_investigacion tr:last').after(html);
+											jQuery("#pci_eliminar_"+fila['codigo_centro_investigacion']).button({ icons: {primary:'ui-icon ui-icon-circle-minus' ,secondary:'ui-icon ui-icon-trash'} });
+										}
+					jQuery("#dialogo_centros_de_investigacion").dialog("close");											
+       		 } //cierra onclickrow
+		}); 
+		/*jQuery("#tablacentroinv").jqGrid('navGrid','#pagercentroinv',{edit:false,add:false,del:false}); 
+		jQuery("#tablacentroinv").jqGrid('navButtonAdd','#pagercentroinv',{
+		caption: "Columnas",
+		title: "Reordena Columnas",
+		onClickButton : function (){
+			jQuery("#tablacentroinv").jqGrid('columnChooser');
+		
+	});}*/
+});
+</script>

@@ -1,0 +1,38 @@
+<?php echo Tag::formRemote("rubro/delete", "update: mensajes", "id: fx","name: fx"); ?>
+
+<h1>ELIMINAR RUBROS</h1>
+
+<table width="100%">
+    	<tr>
+    	  <th height="25" colspan="4">FORMULARIO PARA ELIMINAR IES</th>
+   	  </tr>
+    	<tr>
+    	  
+    	  <th width="30%" align="right">CODIGO:</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("id","size: 50","maxlength: 50"); ?></td>
+    	  
+   	  </tr>
+        <tr>
+    	  
+    	  <th width="30%" align="right">NOMBRE:</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textUpperField("rubro","size: 50","maxlength: 50"); ?></td>
+    	  
+   	  </tr>
+      <tr>
+    	  <td colspan="4" align="center"><button id="guardar" name="guardar">Eliminar Datos</button></td>
+   	  </tr>
+  </table>
+
+<?php echo Tag::endForm(); ?>
+<div id="mensajes"></div>
+<?php echo view::getContent(); ?>
+
+<script>
+	
+	
+	jQuery(document).ready(function(e) {
+        jQuery("#id").attr("readOnly","ReadOnly");
+		jQuery("#rubro").attr("readOnly","ReadOnly");
+		//jQuery("#cod_ies").css("background-color","#333");
+    });
+</script>

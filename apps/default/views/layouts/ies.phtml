@@ -1,0 +1,35 @@
+<div style="height:25px;" class="ui-widget ui-widget-content ui-corner-all ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-front">
+ 	<span align="center" >
+      		<h1>IES</h1>
+    </span>
+</div>
+<div id="cuerpo" style="padding:50px; min-height:300px"><?php echo View::getContent(); ?></div>
+
+
+<div align="center">
+
+	<table width="400px" cellpadding="2" cellspacing="2" class="ui-widget ui-widget-content ui-corner-all ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-front">
+
+    	<tr>
+
+        	<td align="center"><?php echo Tag::linkTo("home/aplicaciones",Tag::image("iconos/inicio.png","width: 50px")); ?></td>
+            <td align="center"><?php echo Tag::linkTo(Router::getController()."/",Tag::image("aplicaciones/agenda.jpg","width: 50px")); ?></td>
+            <td align="center"><?php echo Tag::linkTo("login/salir",Tag::image("iconos/entrar.png","width: 50px")); ?></td>
+
+        </tr>
+
+        <tr>
+
+        	<td align="center">Inicio</td>
+            <td align="center">Opciones <?php echo Router::getController(); ?></td>
+            <td align="center">Cerrar Session</td>
+
+        </tr>
+
+    </table>
+
+    
+
+</div>
+
+

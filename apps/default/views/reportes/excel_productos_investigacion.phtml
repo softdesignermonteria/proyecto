@@ -1,0 +1,144 @@
+<?php 
+// require_once 'Classes/PHPExcel.php';
+$objPHPExcel = new PHPExcel();
+
+//Informacion del excel
+$objPHPExcel->
+getProperties()
+	->setCreator("Proyecto Sies")
+	->setLastModifiedBy("Proyecto Sies")
+	->setTitle("Exportar excel desde Proyecto Sies")
+	->setSubject("Proyecto Sies")
+	->setDescription("Documento generado de Proyecto Sies")
+	->setKeywords("Proyecto Sies")
+	->setCategory("reportes");    
+
+ 
+
+/*detallejson json*/
+/*$filter = new Filter();
+$detallejson = $filter->apply($_POST["detalles"], array("Striptags")); 
+$detallejson = str_replace("]\"","]",str_replace("\"[","[",str_replace("\\","",$detallejson)));
+
+if($detallejson!='[]'){	
+	if(json_decode($detallejson)){
+		//Flash::success("Json Correcto: detallejson");
+		$detallejson = json_decode($detallejson);*/
+		
+$styleArray = array(
+	'font' => array(
+		'bold' => true,
+	),
+	'alignment' => array(
+		'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+	),
+	'borders' => array(
+		'allborders' => array(
+			'style' => PHPExcel_Style_Border::BORDER_THIN,
+			'color' => array('argb' => 'FF9900')
+		),
+	),
+	'fill' => array(
+		'type' => PHPExcel_Style_Fill::FILL_SOLID,
+		'rotation' => 90,
+		'startcolor' => array(
+			'argb' => 'FF9900',
+		),
+		'endcolor' => array(
+			'argb' => 'FF9900',
+		),
+	),
+);
+     
+
+$i=2;		
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("A".$i, "CÓDIGO DE LA IES");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("B".$i, "NOMBRE DE LA IES");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("C".$i, "IDENTIFICACIÓN DEL PRODUCTO");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("D".$i, "AÑO DE OBTENCIÓN DEL PRODUCTO");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("E".$i, "MES DE OBTENCIÓN DEL PRODUCTO");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("F".$i, "TIPO DE PRODUCTO");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("G".$i, "NBC");
+
+$objPHPExcel->getActiveSheet()->getStyle('A2:G2')->applyFromArray($styleArray);	
+
+
+//$db = DbBase::rawConnect();
+$i=3;
+
+//Mostrar todos los clientes activos
+$db = DbBase::rawConnect();
+$sql="SELECT 
+  tbl_ies.Cod_IES,
+  tbl_ies.Nombre_IES,
+  tbl_producto_investigacion.Descripcion_Producto_Investigacion,
+  tbl_producto_investigacion.Ano_Obtecion as year,
+  tbl_producto_investigacion.Mes_Obtencion,
+  tipo_producto_investigacion.Descripcion_Tipo_Investigacion,
+  tbl_nbc.Descripcion_NBC
+FROM
+  tbl_proyecto
+  INNER JOIN tbl_proyecto_porducto_investigacion ON (tbl_proyecto.Cod_Proyecto = tbl_proyecto_porducto_investigacion.Cod_Proyecto)
+  INNER JOIN tbl_producto_investigacion ON (tbl_proyecto_porducto_investigacion.Cod_Producto_Investigacion = tbl_producto_investigacion.Cod_Producto_Investigacion)
+  INNER JOIN tbl_nbc ON (tbl_producto_investigacion.FK_NBC = tbl_nbc.Cod_NBC)
+  INNER JOIN tbl_ies ON (tbl_proyecto.FK_Cod_IES = tbl_ies.Cod_IES)
+  INNER JOIN tipo_producto_investigacion ON (tbl_producto_investigacion.FK_Tipo_Producto = tipo_producto_investigacion.id)
+  where 1=1 
+  ";
+  
+  
+$condicion_ies = " ";
+$condicion_desde = " ";
+$condicion_hasta = " ";
+if($_REQUEST["cod_ies"]!=''){ $condicion_ies = " and Cod_IES = ".$_REQUEST["cod_ies"]." "; }
+if($_REQUEST["desde"]!=''){ $condicion_desde = " and tbl_producto_investigacion.Ano_Obtecion >= ".$_REQUEST["desde"]." "; }
+if($_REQUEST["hasta"]!=''){ $condicion_hasta = " and tbl_producto_investigacion.Ano_Obtecion <= ".$_REQUEST["hasta"]." "; }
+
+$sql.=$condicion_ies;
+$sql.=$condicion_desde;
+$sql.=$condicion_hasta;
+
+$resultset = $db->query($sql);
+/*foreach($resulset as $row){
+print $row[name’].”\n”;
+}*/
+//$ies  = new TblIes();
+//$prod = new TblProductoInvestigacion();
+
+
+while(  $prod = $db->fetchArray() ){
+	
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("A".$i, $prod["Cod_IES"]);
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("B".$i, $prod["Nombre_IES"]);
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("C".$i, $prod["Descripcion_Producto_Investigacion"]);
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("D".$i, $prod["year"]);
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("E".$i, $prod["Mes_Obtencion"]);
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("F".$i, $prod["Descripcion_Tipo_Investigacion"]);
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("G".$i, $prod["Descripcion_NBC"]);
+	
+}; //fin ies
+
+$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('F')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('G')->setAutoSize('true');
+
+
+
+
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment;filename="reportes.xlsx"');
+header('Cache-Control: max-age=0');
+ 
+$objWriter=PHPExcel_IOFactory::createWriter($objPHPExcel,'Excel2007');
+$objWriter->save('php://output');
+exit;
+
+
+
+
+
+?>

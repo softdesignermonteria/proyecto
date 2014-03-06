@@ -1,0 +1,178 @@
+<?php 
+// require_once 'Classes/PHPExcel.php';
+$objPHPExcel = new PHPExcel();
+
+//Informacion del excel
+$objPHPExcel->
+getProperties()
+	->setCreator("Proyecto Sies")
+	->setLastModifiedBy("Proyecto Sies")
+	->setTitle("Exportar excel desde Proyecto Sies")
+	->setSubject("Proyecto Sies")
+	->setDescription("Documento generado de Proyecto Sies")
+	->setKeywords("Proyecto Sies")
+	->setCategory("reportes");    
+
+ 
+
+/*detallejson json*/
+/*$filter = new Filter();
+$detallejson = $filter->apply($_POST["detalles"], array("Striptags")); 
+$detallejson = str_replace("]\"","]",str_replace("\"[","[",str_replace("\\","",$detallejson)));
+
+if($detallejson!='[]'){	
+	if(json_decode($detallejson)){
+		//Flash::success("Json Correcto: detallejson");
+		$detallejson = json_decode($detallejson);*/
+		
+$styleArray = array(
+	'font' => array(
+		'bold' => true,
+	),
+	'alignment' => array(
+		'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+	),
+	'borders' => array(
+		'allborders' => array(
+			'style' => PHPExcel_Style_Border::BORDER_THIN,
+			'color' => array('argb' => 'FF9900')
+		),
+	),
+	'fill' => array(
+		'type' => PHPExcel_Style_Fill::FILL_SOLID,
+		'rotation' => 90,
+		'startcolor' => array(
+			'argb' => 'FF9900',
+		),
+		'endcolor' => array(
+			'argb' => 'FF9900',
+		),
+	),
+);
+     
+
+$i=1;
+$objPHPExcel->setActiveSheetIndex(0)->mergeCells("C1:f1");
+$objPHPExcel->setActiveSheetIndex(0)->mergeCells("g1:k1");
+$objPHPExcel->setActiveSheetIndex(0)->mergeCells("l1:n1");
+
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("C1", "INFORMACIÓN DE LA RED DE COOPERACIÓN");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("g1", "ENTIDADES INTEGRANTES A LA RED");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("l1", "IES NACIONALES INTEGRANTES A LA RED");
+
+$objPHPExcel->getActiveSheet()->getStyle('C1')->applyFromArray($styleArray);		
+$objPHPExcel->getActiveSheet()->getStyle('g1')->applyFromArray($styleArray);		
+$objPHPExcel->getActiveSheet()->getStyle('l1')->applyFromArray($styleArray);		
+
+$i=2;	
+
+
+						
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("A".$i, "CÓDIGO DE LA IES");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("B".$i, "NOMBRE DE LA IES");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("C".$i, "CÓDIGO DE LA RED");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("D".$i, "NOMBRE DE LA RED");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("E".$i, "NBC");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("F".$i, "FECHA DE CREACIÓN DE LA RED");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("G".$i, "NOMBRE DE LA ENTIDAD");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("H".$i, "SECTOR");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("I".$i, "PAÍS");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("J".$i, "FECHA DE ADICIÓN A LA RED");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("k".$i, "FECHA DE RETIRO DE LA RED");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("l".$i, "IES");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("m".$i, "FECHA DE ADICIÓN A LA RED");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("n".$i, "FECHA DE RETIRO DE LA RED");
+
+
+
+$objPHPExcel->getActiveSheet()->getStyle('A2:n2')->applyFromArray($styleArray);	
+
+
+//$db = DbBase::rawConnect();
+$i=2;
+$db = DbBase::rawConnect();
+$ies  = new TblIes();
+
+$sql="
+SELECT 
+  tbl_red_cooperacion.Cod_Red_Cooperacion,
+  tbl_ies.Nombre_IES,
+  tbl_ies.Cod_IES,
+  tbl_nbc.Descripcion_NBC,
+  tbl_red_cooperacion.Nombre_Red_Cooperacion,
+  tbl_red_cooperacion.Fecha_Creacion_Red_Cooperacion,
+  tbl_red_cooperacion_integrantes_red.Fecha_Adicion,
+  tbl_red_cooperacion_integrantes_red.Fecha_Retiro,
+  tbl_entidades_integrantes_red.Nombre_Entidad_Integrante_Red,
+  tbl_entidades_integrantes_red.Fecha_Creacion_Entidad_Integrante_Red,
+  tbl_entidades_integrantes_red.Fecha_Retiro_Entidades_Integrantes_Red,
+  tbl_pais.Nombre_Pais,
+  tbl_sector_entidad.Descripcion_Sector_Entidad
+FROM
+  tbl_ies
+  INNER JOIN tbl_red_cooperacion ON (tbl_ies.Cod_IES = tbl_red_cooperacion.FK_Cod_IES)
+  INNER JOIN tbl_nbc ON (tbl_red_cooperacion.FK_Cod_NBC = tbl_nbc.Cod_NBC)
+  INNER JOIN tbl_red_cooperacion_integrantes_red ON (tbl_red_cooperacion.Cod_Red_Cooperacion = tbl_red_cooperacion_integrantes_red.FK_Cod_Red_Cooperacion)
+  INNER JOIN tbl_entidades_integrantes_red ON (tbl_red_cooperacion_integrantes_red.FK_Id_Entidades_Integrantes_Red = tbl_entidades_integrantes_red.id)
+  INNER JOIN tbl_pais ON (tbl_entidades_integrantes_red.FK_Cod_Pais = tbl_pais.Cod_Pais)
+  INNER JOIN tbl_sector_entidad ON (tbl_entidades_integrantes_red.FK_Cod_Sector_Entidad = tbl_sector_entidad.Cod_Sector_Entidad)
+where 1=1  ";
+
+$condicion_ies = "";
+
+if($_REQUEST["cod_ies"]!=''){ $sql.= " and tbl_ies.Cod_IES = '". $_REQUEST["cod_ies"]."' "; }
+
+
+$resultset = $db->query($sql);
+
+while(  $prod = $db->fetchArray() ){
+	
+	$i++;
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("A".$i, $prod["Cod_IES"]);
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("B".$i, $prod["Nombre_IES"]);
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("c".$i, $prod["Cod_Red_Cooperacion"]);
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("d".$i, $prod["Nombre_Red_Cooperacion"]);
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("e".$i, $prod["Descripcion_NBC"]);
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("f".$i, $prod["Fecha_Creacion_Red_Cooperacion"]);
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("g".$i, $prod["Nombre_Entidad_Integrante_Red"]);
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("h".$i, $prod["Descripcion_Sector_Entidad"]);
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("i".$i, $prod["Nombre_Pais"]);
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("j".$i, $prod["Fecha_Creacion_Entidad_Integrante_Red"]);
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("k".$i, $prod["Fecha_Retiro_Entidades_Integrantes_Red"]);
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("l".$i, $prod["Nombre_Entidad_Integrante_Red"]);
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("m".$i, $prod["Fecha_Adicion"]);
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("n".$i, $prod["Fecha_Retiro"]);
+				
+	
+}
+
+$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('F')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('G')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('H')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('I')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('J')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('k')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('l')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('m')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('n')->setAutoSize('true');
+
+
+
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment;filename="reportes.xlsx"');
+header('Cache-Control: max-age=0');
+ 
+$objWriter=PHPExcel_IOFactory::createWriter($objPHPExcel,'Excel2007');
+$objWriter->save('php://output');
+exit;
+
+
+
+
+
+?>

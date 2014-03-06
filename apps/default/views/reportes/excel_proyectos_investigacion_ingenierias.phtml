@@ -1,0 +1,313 @@
+<?php 
+// require_once 'Classes/PHPExcel.php';
+$objPHPExcel = new PHPExcel();
+
+//Informacion del excel
+$objPHPExcel->
+getProperties()
+	->setCreator("Proyecto Sies")
+	->setLastModifiedBy("Proyecto Sies")
+	->setTitle("Exportar excel desde Proyecto Sies")
+	->setSubject("Proyecto Sies")
+	->setDescription("Documento generado de Proyecto Sies")
+	->setKeywords("Proyecto Sies")
+	->setCategory("reportes");    
+
+ 
+
+/*detallejson json*/
+/*$filter = new Filter();
+$detallejson = $filter->apply($_POST["detalles"], array("Striptags")); 
+$detallejson = str_replace("]\"","]",str_replace("\"[","[",str_replace("\\","",$detallejson)));
+
+if($detallejson!='[]'){	
+	if(json_decode($detallejson)){
+		//Flash::success("Json Correcto: detallejson");
+		$detallejson = json_decode($detallejson);*/
+		
+$styleArray = array(
+	'font' => array(
+		'bold' => true,
+	),
+	'alignment' => array(
+		'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+	),
+	'borders' => array(
+		'allborders' => array(
+			'style' => PHPExcel_Style_Border::BORDER_THIN,
+			'color' => array('argb' => 'FF9900')
+		),
+	),
+	'fill' => array(
+		'type' => PHPExcel_Style_Fill::FILL_SOLID,
+		'rotation' => 90,
+		'startcolor' => array(
+			'argb' => 'FF9900',
+		),
+		'endcolor' => array(
+			'argb' => 'FF9900',
+		),
+	),
+);
+     
+
+$i=1;
+$objPHPExcel->setActiveSheetIndex(0)->mergeCells("C1:G1");
+$objPHPExcel->setActiveSheetIndex(0)->mergeCells("H1:J1");
+
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("C1", "INFORMACION DEL CENTRO DE INVESTIGACION");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("H1", "GRUPOS DE INVESTIGACION");
+
+$objPHPExcel->getActiveSheet()->getStyle('C1')->applyFromArray($styleArray);		
+$objPHPExcel->getActiveSheet()->getStyle('H1')->applyFromArray($styleArray);		
+
+$i=2;	
+
+	 	
+	
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("A".$i, "CÓDIGO DE LA IES");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("B".$i, "NOMBRE DE LA IES");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("C".$i, "AÑO");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("D".$i, "SEMESTRE");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("E".$i, "TÍTULO");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("F".$i, "FECHA DE INICIO");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("G".$i, "DURACIÓN (dado en meses)");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("H".$i, "CÓDIGO DEL PROYECTO");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("I".$i, "TIPO DE PROYECTO");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("J".$i, "OBJETIVO SOCIO-ECONÓMICO");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("k".$i, "OBJETIVO DEL PROYECTO");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("l".$i, "RESUMEN DEL PROYECTO");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("m".$i, "RESULTADOS ESPERADOS");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("n".$i, "FUENTE DE FINANCIACIÓN");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("o".$i, "VALOR");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("p".$i, "NOMBRE DE LA ENTIDAD");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("q".$i, "SECTOR");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("r".$i, "PAÍS");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("s".$i, "VALOR");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("t".$i, "TIPO DE GASTO");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("u".$i, "VALOR");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("v".$i, "NOMBRE DEL GRUPO");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("w".$i, "NOMBRE DEL CENTRO");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("x".$i, "NOMBRE DE LA RED");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("y".$i, "IDENTIFICACIÓN DEL PRODUCTO");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("z".$i, "TIPO DE IDENTIFICACIÓN");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("aa".$i, "NÚMERO DE IDENTIFICACIÓN");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("ab".$i, "PRIMER NOMBRE");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("ac".$i, "SEGUNDO NOMBRE");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("ad".$i, "PRIMER APELLIDO	");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("ae".$i, "SEGUNDO APELLIDO");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("af".$i, "TIPO DE PARTICIPACIÓN EN EL PROYECTO");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("ag".$i, "NBC");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("ah".$i, "TIPO DE IDENTIFICACIÓN");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("ai".$i, "NÚMERO DE IDENTIFICACIÓN");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("aj".$i, "PRIMER NOMBRE");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("ak".$i, "SEGUNDO NOMBRE");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("al".$i, "PRIMER APELLIDO	");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("am".$i, "SEGUNDO APELLIDO");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("an".$i, "TIPO PARTICIPACIÓN EN EL PROYECTO");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("ao".$i, "NBC");
+
+
+
+
+
+$objPHPExcel->getActiveSheet()->getStyle('A2:ao2')->applyFromArray($styleArray);	
+
+
+$i=3;
+
+$sql="SELECT 
+  tbl_proyecto.Titulo_Proyecto,
+  tbl_proyecto.Fecha_Inicio_Proyecto,
+  tbl_proyecto.Duracion_Proyecto,
+  tbl_proyecto.Objetivo_Proyecto,
+  tbl_proyecto.Resumen_Proyecto,
+  tbl_proyecto.Resultados_Esperados,
+  tbl_proyecto.Valor_Proyecto,
+  tbl_ies.Cod_IES,
+  tbl_ies.Nombre_IES,
+  tbl_proyecto.Cod_Proyecto,
+  tbl_objetivo_socioeconomico.Descripcion_Objetivo_Socioeconomico,
+  tbl_tipo_proyecto.Descripcion_Tipo_Proyecto,
+  YEAR(Fecha_Inicio_Proyecto) AS annos,
+  MONTH(Fecha_Inicio_Proyecto) AS mes
+FROM
+  tbl_ies
+  INNER JOIN tbl_proyecto ON (tbl_ies.Cod_IES = tbl_proyecto.FK_Cod_IES)
+  INNER JOIN tbl_objetivo_socioeconomico ON (tbl_proyecto.FK_Cod_Objeto_Socieconomico = tbl_objetivo_socioeconomico.Cod_Objetivo_Socioeconomico)
+  INNER JOIN tbl_tipo_proyecto ON (tbl_proyecto.FK_Tipo_Proyecto = tbl_tipo_proyecto.Cod_Tipo_Proyecto)
+ where 1= 1  ";
+
+
+
+$condicion_ies = "";
+if($_REQUEST["cod_ies"]!=''){ $sql.= " and Cod_IES = '".$_REQUEST["cod_ies"]."' "; }
+
+
+$resultset = mysql_query($sql);
+
+while(  $filas = mysql_fetch_array($resultset) ){
+	if( $filas["mes"] < 7 ) { $mes= "1"; }else{ $mes= "2"; }
+	
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("A".$i, $filas["Cod_IES"]);
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("B".$i, $filas["Nombre_IES"]);
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("c".$i, $filas["annos"]);
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("d".$i, $mes);
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("e".$i, ($filas["Titulo_Proyecto"]));
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("f".$i, $filas["Fecha_Inicio_Proyecto"]);
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("g".$i, $filas["Duracion_Proyecto"]);
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("h".$i, $filas["Cod_Proyecto"]);
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("i".$i, ($filas["Descripcion_Tipo_Proyecto"]));
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("j".$i, ( $filas["Descripcion_Objetivo_Socioeconomico"]));
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("k".$i, ($filas["Objetivo_Proyecto"]));
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("l".$i, ($filas["Resumen_Proyecto"]));
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("m".$i, ($filas["Resultados_Esperados"]));
+	
+	$sql2="SELECT 
+			  tbl_fuente_financiacion_nacional.Descripcion_Fuente_Financiacion_Nacional
+			FROM
+			  tbl_proyecto
+			  INNER JOIN tbl_financiacion_nacional_proyecto ON (tbl_proyecto.Cod_Proyecto = tbl_financiacion_nacional_proyecto.FK_Cod_Proyecto)
+			  INNER JOIN tbl_fuente_financiacion_nacional ON (tbl_financiacion_nacional_proyecto.FK_Cod_Fuente_F_Nacional = tbl_fuente_financiacion_nacional.Cod_Fuente_Financiacion_Nacional)
+			where 1 = 1 and  Cod_Proyecto = '".$filas["Cod_Proyecto"]."' ";
+	$resultset2 = mysql_query($sql2);		
+	$j=$i;
+	while(  $filas2 = mysql_fetch_array($resultset2) ){
+		$objPHPExcel->setActiveSheetIndex(0)->setCellValue("l".$j, ($filas2["Resumen_Proyecto"]));
+		$objPHPExcel->setActiveSheetIndex(0)->setCellValue("m".$j, ($filas2["Resultados_Esperados"]));
+		$j++;
+	}
+	
+	$sql3="SELECT 
+			  tbl_tipo_gasto.Descripcion_Tipo_Gasto,
+			  tbl_gastos.Valor_Gastos
+			FROM
+			  tbl_tipo_gasto
+			  INNER JOIN tbl_gastos ON (tbl_tipo_gasto.Cod_Tipo_Gasto = tbl_gastos.FK_Cod_Tipo_Gastos)
+			where 1 = 1 and  Cod_Proyecto = '".$filas["Cod_Proyecto"]."' ";
+	$resultset3 = mysql_query($sql3);		
+	$j=$i;
+	while(  $filas3 = mysql_fetch_array($resultset3) ){
+		$objPHPExcel->setActiveSheetIndex(0)->setCellValue("t".$j, ($filas3["Resumen_Proyecto"]));
+		$objPHPExcel->setActiveSheetIndex(0)->setCellValue("u".$j, ($filas3["Resultados_Esperados"]));
+		$j++;
+	}
+	
+	$sql4="SELECT 
+			  tbl_centros_investigacion.Nombre_Centro_Investigacion
+			FROM
+			  tbl_centros_investigacion
+			  INNER JOIN tbl_centros_investigacion_proyectos ON (tbl_centros_investigacion.Cod_Centro_Investigacion = tbl_centros_investigacion_proyectos.Cod_Centro_Investigacion)
+			where 1 = 1 and  Cod_Proyecto = '".$filas["Cod_Proyecto"]."' ";
+	$resultset4 = mysql_query($sql4);		
+	$j=$i;
+	while(  $filas4 = mysql_fetch_array($resultset4) ){
+		$objPHPExcel->setActiveSheetIndex(0)->setCellValue("w".$j, ($filas4["Nombre_Centro_Investigacion"]));
+		$j++;
+	}
+	
+	$sql5="SELECT 
+			  tbl_red_cooperacion.Nombre_Red_Cooperacion
+			FROM
+			  tbl_red_cooperacion_proyecto
+			  INNER JOIN tbl_red_cooperacion ON (tbl_red_cooperacion_proyecto.Cod_Proyecto = tbl_red_cooperacion.Cod_Red_Cooperacion)
+			where 1 = 1 and  Cod_Proyecto = '".$filas["Cod_Proyecto"]."' ";
+	$resultset5 = mysql_query($sql5);		
+	$j=$i;
+	while(  $filas5 = mysql_fetch_array($resultset5) ){
+		$objPHPExcel->setActiveSheetIndex(0)->setCellValue("x".$j, ($filas5["Nombre_Red_Cooperacion"]));
+		$j++;
+	}
+	
+	$sql6="SELECT 
+			  tbl_grupo_investigacion.Nombre_Grupo
+			FROM
+			  tbl_grupo_investigacion
+			  INNER JOIN tbl_grupos_investigacion_proyectos ON (tbl_grupo_investigacion.Cod_Grupo = tbl_grupos_investigacion_proyectos.Cod_Grupo_Investigacion)		
+			where 1 = 1 and  Cod_Proyecto = '".$filas["Cod_Proyecto"]."' ";
+	$resultset6 = mysql_query($sql6);		
+	$j=$i;
+	while(  $filas6 = mysql_fetch_array($resultset6) ){
+		$objPHPExcel->setActiveSheetIndex(0)->setCellValue("v".$j, ($filas6["Nombre_Grupo"]));
+		$j++;
+	}
+	
+	
+	$sql7="SELECT 
+		  tbl_producto_investigacion.Descripcion_Producto_Investigacion
+		FROM
+		  tbl_producto_investigacion
+		  INNER JOIN tbl_proyecto_porducto_investigacion ON (tbl_producto_investigacion.Cod_Producto_Investigacion = tbl_proyecto_porducto_investigacion.Cod_Producto_Investigacion)	
+		 where 1 = 1 and  Cod_Proyecto = '".$filas["Cod_Proyecto"]."' ";
+	$resultset7 = mysql_query($sql7);		
+	$j=$i;
+	while(  $filas7 = mysql_fetch_array($resultset7) ){
+		$objPHPExcel->setActiveSheetIndex(0)->setCellValue("v".$j, ($filas7["Descripcion_Producto_Investigacion"]));
+		$j++;
+	}
+	
+	
+	$i = $objPHPExcel->getActiveSheet()->getHighestRow();
+	
+}
+
+$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('F')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('G')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('H')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('I')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('J')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('k')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('l')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('m')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('n')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('o')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('p')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('q')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('r')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('s')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('t')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('u')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('v')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('w')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('x')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('y')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('z')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('aa')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('ab')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('ac')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('ad')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('ae')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('af')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('ag')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('ah')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('ai')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('aj')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('ak')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('al')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('am')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('an')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('ao')->setAutoSize('true');
+
+
+
+
+
+
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment;filename="reportes.xlsx"');
+header('Cache-Control: max-age=0');
+ 
+$objWriter=PHPExcel_IOFactory::createWriter($objPHPExcel,'Excel2007');
+$objWriter->save('php://output');
+exit;
+
+
+
+
+
+?>

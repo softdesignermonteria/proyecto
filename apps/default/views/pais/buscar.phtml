@@ -1,0 +1,57 @@
+<?php 
+	if(isset($_REQUEST["opcion"])){
+		Flash::notice("Doble Click en la Fila para ".$_REQUEST["opcion"]); 
+	}
+?>
+<table id="tabla<?php echo Router::getController(); ?>"></table>
+<div id="pager<?php echo Router::getController(); ?>"></div>
+<script>
+jQuery(document).ready(function(){
+
+		
+		jQuery("#tabla<?php echo Router::getController(); ?>").jqGrid(
+		{ 
+			ajaxGridOptions : {type:"POST"},
+			url:'<?php echo core::getInstancePath().Router::getController(); ?>/find_detalle_buscar', 
+			datatype: "json", 
+			colNames:['Codigo Pais','Nombre Pais'], 
+			colModel:[ 
+				{ name:'codigo_pais',index:'codigo_pais', width:200}, 
+				{ name:'nombre_pais',index:'nombre_pais', width:500}
+			], 
+			autoWidth:true,
+			width: 550,
+			height: 250,
+			rowNum:50, 
+			/*rowList:[10,20,30,40,50], */
+			pager: '#pager<?php echo Router::getController(); ?>', 
+			sortname: 'Cod_Pais', 
+			/*shrinkToFit :false,*/
+			viewrecords: true, 
+			sortorder: "asc", 
+			caption:"listado de los Paises Registrados",
+			ondblClickRow:function(rowid,iRow,iCol,e){
+				
+				var fila = jQuery(this).jqGrid('getRowData',rowid);
+					
+					if( jQuery("#codigo_pais")    ){ jQuery("#codigo_pais").val(fila['codigo_pais']); }
+					if( jQuery("#nombre_objetivo") ){ jQuery("#nombre_objetivo").val(fila['nombre_objetivo']); } 
+					
+					<?php if(isset($_REQUEST["opcion"]) ){ ?>
+						redireccionar_action("<?php echo Router::getController(); ?>/<?php echo $_REQUEST["opcion"]; ?>/" + fila['codigo_pais'] );
+					<?php }else{?>	
+						jQuery("#dialogo_<?php echo Router::getController(); ?>").dialog("close");
+					<?php } ?>
+					
+       		 }
+		}); 
+		/*jQuery("#tabla<?php //echo Router::getController(); ?>").jqGrid('navGrid','#pager<?php //echo Router::getController(); ?>',{edit:false,add:false,del:false}); 
+		jQuery("#tabla<?php //echo Router::getController(); ?>").jqGrid('navButtonAdd','#pager<?php //echo Router::getController(); ?>',{
+		caption: "Columnas",
+		title: "Reordena Columnas",
+		onClickButton : function (){
+			jQuery("#tabla<?php //echo Router::getController(); ?>").jqGrid('columnChooser');
+		
+	});}*/
+});
+</script>

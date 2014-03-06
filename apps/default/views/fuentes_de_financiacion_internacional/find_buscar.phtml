@@ -1,0 +1,73 @@
+<table id="tabla<?php echo Router::getController(); ?>"></table>
+<div id="pager<?php echo Router::getController(); ?>"></div>
+<script>
+jQuery(document).ready(function(){
+
+		
+		jQuery("#tabla<?php echo Router::getController(); ?>").jqGrid(
+		{ 
+			ajaxGridOptions : {type:"POST"},
+			url:'<?php echo core::getInstancePath().Router::getController(); ?>/find_detalle_buscar', 
+			datatype: "json", 
+			colNames:['Codigo Fuentes de Financiacion Internacional','Nombre Fuentes de Financiacion Internacional'], 
+			colModel:[ 
+				{ name:'codigo_fuentes_de_financiacion_internacional',index:'codigo_fuentes_de_financiacion_internacional', width:200}, 
+				{ name:'nombre_fuentes_de_financiacion_internacional',index:'nombre_fuentes_de_financiacion_internacional', width:350}
+			], 
+			autoWidth:true,
+			width: 550,
+			height: 250,
+			rowNum:50, 
+			/*rowList:[10,20,30,40,50], */
+			pager: '#pager<?php echo Router::getController(); ?>', 
+			sortname: 'Cod_Fuente_Financiacion_Internacional', 
+			/*shrinkToFit :false,*/
+			viewrecords: true, 
+			sortorder: "asc", 
+			caption:"listado de los Paises Registrados",
+			ondblClickRow:function(rowid,iRow,iCol,e){
+				
+				var fila = jQuery(this).jqGrid('getRowData',rowid);
+					
+					if( jQuery("#codigo_fuentes_de_financiacion_internacional")    ){ jQuery("#codigo_fuentes_de_financiacion_internacional").val(fila['codigo_fuentes_de_financiacion_internacional']); }
+					if( jQuery("#nombre_fuentes_de_financiacion_internacional") ){ jQuery("#nombre_fuentes_de_financiacion_internacional").val(fila['nombre_fuentes_de_financiacion_internacional']); } 
+					
+					if(jQuery("#proyecto_fuentes_de_financiacion_internacional")){
+	
+									if( jQuery("#pffi_" + fila['codigo_fuentes_de_financiacion_internacional'] ).length ){
+											
+											jQuery("#dialogo_mensajes").html("");
+											jQuery("#dialogo_mensajes").html("<strong>Error Fuente de Financiacion Internacional ya Agreado para este Proyecto</strong>" );
+											jQuery("#dialogo_mensajes").dialog("open");
+											
+									}else{
+											html ="";
+											html +="<tr id=pffi_" + fila['codigo_fuentes_de_financiacion_internacional'] + ">"
+												html += "<td>" + fila['codigo_fuentes_de_financiacion_internacional'] + "</td>"
+												html += "<td colspan='2'>" + fila['nombre_fuentes_de_financiacion_internacional'] + "</td>"
+												if(jQuery('#valor_fuentes_de_financiacion_internacional')){ 
+													html += "<td>" + jQuery('#valor_fuentes_de_financiacion_internacional').val() + "</td>" 
+													jQuery('#valor_fuentes_de_financiacion_internacional').val("0");
+												}
+												html += "<td><button type=\"button\" id='pffi_eliminar_"+fila['codigo_fuentes_de_financiacion_internacional']+"' onClick='jQuery(\"#pffi_" + fila['codigo_fuentes_de_financiacion_internacional'] + "\").remove();' >Borrar Fila</button> </td>"
+											html +="</tr>"
+											jQuery('#proyecto_fuentes_de_financiacion_internacional tr:last').after(html);
+											jQuery("#pffi_eliminar_"+fila['codigo_fuentes_de_financiacion_internacional']).button({ icons: {primary:'ui-icon ui-icon-circle-minus' ,secondary:'ui-icon ui-icon-trash'} });
+										}
+							}
+								
+						
+					
+					jQuery("#dialogo_fuentes_de_financiacion_internacional").dialog("close");											
+       		 }
+		}); 
+		/*jQuery("#tabla<?php echo Router::getController(); ?>").jqGrid('navGrid','#pager<?php echo Router::getController(); ?>',{edit:false,add:false,del:false}); 
+		jQuery("#tabla<?php echo Router::getController(); ?>").jqGrid('navButtonAdd','#pager<?php echo Router::getController(); ?>',{
+		caption: "Columnas",
+		title: "Reordena Columnas",
+		onClickButton : function (){
+			jQuery("#stabla<?php echo Router::getController(); ?>").jqGrid('columnChooser');
+		
+	});}*/
+});
+</script>

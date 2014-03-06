@@ -1,0 +1,57 @@
+<?php 
+	if(isset($_REQUEST["opcion"])){
+		Flash::notice("Doble Click en la Fila para ".$_REQUEST["opcion"]); 
+	}
+?>
+<table id="tabla<?php echo Router::getController(); ?>"></table>
+<div id="pager<?php echo Router::getController(); ?>"></div>
+<script>
+jQuery(document).ready(function(){
+
+		
+		jQuery("#tabla<?php echo Router::getController(); ?>").jqGrid(
+		{ 
+			ajaxGridOptions : {type:"POST"},
+			url:'<?php echo core::getInstancePath().Router::getController(); ?>/find_detalle_buscar', 
+			datatype: "json", 
+			colNames:['Codigo Tipo Proyecto','Nombre Tipo Proyecto'], 
+			colModel:[ 
+				{ name:'cod_tipo_proyecto',index:'cod_tipo_proyecto', width:200}, 
+				{ name:'nombre_tipo_proyecto',index:'nombre_tipo_proyecto', width:500}
+			], 
+			autoWidth:true,
+			width: 750,
+			height: 250,
+			rowNum:50, 
+			/*rowList:[10,20,30,40,50], */
+			pager: '#pager<?php echo Router::getController(); ?>', 
+			sortname: 'Cod_Tipo_Proyecto', 
+			/*shrinkToFit :false,*/
+			viewrecords: true, 
+			sortorder: "asc", 
+			caption:"listado de las Tipos de Proyecto Registrados",
+			ondblClickRow:function(rowid,iRow,iCol,e){
+				
+				var fila = jQuery(this).jqGrid('getRowData',rowid);
+					
+					if( jQuery("#cod_tipo_proyecto")    ){ jQuery("#cod_tipo_proyecto").val(fila['cod_tipo_proyecto']); }
+					if( jQuery("#nombre_tipo_proyecto")      ){ jQuery("#nombre_tipo_proyecto").val(fila['nombre_tipo_proyecto']); } 
+					
+					<?php if(isset($_REQUEST["opcion"]) ){ ?>
+						redireccionar_action("<?php echo Router::getController(); ?>/<?php echo $_REQUEST["opcion"]; ?>/" + fila['cod_tipo_proyecto'] );
+					<?php }else{?>	
+						jQuery("#dialogo_<?php echo Router::getController(); ?>").dialog("close");
+					<?php } ?>
+					
+       		 }
+		}); 
+		/*jQuery("#tabla<?php //echo Router::getController(); ?>").jqGrid('navGrid','#pager<?php //echo Router::getController(); ?>',{edit:false,add:false,del:false}); 
+		jQuery("#tabla<?php //echo Router::getController(); ?>").jqGrid('navButtonAdd','#pager<?php //echo Router::getController(); ?>',{
+		caption: "Columnas",
+		title: "Reordena Columnas",
+		onClickButton : function (){
+			jQuery("#tabla<?php //echo Router::getController(); ?>").jqGrid('columnChooser');
+		
+	});}*/
+});
+</script>

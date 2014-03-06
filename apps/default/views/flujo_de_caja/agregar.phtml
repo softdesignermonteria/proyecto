@@ -1,0 +1,187 @@
+<?php echo Tag::form(Router::getController()."/add", "id: fx","name: fx"); ?>
+
+<h1>AGREGAR FLUJO DE CAJA</h1>
+
+<table width="100%">
+    	<tr>
+    	  <th height="25" colspan="4">FORMULARIO PARA AGREGAR IES</th>
+   	  </tr>
+    	
+        <tr>
+    	  
+    	  <th width="30%" align="right">CODIGO: </th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("id","size: 50","readonly: readonly"); ?></td>
+    	  
+   	  </tr>
+      <tr>
+    	  
+    	  <th width="30%" align="right">FACULTAD RESPONSABLE: </th>
+    	  <td width="64%" align="left"><?php  echo Tag::textUpperField("facultad_responsable","size: 50"); ?></td>
+    	  
+   	  </tr>
+        <tr>
+    	  
+    	  <th width="30%" align="right">INVESTIGADOR RESPONSABLE</th>
+    	  <td width="64%" align="left">
+		  		<?php  echo Tag::textField("codigo_investigador","size: 10"); ?>
+	            <?php  echo Tag::textField("nombre_investigador","size: 50"); ?>
+                <button type="button" id="buscar_investigadores" name="buscar_investigadores">Buscar</button>
+            </td>
+    	  
+   	  </tr>
+      
+        <tr>
+    	  
+    	  <th width="30%" align="right">PROYECTO DE INVESTIGACION</th>
+    	  <td width="64%" align="left">
+		  		<?php  echo Tag::textField("codigo_proyecto","size: 10"); ?>
+	            <?php  echo Tag::textField("nombre_proyecto","size: 50"); ?>
+                <button type="button" id="buscar_proyecto_de_investigacion" name="buscar_proyecto_de_investigacion">Buscar</button>
+            </td>
+    	  
+   	  </tr>
+      
+  </table>
+  
+  <h4>DETALLE DE FLUJO DE CAJA</h4>
+<table id="tabla_flujo_caja" width="900px">
+	<tr>
+    	<td width="100" align="left">TIPO RUBRO</td>
+        <td align="left">
+			<?php echo Tag::textField("codigo_rubros","size: 10","readonly: readonly"); ?>
+            <?php echo Tag::textField("nombre_rubros","size: 30","readonly: readonly"); ?>
+	    	<button type="button" id="buscar_rubros">Buscar</button>        
+            VALOR GASTO:<?php echo Tag::numericField("valor","size: 20"); ?>
+            AÑO:<?php echo Tag::numericField("annos","size: 5","maxlength: 4","value: ".date("Y")); ?>
+            	<?php $mes = new Meses(); ?>
+                <select id="meses" name="meses">
+					<option value="-1">Seleccione Uno</option>   
+                    <?php foreach($mes->find() as $mes ): ?>             	
+                	<option value="<?php echo $mes->getMeses(); ?>"><?php echo $mes->getMes(); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </td>
+    </tr>
+    <tr>
+    	<td width="100" align="left">DESCRIPCION GASTOS:</td>
+        <td align="left"><?php echo Tag::textUpperField("descripcion_gastos","size: 80"); ?> </td>
+    </tr>
+    <tr>
+    	<td align="center" colspan="2"><button type="button" id="agregar_gasto" name="agregar_gasto">Agregar Gasto</button></td>
+    </tr>
+</table>
+<table id="flujo_caja_detalles"> 
+	<tbody>
+        <tr id="pflujo_caja_detalles" class="ui-dialog-titlebar ui-widget-header ui-corner-all">	
+            <td width="150px">Codigo</td>
+            <td width="400px">Nombre Rubro</td>
+            <td width="400px">Descripcion Gastos</td>
+            <td width="150px">Annos</td>
+            <td width="150px">Meses</td>
+            <td width="100px">Valor</td>
+            <td width="150px">borrar</td>
+        </tr>
+    </tbody>
+</table>
+
+<div align="center"><button type="submit" id="guardar" name="guardar">Guardar</button></div>
+<?php echo Tag::endForm(); ?>
+<div id="mensajes"></div>
+
+<?php echo view::getContent(); ?>
+
+
+<script>
+jQuery(document).ready(function(e) {
+
+	jQuery('#fx').submit(function(event) {  
+	  event.preventDefault();  
+	  var url = jQuery(this).attr('action');  
+	  var datos = jQuery(this).serialize();
+	  
+	  //var srv = JSON.stringify(detalles);
+		var gastos = JSON.stringify(tableToJson( document.getElementById("flujo_caja_detalles") ) );
+		//var srv = tableToJson( document.getElementById("proyecto_grupos_investigacion") ) ;
+		jQuery( "#progressbar" ).progressbar({ value: 50 });	
+		//jQuery("#guardar").attr("disabled","disabled");
+		
+			//$('#resumen').html('Cargando....');
+			
+			var jqXHR = jQuery.ajax({
+				type: "post",
+				url: url,
+				data: {
+						id:                     jQuery("#id").val(),
+						codigo_proyecto:        jQuery("#codigo_proyecto").val(),
+						facultad_responsable:   jQuery("#facultad_responsable").val(),
+						codigo_investigador:    jQuery("#codigo_investigador").val(),
+						gastos:                 gastos
+				},
+				success: function(data) {
+					jQuery( '#mensajes' ).html("");
+					jQuery( "#progressbar" ).progressbar({ value: 90 });
+					jQuery( '#mensajes' ).html(data);
+				},
+				error: function(data) {
+					jQuery('#dialogo_mensajes').html("Error Enviando parametros.....");
+					jQuery( "#progressbar" ).progressbar({ value: 0 });
+					jQuery('#dialogo_mensajes').dialog("open");
+					
+				}
+			});
+			
+			 jqXHR.done(function(data){
+				jQuery( "#progressbar" ).progressbar({ value: 0 });
+			});  
+	 
+	});  
+	
+	jQuery("#agregar_gasto").click(function(event){
+			event.preventDefault();
+			var sw=0;
+			var msg = "";
+			if( jQuery("#codigo_rubros").val() ==''         ){ sw=1; msg+= "Seleccione un tipo de Rubro <br />"; } 
+			if( jQuery("#descripcion_gastos").val() == ''  ){ sw=1; msg+= "Descripcion del Gasto no puede ser vacio <br />"; } 
+			if( jQuery("#meses").val() == '-1'  			){ sw=1; msg+= "Seleccione un Mes <br />"; } 
+			if( jQuery("#valor").val() == ''               ){ sw=1; msg+= "Valor del Gasto no puede ser vacio <br />"; } 
+			
+				if(jQuery("#flujo_caja_detalles")){
+							if( sw==0 ){
+									if( jQuery("#pflujo_caja_detalles_" + jQuery("#codigo_rubros").val() ).length ){
+											
+											jQuery("#dialogo_mensajes").html("");
+											jQuery("#dialogo_mensajes").html("<strong>Error Tipo de Gastos ya Agreado para este Proyecto</strong>" );
+											jQuery("#dialogo_mensajes").dialog("open");
+											
+									}else{
+											html ="";
+											html +="<tr id=pflujo_caja_detalles_" + jQuery("#codigo_rubros").val() + jQuery('#flujo_caja_detalles tr').length + ">"
+												html += "<td>" + jQuery("#codigo_rubros").val() + "</td>"
+												html += "<td>" + jQuery("#nombre_rubros").val() + "</td>"
+												html += "<td>" + jQuery("#descripcion_gastos").val() + "</td>"
+												html += "<td>" + jQuery("#annos").val() + "</td>"
+												html += "<td>" + jQuery("#meses").val() + "</td>"
+												html += "<td>" + jQuery("#valor").val() + "</td>"
+												html += "<td><button type=\"button\" id='pgastos_eliminar_"+jQuery("#codigo_rubros").val() + jQuery('#flujo_caja_detalles tr').length +"' onClick='jQuery(\"#pflujo_caja_detalles_" + jQuery("#codigo_rubros").val() + jQuery('#flujo_caja_detalles tr').length  +  "\").remove();' >Borrar Fila</button> </td>"
+											html +="</tr>"
+											jQuery('#flujo_caja_detalles tr:last').after(html);
+											jQuery("#pgastos_eliminar_"+jQuery("#codigo_rubros").val() + jQuery('#flujo_caja_detalles tr').length +"" ).button({ icons: {primary:'ui-icon ui-icon-circle-minus' ,secondary:'ui-icon ui-icon-trash'} });
+											
+											jQuery("#annos").val("");
+											jQuery("#meses").val("-1");
+											jQuery("#nombre_rubro").val("");
+											jQuery("#descripcion_gastos").val("");
+											jQuery("#valor").val("");
+											
+										}
+							}else{
+										jQuery("#dialogo_mensajes").html("");
+										jQuery("#dialogo_mensajes").html("<strong>"+msg+"</strong>" );
+										jQuery("#dialogo_mensajes").dialog("open");
+							}
+					}
+			});
+	
+	
+});
+</script>

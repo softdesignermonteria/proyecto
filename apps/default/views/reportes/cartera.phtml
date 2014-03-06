@@ -1,0 +1,89 @@
+<table width="80%">
+	<tr>
+    	<th colspan="2" align="center" class="ui-jqgrid-titlebar ui-widget-header ui-corner-top ui-helper-clearfix">Filtros</th>
+    </tr>
+	<tr>
+    	<td>Identificacion</td>
+    	<td><?php echo Tag::numericField("nit","size: 30"); ?></td>
+    </tr>
+    <tr>
+    	<td>Nombre</td>
+    	<td><?php echo Tag::textUpperField("nombre","size: 100"); ?></td>
+    </tr>
+    
+    <tr>
+    	<td colspan="2" align="center"><button type="button" id="enviar" name="enviar">Filtrar</button></td>
+   	</tr>
+</table>
+
+<table id="tabla<?php echo Router::getController(); ?>"></table>
+<div id="pager<?php echo Router::getController(); ?>"></div>
+
+<script>
+	
+
+jQuery(document).ready(function(){
+	
+						
+		function reload_grid(){
+			var urls  = '<?php echo core::getInstancePath().Router::getController(); ?>/detalle_cartera/'	
+			urls += '?identificacion=' + jQuery("#nit").val();
+			urls += '&nombre=' + jQuery("#nombre").val();
+			jQuery("#tabla<?php echo Router::getController(); ?>").jqGrid('setGridParam',
+				{ 	
+					url: urls, 
+				}
+			).trigger("reloadGrid");
+		}
+	
+		jQuery("#enviar").click(function() {
+            reload_grid();
+        });
+
+		
+		jQuery("#tabla<?php echo Router::getController(); ?>").jqGrid(
+		{ 
+			ajaxGridOptions : {type:"POST"},
+			url:'<?php echo core::getInstancePath().Router::getController(); ?>/detalle_cartera', 
+			datatype: "json", 
+			colNames:['Id','Prefijo','Consecutivo','Fecha','Identificacion','Nombre','Total Credito','Total Pagado'], 
+			colModel:[ 
+				{ name:'id',index:'id', width:50},
+				{ name:'prefijo',index:'prefijo', width:50}, 
+				{ name:'consecutivo',index:'consecutivo', width:100},
+				{ name:'fecha',index:'fecha', width:100}, 
+				{ name:'nit',index:'nit', width:200 }, 
+				{ name:'razon_social',index:'razon_social', width:300},
+				{ name:'total_credito',index:'total_credito', width:100},
+				{ name:'total_pagado',index:'total_pagado', width:100}
+			], 
+			autoWidth:true,
+			width: 900,
+			height: 300,
+			rowNum:25, 
+			/*rowList:[10,20,30,40,50], */
+			pager: '#pager<?php echo Router::getController(); ?>', 
+			sortname: 'id', 
+			/*shrinkToFit :false,*/
+			viewrecords: true, 
+			sortorder: "asc", 
+			caption:"LISTADO DE SALDOS DE CARTERA",
+			ondblClickRow:function(rowid,iRow,iCol,e){
+				
+				var fila = jQuery(this).jqGrid('getRowData',rowid);
+					
+					//if( jQuery("#nit")    ){ jQuery("#nit").val(fila['nit']); }
+					
+					
+       		 }
+		}); 
+		/*jQuery("#tabla<?php //echo Router::getController(); ?>").jqGrid('navGrid','#pager<?php //echo Router::getController(); ?>',{edit:false,add:false,del:false}); 
+		jQuery("#tabla<?php //echo Router::getController(); ?>").jqGrid('navButtonAdd','#pager<?php //echo Router::getController(); ?>',{
+		caption: "Columnas",
+		title: "Reordena Columnas",
+		onClickButton : function (){
+			jQuery("#tabla<?php //echo Router::getController(); ?>").jqGrid('columnChooser');
+		
+	});}*/
+});
+</script>

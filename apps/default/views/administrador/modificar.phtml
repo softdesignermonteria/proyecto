@@ -1,0 +1,127 @@
+<?php echo Tag::formRemote(Router::getController()."/update", "update: mensajes", "id: fx","name: fx"); ?>
+<br />
+<table width="80%"   align="center" cellpadding="2" cellspacing="2">
+ <tr>
+    <th colspan="6" class="ui-jqgrid-titlebar ui-widget-header ui-corner-top ui-helper-clearfix" align="left">
+    Agregar Usuarios del Sistema
+    <?php echo Tag::hiddenField("id"); ?>    </th>
+</tr>
+
+  <tr>
+    <td width="29%" align="right">Usuario</td>
+    <td width="38%" align="left"><?php echo Tag::textField("username", "size: 25","maxlength: 20") ?></td>
+    <td width="33%" align="left">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="29%" align="right">Identificacion</td>
+    <td width="38%" align="left"><?php echo Tag::textField("cedula", "size: 50","maxlength: 200") ?></td>
+    <td width="33%" align="left">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="29%" align="right">Primer Nombre</td>
+    <td width="38%" align="left"><?php echo Tag::textField("nombre1", "size: 50","maxlength: 200") ?></td>
+    <td width="33%" align="left">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="29%" align="right">Segundo Nombre</td>
+    <td width="38%" align="left"><?php echo Tag::textField("nombre2", "size: 50","maxlength: 200") ?></td>
+    <td width="33%" align="left">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="29%" align="right">Primer Apellido</td>
+    <td width="38%" align="left"><?php echo Tag::textField("apellido1", "size: 50","maxlength: 200") ?></td>
+    <td width="33%" align="left">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="29%" align="right">Segundo Apellido</td>
+    <td width="38%" align="left"><?php echo Tag::textField("apellido2", "size: 50","maxlength: 200") ?></td>
+    <td width="33%" align="left">&nbsp;</td>
+  </tr>
+  
+  <tr>
+    <td align="right">Clave</td>
+    <td align="left"><?php echo Tag::PasswordField("password", "size: 25","maxlength: 20") ?></td>
+    <td align="left">&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="right">Confirmar Clave</td>
+    <td align="left"><?php echo Tag::PasswordField("confirmar", "size: 25","maxlength: 20") ?></td>
+    <td align="left">&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="right">Tipo de Usuario</td>
+    <td align="left">
+	  <?php $rol = new Role();
+      	echo Tag::select('role',$rol->find(), 'using: role,role','useDummy=yes'); 
+	  ?>    
+    </td>
+    <td align="left">&nbsp;</td>
+  </tr>
+
+</table>
+<br />
+<div align="center"><button type="submit" id="guardar">Guardar</button></div>
+
+<br /><br />
+
+<div id="mensajes"></div>
+
+
+<?php echo Tag::endForm(); ?>
+
+<script>
+/*
+jQuery(document).ready(function(){
+
+	
+
+jQuery("#guardar").click(function(){
+	guardar();
+});
+
+function guardar(){
+var datos = "";
+jQuery( '#mensajes' ).html("");
+//jQuery( "#progressbar" ).progressbar({ value: 50 });	
+var jqXHR = jQuery.ajax({
+	type: "POST",
+	url: "<?php //echo core::getInstancePath(); ?>administrador/add",
+	data: {
+			id:               jQuery("#id").val(),
+			username:         jQuery("#username").val(),
+			cedula:           jQuery("#cedula").val(),
+			nombre1:          jQuery("#nombre1").val(),
+			nombre2:          jQuery("#nombre2").val(),
+			apellido1:        jQuery("#apellido1").val(),
+			apellido2:        jQuery("#apellido2").val(),
+			password:         jQuery("#password").val(),
+			confirmar:        jQuery("#confirmar").val(),
+			nombre_completo:  jQuery("#nombre_completo").val(),
+			role:             jQuery("#role").val(),
+			
+	},
+	success: function(data) {
+		jQuery( '#mensajes' ).html("");
+		//jQuery( "#progressbar" ).progressbar({ value: 90 });
+		jQuery( '#mensajes' ).html(data);
+	},
+	error: function(data) {
+		jQuery('#dialogo_mensajes').html("Error Enviando parametros....." + data);
+		jQuery('#mensajes').html(data);
+		//jQuery( "#progressbar" ).progressbar({ value: 0 });
+		jQuery('#dialogo_mensajes').dialog("open");
+	}
+});
+
+ jqXHR.done(function(data){
+	//jQuery( "#progressbar" ).progressbar({ value: 0 });
+});
+
+}
+
+
+});
+
+*/
+</script>
+

@@ -1,0 +1,120 @@
+<?php echo Tag::form("reportes/proyecto_detalles", "id: fx","name: fx"); ?>
+<table width="700px">
+<tr>
+  <td colspan="2" align="center">FILTROS</td>
+</tr>
+<tr>
+	<td width="200">CODIGO IES</td>
+    <td>
+		<?php  echo Tag::textField("cod_ies","size: 10","maxlength: 50","readonly: readonly"); ?>
+        <?php  echo Tag::textField("nombre_ies","size: 50","maxlength: 50","readonly: readonly"); ?>
+        <button type="button" id="buscar_ies" name="buscar_ies">Buscar</button>
+    </td>
+</tr>
+<tr>
+	<td width="200">Tipo Proyecto</td>
+    <td><?php  echo Tag::textField("codigo_tipo_proyecto","size: 10","maxlength: 50","readonly: readonly"); ?>
+    	    <?php  echo Tag::textField("nombre_tipo_proyecto","size: 50","maxlength: 50","readonly: readonly"); ?>
+            <button type="button" id="buscar_tipo_proyecto">Buscar</button></td>
+</tr>
+<tr>
+	<td width="200">Objetivo Socioeconomico</td>
+    <td><?php  echo Tag::textField("cod_objetivo","size: 10","maxlength: 50","readonly: readonly"); ?>
+            <?php  echo Tag::textField("nombre_objetivo","size: 50","maxlength: 50","readonly: readonly"); ?>
+            <button type="button" id="buscar_objetivo_socioeconomico">Buscar</button></td>
+</tr>
+<tr>
+	<td width="200">Fecha de Inicio</td>
+    <td>
+		<select id="signo_fecha">
+        	<option value="=">Igual a</option>
+            <option value=">">Mayor a</option>
+            <option value="<">Menor a </option>
+        </select>
+		<?php  echo Tag::textField("fecha_inicio_proyecto","size: 20","maxlength: 10"); ?></td>
+</tr>
+<tr>
+	<td width="200">&nbsp;</td>
+    <td>&nbsp;</td>
+</tr>
+</table>
+<br />
+<div align="center">
+  <button  type="submit" id="guardar" name="guardar2">Consultar</button></div>
+<br />
+
+ <div align="center" id="progressbarWrapper" style="height:30px; width:100% " class="ui-widget-default">
+    <div id="progressbar" style="height:100%;"></div>
+ </div>
+<br />
+
+<?php echo Tag::endForm(); ?>
+
+<form action="<?php echo core::getInstancePath(); ?>reportes/excel" id="fx2" name="fx2" method="post">
+
+<div id="mensajes"></div>
+<div id="div_exportar"></div>
+<input type="hidden" id="detalles" name="detalles" />
+</form>
+
+<script>
+
+
+
+function exportar(){
+		var  exportar = JSON.stringify(tableToJson( document.getElementById("exportexcel") ) );
+		jQuery("#detalles").val(exportar);
+	}
+
+jQuery(document).ready(function(e) {
+	
+	jQuery("#fx2").submit(function(event) {
+			var  exportar = JSON.stringify(tableToJson( document.getElementById("exportexcel") ) );
+			jQuery("#detalles").val(exportar);
+			return true;
+	});		
+
+	jQuery('#fx').submit(function(event) {  
+	  event.preventDefault();  
+	  var url = jQuery(this).attr('action');  
+	  var datos = jQuery(this).serialize();
+	  
+	  //var srv = JSON.stringify(detalles);
+	  //	var grupos_investigacion = JSON.stringify(tableToJson( document.getElementById("proyecto_grupos_investigacion") ) );
+				//var srv = tableToJson( document.getElementById("proyecto_grupos_investigacion") ) ;
+		jQuery( "#progressbar" ).progressbar({ value: 50 });	
+		//jQuery("#guardar").attr("disabled","disabled");
+		
+			//$('#resumen').html('Cargando....');
+			
+			var jqXHR = jQuery.ajax({
+				type: "post",
+				url: url,
+				data: {
+						cod_ies:                jQuery("#cod_ies").val(),
+						fecha_inicio_proyecto:  jQuery("#fecha_inicio_proyecto").val(),
+						codigo_tipo_proyecto:   jQuery("#codigo_tipo_proyecto").val(),
+						cod_objetivo:           jQuery("#cod_objetivo").val(),
+						signo_fecha:            jQuery("#signo_fecha").val()
+				},
+				success: function(data) {
+					jQuery( '#mensajes' ).html("");
+					jQuery( "#progressbar" ).progressbar({ value: 90 });
+					jQuery( '#mensajes' ).html(data);
+				},
+				error: function(data) {
+					jQuery('#dialogo_mensajes').html("Error Enviando parametros.....");
+					jQuery( "#progressbar" ).progressbar({ value: 0 });
+					jQuery('#dialogo_mensajes').dialog("open");
+					
+				}
+			});
+			
+			 jqXHR.done(function(data){
+				jQuery( "#progressbar" ).progressbar({ value: 0 });
+			});  
+	 
+	});  
+	
+});
+</script>

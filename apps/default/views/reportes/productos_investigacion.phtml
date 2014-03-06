@@ -1,0 +1,33 @@
+<?php echo Tag::form("reportes/excel_productos_investigacion", "id: fx","name: fx","target: _blanck"); ?>
+<table width="700px">
+<tr>
+  <td colspan="2" align="center">FILTROS</td>
+</tr>
+<tr>
+	<td width="200" align="right" >CODIGO IES</td>
+    <td>
+		<?php  echo Tag::textField("cod_ies","size: 10","maxlength: 50","readonly: readonly"); ?>
+        <?php  echo Tag::textField("nombre_ies","size: 50","maxlength: 50","readonly: readonly"); ?>
+      <button type="button" id="buscar_ies" name="buscar_ies">Buscar</button>
+    </td>
+</tr>
+
+<tr>
+	<td width="200" align="right">AÑO DE OBTENSION</td>
+    <td>DESDE
+      <?php  echo Tag::numericField("desde","size: 8","maxlength: 4"); ?>
+		HASTA
+    <?php  echo Tag::numericField("hasta","size: 8","maxlength: 4"); ?></td>
+</tr>
+</table>
+<br />
+<div align="center">
+  <button  type="submit" id="guardar" name="guardar2">Exportar a Excel</button></div>
+<br />
+
+ <div align="center" id="progressbarWrapper" style="height:30px; width:100% " class="ui-widget-default">
+    <div id="progressbar" style="height:100%;"></div>
+ </div>
+<br />
+
+<?php echo Tag::endForm(); ?>

@@ -1,0 +1,47 @@
+<table id="tablanbc"></table>
+<div id="pagernbc"></div>
+<script>
+jQuery(document).ready(function(){
+
+		
+		jQuery("#tablanbc").jqGrid(
+		{ 
+			ajaxGridOptions : {type:"POST"},
+			url:'<?php echo core::getInstancePath().Router::getController(); ?>/find_detalle_buscar/=codigo_departamentos=<?php echo $_REQUEST["codigo_departamentos"]; ?>', 
+			datatype: "json", 
+			colNames:['Codigo Municipio','Nombre Municipio'], 
+			colModel:[ 
+				{ name:'codigo_municipio',index:'codigo_municipio', width:200}, 
+				{ name:'nombre_municipio',index:'nombre_municipio', width:350}
+			
+			], 
+			autoWidth:true,
+			width: 550,
+			height: 250,
+			rowNum:50, 
+			/*rowList:[10,20,30,40,50], */
+			pager: '#pagernbc', 
+			sortname: 'Cod_Municipio', 
+			/*shrinkToFit :false,*/
+			viewrecords: true, 
+			sortorder: "asc", 
+			caption:"listado de los Municipios Registrados",
+			ondblClickRow:function(rowid,iRow,iCol,e){
+				
+				var fila = jQuery(this).jqGrid('getRowData',rowid);
+					
+					if( jQuery("#codigo_municipios")    ){ jQuery("#codigo_municipios").val(fila['codigo_municipio']); }
+					if( jQuery("#nombre_municipios") ){ jQuery("#nombre_municipios").val(fila['nombre_municipio']); } 
+					jQuery("#dialogo_municipios").dialog("close");											
+       		 }
+		}); 
+		/*jQuery("#tablanbc").jqGrid('navGrid','#pagernbc',{edit:false,add:false,del:false}); 
+		jQuery("#tablanbc").jqGrid('navButtonAdd','#pagernbc',{
+		caption: "Columnas",
+		title: "Reordena Columnas",
+		onClickButton : function (){
+			jQuery("#stablanbc").jqGrid('columnChooser');
+		
+	});}*/
+});
+</script>

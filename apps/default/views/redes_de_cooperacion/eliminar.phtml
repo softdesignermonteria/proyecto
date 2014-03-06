@@ -1,0 +1,99 @@
+<?php echo Tag::formRemote(Router::getController()."/delete", "update: mensajes", "id: fx","name: fx"); ?>
+
+<h1>ELIMINAR <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?></h1>
+
+<table width="100%">
+    	<tr>
+    	  <th height="25" colspan="4">FORMULARIO PARA ELIMINAR <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?></th>
+   	  </tr>
+    	<tr>
+    	  
+    	  <th width="30%" align="right">CODIGO <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?>:</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("codigo_redes_de_cooperacion","size: 50","maxlength: 50"); ?></td>
+    	  
+   	  </tr>
+        <tr>
+    	  
+    	  <th width="30%" align="right">NOMBRE <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?>:</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("nombre_redes_de_cooperacion","size: 50"); ?></td>
+    	  
+   	  </tr>
+      <tr>
+    	  
+    	  <th width="30%" align="right">CODIGO IES:</th>
+    	  <td width="64%" align="left">
+		  	<?php  echo Tag::textField("cod_ies","size: 20","maxlength: 50","readonly: readonly"); ?>
+            <?php  echo Tag::textField("nombre_ies","size: 50","maxlength: 50","readonly: readonly"); ?>
+            <button type="button" id="buscar_ies" name="buscar_ies">buscar</button>
+            </td>
+    	  
+   	  </tr>
+      
+       <tr>
+    	  
+    	  <th width="30%" align="right">CODIGO NBC:</th>
+    	  <td width="64%" align="left">
+		  	<?php  echo Tag::textField("codigo_nbc","size: 20","maxlength: 50","readonly: readonly"); ?>
+            <?php  echo Tag::textField("nombre_nbc","size: 50","maxlength: 50","readonly: readonly"); ?>
+            <button type="button" id="buscar_nbc" name="buscar_nbc">buscar</button>
+            </td>
+    	  
+   	  </tr>
+        
+        
+       <tr>
+    	  
+    	  <th width="30%" align="right">FECHA CREACION:</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("fecha_creacion","size: 20","maxlength: 50","readonly: readonly","value: ".date("Y-m-d")); ?></td>
+    	  
+   	  </tr>
+     
+  </table>
+  <h4>IES NACIONALES INTEGRANTES DE LA RED</h4>
+<table id="proyecto_ies_nacionales_integrantes_de_red"> 
+	<tbody>
+        <tr id="pinidr_encabezados" class="ui-dialog-titlebar ui-widget-header ui-corner-all">	
+            <td width="100px">Codigo</td>
+            <td colspan="2" width="450px">Nombre</td>
+            <td width="100px">FechaAdicion</td>
+            <td width="100px">FechaRetiro</td>
+            <td width="100px">borrar</td>
+        </tr>
+        <?php 
+			foreach($tabla_rcir as $filas): 
+			$ent = new TblEntidadesIntegrantesRed();
+			$ent->findFirst(" id = '".$filas->getFKIdEntidadesIntegrantesRed()."' ");
+		?>
+         <tr id="pinidr_<?php echo $filas->getFKIdEntidadesIntegrantesRed(); ?>">	
+            <td width="100px"><?php echo $filas->getFKIdEntidadesIntegrantesRed(); ?></td>
+            <td colspan="2" width="450px"><?php echo $ent->getNombreEntidadIntegranteRed(); ?></td>
+            <td width="100px"><?php echo $filas->getFechaAdicion(); ?></td>
+            <td width="100px"><?php echo $filas->getFechaRetiro(); ?></td>
+            <td width="100px">
+            	<button type="button" id='pinidr_eliminar_<?php echo $filas->getFKIdEntidadesIntegrantesRed(); ?>' onClick='jQuery("#pinidr_<?php echo $filas->getFKIdEntidadesIntegrantesRed(); ?>").remove();' >Borrar Fila</button> 
+               
+            </td>
+        </tr>
+		 <script>jQuery("#pinidr_eliminar_<?php echo $filas->getFKIdEntidadesIntegrantesRed(); ?>").button({ icons: {primary:'ui-icon ui-icon-circle-minus' ,secondary:'ui-icon ui-icon-trash'} });</script>        
+        <?php endforeach; ?>
+    </tbody>
+</table>
+
+<br />
+<div align="center"><button id="guardar" name="guardar">Eliminar</button></div>
+<?php echo Tag::endForm(); ?>
+<div id="mensajes"></div>
+<?php echo view::getContent(); ?>
+
+<script>
+	
+	
+	jQuery(document).ready(function(e) {
+        jQuery("#codigo_redes_de_cooperacion").attr("readOnly","ReadOnly");
+		jQuery("#nombre_redes_de_cooperacion").attr("readOnly","ReadOnly");
+		jQuery("#buscar_ies").attr("disabled","disabled");
+		jQuery("#buscar_nbc").attr("disabled","disabled");
+		jQuery("#fecha_creacion").attr("readOnly","ReadOnly");
+		//jQuery("#cod_ies").css("background-color","#333");
+    });
+</script>

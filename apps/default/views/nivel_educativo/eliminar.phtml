@@ -1,0 +1,38 @@
+<?php echo Tag::formRemote(Router::getController()."/delete", "update: mensajes", "id: fx","name: fx"); ?>
+
+<h1>ELIMINAR <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?></h1>
+
+<table width="100%">
+    	<tr>
+    	  <th height="25" colspan="4">FORMULARIO PARA ELIMINAR <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?></th>
+   	  </tr>
+    	<tr>
+    	  
+    	  <th width="30%" align="right">CODIGO <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?></th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("codigo_nivel_educativo","size: 50","maxlength: 50"); ?></td>
+    	  
+   	  </tr>
+        <tr>
+    	  
+    	  <th width="30%" align="right">DESCRIPCION <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?></th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("nombre_nivel_educativo","size: 50","maxlength: 50"); ?></td>
+    	  
+   	  </tr>
+      <tr>
+    	  <td colspan="4" align="center"><button id="guardar" name="guardar">Eliminar</button></td>
+   	  </tr>
+  </table>
+
+<?php echo Tag::endForm(); ?>
+<div id="mensajes"></div>
+<?php echo view::getContent(); ?>
+
+<script>
+	
+	
+	jQuery(document).ready(function(e) {
+        jQuery("#codigo_nivel_educativo").attr("readOnly","ReadOnly");
+		jQuery("#nombre_nivel_educativo").attr("readOnly","ReadOnly");
+		//jQuery("#cod_ies").css("background-color","#333");
+    });
+</script>

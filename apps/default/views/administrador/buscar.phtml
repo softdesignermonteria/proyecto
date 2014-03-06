@@ -1,0 +1,59 @@
+<?php 
+	if(isset($_REQUEST["opcion"])){
+		Flash::notice("Doble Click en la Fila para ".$_REQUEST["opcion"]); 
+	}
+?>
+<table id="tabla<?php echo Router::getController(); ?>"></table>
+<div id="pager<?php echo Router::getController(); ?>"></div>
+<script>
+jQuery(document).ready(function(){
+
+		
+		jQuery("#tabla<?php echo Router::getController(); ?>").jqGrid(
+		{ 
+			ajaxGridOptions : {type:"POST"},
+			url:'<?php echo core::getInstancePath().Router::getController(); ?>/find_detalle_buscar', 
+			datatype: "json", 
+			colNames:['Codigo','Usuario','Nombre Completo','Role'], 
+			colModel:[ 
+				{ name:'codigo',index:'id', width:200}, 
+				{ name:'username',index:'username', width:200}, 
+				{ name:'nombre_completo2',index:'nombre_completo2', width:500},
+				{ name:'role',index:'role', width:200}
+			], 
+			autoWidth:true,
+			width: 850,
+			height: 250,
+			rowNum:50, 
+			/*rowList:[10,20,30,40,50], */
+			pager: '#pager<?php echo Router::getController(); ?>', 
+			sortname: 'username', 
+			/*shrinkToFit :false,*/
+			viewrecords: true, 
+			sortorder: "asc", 
+			caption:"listado de los Usuarios Registrados",
+			ondblClickRow:function(rowid,iRow,iCol,e){
+				
+				var fila = jQuery(this).jqGrid('getRowData',rowid);
+					
+					if( jQuery("#codigo")    ){ jQuery("#codigo").val(fila['codigo']); }
+					if( jQuery("#nombre_completo2") ){ jQuery("#nombre_completo2").val(fila['nombre_completo2']); } 
+					
+					<?php if(isset($_REQUEST["opcion"]) ){ ?>
+						redireccionar_action("<?php echo Router::getController(); ?>/<?php echo $_REQUEST["opcion"]; ?>/" + fila['codigo'] );
+					<?php }else{?>	
+						jQuery("#dialogo_<?php echo Router::getController(); ?>").dialog("close");
+					<?php } ?>
+					
+       		 }
+		}); 
+		/*jQuery("#tabla<?php //echo Router::getController(); ?>").jqGrid('navGrid','#pager<?php //echo Router::getController(); ?>',{edit:false,add:false,del:false}); 
+		jQuery("#tabla<?php //echo Router::getController(); ?>").jqGrid('navButtonAdd','#pager<?php //echo Router::getController(); ?>',{
+		caption: "Columnas",
+		title: "Reordena Columnas",
+		onClickButton : function (){
+			jQuery("#tabla<?php //echo Router::getController(); ?>").jqGrid('columnChooser');
+		
+	});}*/
+});
+</script>

@@ -1,0 +1,65 @@
+<table id="tablaredescoop"></table>
+<div id="pagerredescoop"></div>
+<script>
+jQuery(document).ready(function(){
+
+		
+		jQuery("#tablaredescoop").jqGrid(
+		{ 
+			ajaxGridOptions : {type:"POST"},
+			url:'<?php echo core::getInstancePath().Router::getController(); ?>/find_detalle_buscar/?cod_ies=<?php echo $_REQUEST["cod_ies"]?>', 
+			datatype: "json", 
+			colNames:['Codigo Red de Cooperacion','Nombre Red de Cooperacion'], 
+			colModel:[ 
+				{ name:'codigo_redes_de_cooperacion',index:'codigo_redes_de_cooperacion', width:200}, 
+				{ name:'nombre_redes_de_cooperacion',index:'nombre_redes_de_cooperacion', width:350}
+			], 
+			autoWidth:true,
+			width: 550,
+			height: 250,
+			rowNum:50, 
+			/*rowList:[10,20,30,40,50], */
+			pager: '#pagerredescoop', 
+			sortname: 'Cod_Red_Cooperacion', 
+			/*shrinkToFit :false,*/
+			viewrecords: true, 
+			sortorder: "asc", 
+			caption:"listado de las Redes de Cooperaciones Registrados",
+			ondblClickRow:function(rowid,iRow,iCol,e){
+				
+				var fila = jQuery(this).jqGrid('getRowData',rowid);
+					
+					if( jQuery("#codigo_redes_de_cooperacion")    ){ jQuery("#codigo_redes_de_cooperacion").val(fila['codigo_redes_de_cooperacion']); }
+					if( jQuery("#nombre_redes_de_cooperacion") ){ jQuery("#nombre_redes_de_cooperacion").val(fila['nombre_redes_de_cooperacion']); } 
+						if(jQuery("#proyecto_redes_cooperacion")){
+	
+									if( jQuery("#prc_" + fila['codigo_redes_de_cooperacion'] ).length ){
+											
+											jQuery("#dialogo_mensajes").html("");
+											jQuery("#dialogo_mensajes").html("<strong>Error Productos de Invetigacion ya Agreado para este Proyecto</strong>" );
+											jQuery("#dialogo_mensajes").dialog("open");
+											
+									}else{
+											html ="";
+											html +="<tr id=prc_" + fila['codigo_redes_de_cooperacion'] + ">"
+												html += "<td>" + fila['codigo_redes_de_cooperacion'] + "</td>"
+												html += "<td colspan='2'>" + fila['nombre_redes_de_cooperacion'] + "</td>"
+												html += "<td><button type=\"button\" id='prc_eliminar_"+fila['codigo_redes_de_cooperacion']+"' onClick='jQuery(\"#prc_" + fila['codigo_redes_de_cooperacion'] + "\").remove();' >Borrar Fila</button> </td>"
+											html +="</tr>"
+											jQuery('#proyecto_redes_cooperacion tr:last').after(html);
+											jQuery("#prc_eliminar_"+fila['codigo_redes_de_cooperacion']).button({ icons: {primary:'ui-icon ui-icon-circle-minus' ,secondary:'ui-icon ui-icon-trash'} });
+										}
+							}
+					jQuery("#dialogo_redes_de_cooperacion").dialog("close");											
+       		 }
+		}); 
+		/*jQuery("#tablaredescoop").jqGrid('navGrid','#pagerredescoop',{edit:false,add:false,del:false}); 
+		jQuery("#tablaredescoop").jqGrid('navButtonAdd','#pagerredescoop',{
+		caption: "Columnas",
+		title: "Reordena Columnas",
+		onClickButton : function (){
+			jQuery("#tablaredescoop").jqGrid('columnChooser');
+		
+	});}*/
+});
+</script>

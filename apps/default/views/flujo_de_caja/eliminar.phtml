@@ -1,0 +1,136 @@
+<?php echo Tag::form(Router::getController()."/delete", "id: fx","name: fx"); ?>
+
+<h1>ELIMINAR FLUJO DE CAJA</h1>
+
+<table width="100%">
+    	<tr>
+    	  <th height="25" colspan="4">FORMULARIO PARA ELIMINAR FLUJO DE CAJA</th>
+   	  </tr>
+    	
+        <tr>
+    	  
+    	  <th width="30%" align="right">CODIGO: </th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("id","size: 50","readonly: readonly"); ?></td>
+    	  
+   	  </tr>
+      <tr>
+    	  
+    	  <th width="30%" align="right">FACULTAD RESPONSABLE: </th>
+    	  <td width="64%" align="left"><?php  echo Tag::textUpperField("facultad_responsable","size: 50"); ?></td>
+    	  
+   	  </tr>
+        <tr>
+    	  
+    	  <th width="30%" align="right">INVESTIGADOR RESPONSABLE</th>
+    	  <td width="64%" align="left">
+		  		<?php  echo Tag::textField("codigo_investigador","size: 10"); ?>
+	            <?php  echo Tag::textField("nombre_investigador","size: 50"); ?>
+                <button type="button" id="buscar_investigadores" name="buscar_investigadores">Buscar</button>
+            </td>
+    	  
+   	  </tr>
+      
+        <tr>
+    	  
+    	  <th width="30%" align="right">PROYECTO DE INVESTIGACION</th>
+    	  <td width="64%" align="left">
+		  		<?php  echo Tag::textField("codigo_proyecto","size: 10"); ?>
+	            <?php  echo Tag::textField("nombre_proyecto","size: 50"); ?>
+                <button type="button" id="buscar_proyecto_de_investigacion" name="buscar_proyecto_de_investigacion">Buscar</button>
+            </td>
+    	  
+   	  </tr>
+      
+  </table>
+  
+  <h4>DETALLE DE FLUJO DE CAJA</h4>
+
+<table id="flujo_caja_detalles"> 
+	<tbody>
+        <tr id="pflujo_caja_detalles" class="ui-dialog-titlebar ui-widget-header ui-corner-all">	
+            <td width="150px">Codigo</td>
+            <td width="400px">Nombre Rubro</td>
+            <td width="400px">Descripcion Gastos</td>
+            <td width="150px">Annos</td>
+            <td width="150px">Meses</td>
+            <td width="100px">Valor</td>
+            <td width="150px">borrar</td>
+        </tr>
+         <?php 
+	   		//$fnac = new TblFuenteFinanciacionNacional();
+			$rubros = new Rubros();
+			$i = 0;
+	   		foreach($gastos as $filas): ?> 
+       <tr id="pflujo_caja_detalles_a<?php echo $filas->getId(); ?>" >	
+            <td ><?php echo $filas->getRubro_id(); ?></td>
+            <td  ><?php echo utf8_encode($rubros->findFirst(" id = '".$filas->getRubro_id()."' ")->getRubro()); ?></td>
+            <td width="400px"><?php echo $filas->getDescripcion_gastos(); ?></td>
+            <td width="150px"><?php echo $filas->getAnnos(); ?></td>
+            <td width="150px"><?php echo $filas->getMeses(); ?></td>
+            <td width="100px"><?php echo $filas->getValor(); ?></td>
+         
+            <td width="200px">
+            	
+            </td>
+        </tr>
+        
+       <?php endforeach;?>
+    </tbody>
+</table>
+
+<div align="center"><button type="submit" id="guardar" name="guardar">Guardar</button></div>
+<?php echo Tag::endForm(); ?>
+<div id="mensajes"></div>
+
+<?php echo view::getContent(); ?>
+
+
+<script>
+jQuery(document).ready(function(e) {
+
+	jQuery('#fx').submit(function(event) {  
+	  event.preventDefault();  
+	  var url = jQuery(this).attr('action');  
+	  var datos = jQuery(this).serialize();
+	  
+	  //var srv = JSON.stringify(detalles);
+		var gastos = JSON.stringify(tableToJson( document.getElementById("flujo_caja_detalles") ) );
+		//var srv = tableToJson( document.getElementById("proyecto_grupos_investigacion") ) ;
+		jQuery( "#progressbar" ).progressbar({ value: 50 });	
+		//jQuery("#guardar").attr("disabled","disabled");
+		
+			//$('#resumen').html('Cargando....');
+			
+			var jqXHR = jQuery.ajax({
+				type: "post",
+				url: url,
+				data: {
+						id:                     jQuery("#id").val(),
+						codigo_proyecto:        jQuery("#codigo_proyecto").val(),
+						facultad_responsable:   jQuery("#facultad_responsable").val(),
+						codigo_investigador:    jQuery("#codigo_investigador").val(),
+						gastos:                 gastos
+				},
+				success: function(data) {
+					jQuery( '#mensajes' ).html("");
+					jQuery( "#progressbar" ).progressbar({ value: 90 });
+					jQuery( '#mensajes' ).html(data);
+				},
+				error: function(data) {
+					jQuery('#dialogo_mensajes').html("Error Enviando parametros.....");
+					jQuery( "#progressbar" ).progressbar({ value: 0 });
+					jQuery('#dialogo_mensajes').dialog("open");
+					
+				}
+			});
+			
+			 jqXHR.done(function(data){
+				jQuery( "#progressbar" ).progressbar({ value: 0 });
+			});  
+	 
+	});  
+	
+	
+	
+});
+</script>

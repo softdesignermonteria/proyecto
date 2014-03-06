@@ -1,0 +1,37 @@
+<?php echo Tag::formRemote(Router::getController()."/update", "update: mensajes", "id: fx","name: fx"); ?>
+
+<h1>MODIFICAR IES</h1>
+
+<table width="100%">
+    	<tr>
+    	  <th height="25" colspan="4">FORMULARIO PARA MODIFICAR IES</th>
+   	  </tr>
+    	<tr>
+    	  
+    	  <th width="30%" align="right">CODIGO IES:</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("cod_ies","size: 50","maxlength: 50"); ?></td>
+    	  
+   	  </tr>
+        <tr>
+    	  
+    	  <th width="30%" align="right">NOMBRE IES:</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("nombre_ies","size: 50"); ?></td>
+    	  
+   	  </tr>
+      <tr>
+    	  <td colspan="4" align="center"><button id="guardar" name="guardar">Modificar Datos</button></td>
+   	  </tr>
+  </table>
+
+<?php echo Tag::endForm(); ?>
+<div id="mensajes"></div>
+<?php echo view::getContent(); ?>
+
+<script>
+	
+	
+	jQuery(document).ready(function(e) {
+        //jQuery("#cod_ies").attr("readOnly","ReadOnly");
+		//jQuery("#cod_ies").css("background-color","#333");
+    });
+</script>

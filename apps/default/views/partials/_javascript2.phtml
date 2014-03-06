@@ -1,0 +1,386 @@
+<script type="text/javascript">
+
+jQuery(document).ready(function(){
+	/*Proyecto investigacion dialogo mensajes de error*/
+	jQuery( "#dialogo_mensajes"                   ).dialog({ autoOpen: false });
+	/*Proyecto investigacion dialogo objetivo_socioeconomico*/
+	jQuery( "#dialogo_objetivo_socioeconomico"    ).dialog({ autoOpen: false, width: 600, height: 450, title: "Objetivo Socioeconomico" });
+	/*Proyecto investigacion dialogo productos_de_investigacion*/
+	jQuery( "#dialogo_productos_de_investigacion" ).dialog({ autoOpen: false, width: 600, height: 450, title: "Productos de Investigacion" });
+	/*Proyecto investigacion dialogo productos_de_investigacion*/
+	jQuery( "#dialogo_tipo_productos_de_investigacion" ).dialog({ autoOpen: false, width: 600, height: 450, title: "Tipo Productos de Investigacion" });
+	/*Proyecto investigacion dialogo centros_de_produccion*/
+	jQuery( "#dialogo_centros_de_investigacion"   ).dialog({ autoOpen: false, width: 600, height: 450, title: "Centros de Produccion" });
+	/*Proyecto investigacion dialogo Ies*/
+	jQuery( "#dialogo_ies"                        ).dialog({ autoOpen: false, width: 600, height: 450, title: "Ies"     });
+	/*Proyecto investigacion dialogo Ies*/
+	jQuery( "#dialogo_role"                       ).dialog({ autoOpen: false, width: 600, height: 450, title: "Roles de Usuarios"     });
+	/*Proyecto investigacion dialogo Ies*/
+	jQuery( "#dialogo_nbc"                        ).dialog({ autoOpen: false, width: 600, height: 450, title: "Nbc"     });
+	/*Proyecto investigacion dialogo grupos_de_investigacion*/
+	jQuery( "#dialogo_grupos_de_investigacion"    ).dialog({ autoOpen: false, width: 600, height: 450, title: "Grupos de Investigacion"     });
+	/*Proyecto investigacion dialogo redes_de_cooperacion*/
+	jQuery( "#dialogo_redes_de_cooperacion"       ).dialog({ autoOpen: false, width: 600, height: 450, title: "Redes de Cooperacion"     });
+	/*Proyecto investigacion dialogo departamentos*/
+	jQuery( "#dialogo_departamentos"              ).dialog({ autoOpen: false, width: 600, height: 450, title: "Departamentos"     });
+	/*Proyecto investigacion dialogo municipios  */
+	jQuery( "#dialogo_municipios"                 ).dialog({ autoOpen: false, width: 600, height: 450, title: "Municipios"     });
+	/*Proyecto investigacion dialogo pais  */
+	jQuery( "#dialogo_pais"                       ).dialog({ autoOpen: false, width: 600, height: 450, title: "Paises"     });
+	/*Proyecto investigacion dialogo Tipo Proyecto  */
+	jQuery( "#dialogo_tipo_proyecto"               ).dialog({ autoOpen: false, width: 600, height: 450, title: "Tipo Proyecto"     });
+	/*Proyecto investigacion dialogo Fuentes de financiacion nacional  */
+	jQuery( "#dialogo_fuentes_de_financiacion_nacional"     ).dialog({ autoOpen: false, width: 600, height: 450, title: "Fuentes de Financiacion Nacional"     });
+	/*Proyecto investigacion dialogo Fuente de financiacion internacional  */
+	jQuery( "#dialogo_fuentes_de_financiacion_internacional" ).dialog({ autoOpen: false, width: 600, height: 450, title: "Fuentes de financiacion Internacional"     });
+	/*Proyecto investigacion dialogo Fuente de financiacion internacional  */
+	jQuery( "#dialogo_tipos_de_gastos"             ).dialog({ autoOpen: false, width: 600, height: 450, title: "Tipo de Gastos"     });
+	/*Proyecto investigacion dialogo tipo_participacion_proyecto  */
+	jQuery( "#dialogo_tipo_participacion_proyecto"             ).dialog({ autoOpen: false, width: 600, height: 450, title: "Tipo Participacion Proyecto"     });
+	/*Proyecto investigacion dialogo tipo_participacion_proyecto  */
+	jQuery( "#dialogo_nivel_educativo"             ).dialog({ autoOpen: false, width: 600, height: 450, title: "Nivel Educativo"     });
+	/*Proyecto investigacion dialogo tipo_participacion_proyecto  */
+	jQuery( "#dialogo_sector_entidad"             ).dialog({ autoOpen: false, width: 600, height: 450, title: "Sector Entidad"     });
+	/*Proyecto investigacion dialogo tipo_participacion_proyecto  */
+	jQuery( "#dialogo_entidades_integrantes_de_red"             ).dialog({ autoOpen: false, width: 600, height: 450, title: "Sector Entidad"     });
+	/*Proyecto investigacion dialogo tipo_participacion_proyecto  */
+	jQuery( "#dialogo_investigadores"             ).dialog({ autoOpen: false, width: 600, height: 450, title: "Investigadores"     });
+	/*Proyecto investigacion dialogo tipo_participacion_proyecto  */
+	jQuery( "#dialogo_proyecto_de_investigacion"             ).dialog({ autoOpen: false, width: 600, height: 450, title: "Proyectos"     });
+	/*Proyecto investigacion dialogo tipo_participacion_proyecto  */
+	jQuery( "#dialogo_rubros"             ).dialog({ autoOpen: false, width: 600, height: 450, title: "Rubros"     });
+	
+	
+	/*desabilita progressbar*/
+	jQuery( "#progressbar" ).progressbar({ disable: true });
+	jQuery( "#progressbarWrapper" ).resizable();
+
+	/*Date Picker utilizados en el sistema*/
+	if( jQuery( "#fecha_inicio_proyecto"      ) ){ jQuery( "#fecha_inicio_proyecto"      ).datepicker({ dateFormat: "yy-mm-dd"}); 	}
+	if( jQuery( "#fecha_adicion_red"          ) ){ jQuery( "#fecha_adicion_red"      ).datepicker({ dateFormat: "yy-mm-dd"}); 	}
+	if( jQuery( "#fecha_retiro_red"           ) ){ jQuery( "#fecha_retiro_red"      ).datepicker({ dateFormat: "yy-mm-dd"}); 	}
+	if( jQuery( "#fecha_adicion_red2"          ) ){ jQuery( "#fecha_adicion_red2"      ).datepicker({ dateFormat: "yy-mm-dd"}); 	}
+	if( jQuery( "#fecha_retiro_red2"           ) ){ jQuery( "#fecha_retiro_red2"      ).datepicker({ dateFormat: "yy-mm-dd"}); 	}
+	if( jQuery( "#fecha_creacion"             ) ){ jQuery( "#fecha_creacion"             ).datepicker({ dateFormat: "yy-mm-dd"}); 	}
+	if( jQuery( "#fecha_vigencia"             ) ){ jQuery( "#fecha_vigencia"             ).datepicker({ dateFormat: "yy-mm-dd"}); 	}
+	if( jQuery( "#fecha_adicion_grupo"        ) ){ jQuery( "#fecha_adicion_grupo"             ).datepicker({ dateFormat: "yy-mm-dd"}); 	}
+	if( jQuery( "#fecha_retiro_grupo"         ) ){ jQuery( "#fecha_retiro_grupo"             ).datepicker({ dateFormat: "yy-mm-dd"}); 	}
+	
+	/*Botones Utilizados en el sistema*/
+	if( jQuery( ".boton"  ) ){ jQuery( ".boton"  ).button({ icons: {primary:'ui-icon ui-icon-search'     ,secondary:'ui-icon ui-icon-newwin'} });   }
+	/*Proyecto investigacion dialogo objetivo_socioeconomico*/
+	if( jQuery( "#buscar_objetivo_socioeconomico"     ) ){ jQuery( "#buscar_objetivo_socioeconomico"  ).button({ icons: {primary:'ui-icon ui-icon-search'     ,secondary:'ui-icon ui-icon-newwin'} });   }
+	/*Proyecto investigacion dialogo Ies*/
+	if( jQuery( "#buscar_centros_de_investigacion"    ) ){ jQuery( "#buscar_centros_de_investigacion"  ).button({ icons: {primary:'ui-icon ui-icon-search'     ,secondary:'ui-icon ui-icon-newwin'} });   }
+	/*Proyecto investigacion dialogo productos_de_investigacion*/
+	if( jQuery( "#buscar_productos_de_investigacion"  ) ){ jQuery( "#buscar_productos_de_investigacion"  ).button({ icons: {primary:'ui-icon ui-icon-search'     ,secondary:'ui-icon ui-icon-newwin'} });   }
+	/*Proyecto investigacion dialogo buscar_tipo_productos_de_investigacion*/
+	if( jQuery( "#buscar_tipo_productos_de_investigacion"  ) ){ jQuery( "#buscar_tipo_productos_de_investigacion"  ).button({ icons: {primary:'ui-icon ui-icon-search'     ,secondary:'ui-icon ui-icon-newwin'} });   }
+	/*Proyecto investigacion dialogo Ies*/
+	if( jQuery( "#buscar_ies"                         ) ){ jQuery( "#buscar_ies"  ).button({ icons: {primary:'ui-icon ui-icon-search'     ,secondary:'ui-icon ui-icon-newwin'} });   }
+	/*Proyecto investigacion dialogo Roles*/
+	if( jQuery( "#buscar_roles"                       ) ){ jQuery( "#buscar_roles"  ).button({ icons: {primary:'ui-icon ui-icon-search'     ,secondary:'ui-icon ui-icon-newwin'} });   }
+	/*Proyecto investigacion dialogo Ies*/
+	if( jQuery( "#buscar_nbc"                         ) ){ jQuery( "#buscar_nbc"  ).button({ icons: {primary:'ui-icon ui-icon-search'     ,secondary:'ui-icon ui-icon-newwin'} });   }
+	/*Proyecto investigacion dialogo tipo_proyecto*/
+	if( jQuery( "#buscar_tipo_proyecto"               ) ){ jQuery( "#buscar_tipo_proyecto"  ).button({ icons: {primary:'ui-icon ui-icon-search'     ,secondary:'ui-icon ui-icon-newwin'} });   }
+	/*Proyecto investigacion dialogo tipo proyecto*/
+	if( jQuery( "#buscar_grupos_de_investigacion"     ) ){ jQuery( "#buscar_grupos_de_investigacion"  ).button({ icons: {primary:'ui-icon ui-icon-search'     ,secondary:'ui-icon ui-icon-newwin'} });   }
+	/*Proyecto investigacion dialogo grupos de investigacion*/
+	if( jQuery( "#buscar_redes_de_cooperacion"        ) ){ jQuery( "#buscar_redes_de_cooperacion"  ).button({ icons: {primary:'ui-icon ui-icon-search'     ,secondary:'ui-icon ui-icon-newwin'} });   }
+	/*Proyecto investigacion dialogo departamentos*/
+	if( jQuery( "#buscar_departamentos"               ) ){ jQuery( "#buscar_departamentos"  ).button({ icons: {primary:'ui-icon ui-icon-search'     ,secondary:'ui-icon ui-icon-newwin'} });   }
+	/*Proyecto investigacion dialogo municipios*/
+	if( jQuery( "#buscar_municipios"                  ) ){ jQuery( "#buscar_municipios"  ).button({ icons: {primary:'ui-icon ui-icon-search'     ,secondary:'ui-icon ui-icon-newwin'} });   }
+	/*Proyecto investigacion dialogo pais*/
+	if( jQuery( "#buscar_pais"                        ) ){ jQuery( "#buscar_pais"  ).button({ icons: {primary:'ui-icon ui-icon-search'     ,secondary:'ui-icon ui-icon-newwin'} });   }
+	/*Proyecto investigacion fuente de financiacion nacional*/
+	if( jQuery( "#buscar_fuentes_de_financiacion_nacional"       ) ){ jQuery( "#buscar_fuentes_de_financiacion_nacional"  ).button({ icons: {primary:'ui-icon ui-icon-search'     ,secondary:'ui-icon ui-icon-newwin'} });   }
+	/*Proyecto investigacion fuente de financiacion internacional*/
+	if( jQuery( "#buscar_fuentes_de_financiacion_internacional"  ) ){ jQuery( "#buscar_fuentes_de_financiacion_internacional"  ).button({ icons: {primary:'ui-icon ui-icon-search'     ,secondary:'ui-icon ui-icon-newwin'} });   }
+	/*Proyecto investigacion fuente de financiacion internacional*/
+	if( jQuery( "#buscar_tipos_de_gastos"                         ) ){ jQuery( "#buscar_tipos_de_gastos"  ).button({ icons: {primary:'ui-icon ui-icon-search'     ,secondary:'ui-icon ui-icon-newwin'} });   }
+	/*Proyecto investigacion fuente de financiacion internacional*/
+	if( jQuery( "#buscar_tipo_participacion_proyecto"                         ) ){ jQuery( "#buscar_tipo_participacion_proyecto"  ).button({ icons: {primary:'ui-icon ui-icon-search'     ,secondary:'ui-icon ui-icon-newwin'} });   }
+	/*Proyecto investigacion fuente de financiacion internacional*/
+	if( jQuery( "#buscar_nivel_educativo"                         ) ){ jQuery( "#buscar_nivel_educativo"  ).button({ icons: {primary:'ui-icon ui-icon-search'     ,secondary:'ui-icon ui-icon-newwin'} });   }
+	/*Proyecto investigacion fuente de financiacion internacional*/
+	if( jQuery( "#buscar_sector_entidad"                         ) ){ jQuery( "#buscar_sector_entidad"  ).button({ icons: {primary:'ui-icon ui-icon-search'     ,secondary:'ui-icon ui-icon-newwin'} });   }
+	/*Proyecto investigacion fuente de financiacion internacional*/
+	if( jQuery( "#buscar_entidades_integrantes_red"                         ) ){ jQuery( "#buscar_entidades_integrantes_red"  ).button({ icons: {primary:'ui-icon ui-icon-search'     ,secondary:'ui-icon ui-icon-newwin'} });   }
+	/*Proyecto investigacion fuente de financiacion internacional*/
+	if( jQuery( "#buscar_entidades_integrantes_red2"                         ) ){ jQuery( "#buscar_entidades_integrantes_red2"  ).button({ icons: {primary:'ui-icon ui-icon-search'     ,secondary:'ui-icon ui-icon-newwin'} });   }
+	/*Proyecto investigacion fuente de financiacion internacional*/
+	if( jQuery( "#buscar_investigadores"                         ) ){ jQuery( "#buscar_investigadores"  ).button({ icons: {primary:'ui-icon ui-icon-search'     ,secondary:'ui-icon ui-icon-newwin'} });   }
+	/*Proyecto investigacion fuente de financiacion internacional*/
+	if( jQuery( "#buscar_proyecto_de_investigacion"                         ) ){ jQuery( "#buscar_proyecto_de_investigacion"  ).button({ icons: {primary:'ui-icon ui-icon-search'     ,secondary:'ui-icon ui-icon-newwin'} });   }
+	/*Proyecto investigacion fuente de financiacion internacional*/
+	if( jQuery( "#buscar_rubros"                         ) ){ jQuery( "#buscar_rubros"  ).button({ icons: {primary:'ui-icon ui-icon-search'     ,secondary:'ui-icon ui-icon-newwin'} });   }
+
+	if( jQuery( "#buscar"     ) ){ jQuery( "#buscar"        ).button({ icons: {primary:'ui-icon ui-icon-circle-check' ,secondary:'ui-icon-triangle-1-s'}       });   }
+	if( jQuery( "#enviar"     ) ){ jQuery( "#enviar"        ).button({ icons: {primary:'ui-icon ui-icon-circle-check' ,secondary:'ui-icon-triangle-1-s'}       });   }
+	if( jQuery( "#guardar"    ) ){ jQuery( "#guardar"       ).button({ icons: {primary:'ui-icon ui-icon-circle-check' ,secondary:'ui-icon-triangle-1-s'}       });   }
+	if( jQuery( "#cancelar"   ) ){ jQuery( "#cancelar"      ).button({ icons: {primary:'ui-icon ui-icon-circle-minus' ,secondary:'ui-icon ui-icon-closethick'} });   }
+
+	if( jQuery( "#generar"        ) ){ jQuery( "#generar"        ).button({ icons: {primary:'ui-icon ui-icon-circle-check' ,secondary:'ui-icon-triangle-1-s'}       });   }
+	if( jQuery( "#copiar"         ) ){ jQuery( "#copiar"         ).button({ icons: {primary:'ui-icon ui-icon-circle-check' ,secondary:'ui-icon-triangle-1-s'}       });   }
+
+	
+	if( jQuery( "#agregar_gasto"   ) ){ jQuery( "#agregar_gasto"   ).button({ icons: {primary:'ui-icon ui-icon-circle-plus'  ,secondary:'ui-icon-cart'} }); }
+	if( jQuery( "#agregar_entidad"   ) ){ jQuery( "#agregar_entidad"   ).button({ icons: {primary:'ui-icon ui-icon-circle-plus'  ,secondary:'ui-icon-cart'} }); }
+	if( jQuery( "#agregar_entidad2"   ) ){ jQuery( "#agregar_entidad2"   ).button({ icons: {primary:'ui-icon ui-icon-circle-plus'  ,secondary:'ui-icon-cart'} }); }
+
+	
+	if( jQuery( "#inicio"         ) ){ jQuery( "#inicio"         ).button({ icons: {primary:'ui-icon ui-icon-person' ,secondary:'ui-icon ui-icon-power'}       });   }
+	
+		/*Ventanas de busquedas*/
+		
+		/*Proyecto de Investigacion Departamentos*/
+		if(jQuery("#buscar_pais")){
+				jQuery("#buscar_pais").click(function(){
+						buscar_dialogo("pais","true","true");
+				});
+		}
+		
+		/*Proyecto de Investigacion Departamentos*/
+		if(jQuery("#buscar_rubros")){
+				jQuery("#buscar_rubros").click(function(){
+						buscar_dialogo("rubros","true","true");
+				});
+		}
+		
+		/*Proyecto de Investigacion Roles*/
+		if(jQuery("#buscar_roles")){
+				jQuery("#buscar_roles").click(function(){
+						buscar_dialogo("roles_de_usuario","true","true");
+				});
+		}
+		
+		
+		/*Proyecto de Investigacion Roles*/
+		if(jQuery("#buscar_proyecto_de_investigacion")){
+				jQuery("#buscar_proyecto_de_investigacion").click(function(){
+						buscar_dialogo("proyecto_de_investigacion","true","true");
+				});
+		}
+
+		
+		/*Proyecto de Investigacion Departamentos*/
+		if(jQuery("#buscar_departamentos")){
+				jQuery("#buscar_departamentos").click(function(){
+						if(jQuery("#codigo_pais").val()){
+							buscar_dialogo("departamentos","codigo_pais",jQuery("#codigo_pais").val());
+						}else{
+							jQuery("#dialogo_mensajes").html("");
+							jQuery("#dialogo_mensajes").html("Por favor Escoger Un Pais");
+							jQuery("#dialogo_mensajes").dialog("open");	
+						}
+				});
+		}
+
+
+		/*Proyecto de Investigacion Municipios*/
+		if(jQuery("#buscar_municipios")){
+				jQuery("#buscar_municipios").click(function(){
+					if(jQuery("#codigo_departamentos").val()!=''){
+						buscar_dialogo("municipios","codigo_departamentos",jQuery("#codigo_departamentos").val());
+					}else{
+						jQuery("#dialogo_mensajes").html("");
+						jQuery("#dialogo_mensajes").html("Por favor Escoger Un Departamento");
+						jQuery("#dialogo_mensajes").dialog("open");	
+					}
+				});
+		}
+
+		
+		/*Proyecto de Investigacion Objetivo Socieconomico*/
+		if(jQuery("#buscar_objetivo_socioeconomico")){
+				jQuery("#buscar_objetivo_socioeconomico").click(function(){
+						buscar_dialogo("objetivo_socioeconomico","true","true");
+				});
+		}
+		
+		
+		/*Proyecto de Ies*/
+		if(jQuery("#buscar_ies")){
+				jQuery("#buscar_ies").click(function(){
+						buscar_dialogo("ies","true","true");
+				});
+		}
+		
+		/*Proyecto de Tipo Proyecto*/
+		if(jQuery("#buscar_tipo_proyecto")){
+				jQuery("#buscar_tipo_proyecto").click(function(){
+						buscar_dialogo("tipo_proyecto","true","true");
+				});
+		}
+		
+		/*Proyecto de Tipo Proyecto*/
+		if(jQuery("#buscar_grupos_de_investigacion")){
+				jQuery("#buscar_grupos_de_investigacion").click(function(){
+						buscar_dialogo("grupos_de_investigacion","true","true");
+				});
+		}
+		
+		
+		/*Proyecto de Nbc*/
+		if(jQuery("#buscar_nbc")){
+				jQuery("#buscar_nbc").click(function(){
+						buscar_dialogo("nbc","true","true");
+				});
+		}
+		
+		/*Proyecto de buscar_tipos_de_gastos*/
+		if(jQuery("#buscar_tipos_de_gastos")){
+				jQuery("#buscar_tipos_de_gastos").click(function(){
+						buscar_dialogo("tipos_de_gastos","true","true");
+				});
+		}
+	
+		
+		/*Proyecto de Investigacion Popup productos_de_investigacion*/
+		if(jQuery("#buscar_centros_de_investigacion")){
+				jQuery("#buscar_centros_de_investigacion").click(function(){
+						if(jQuery("#cod_ies").val()!=''){
+							buscar_dialogo("centros_de_investigacion","cod_ies",jQuery("#cod_ies").val());
+						}else{
+							jQuery("#dialogo_mensajes").html("");
+							jQuery("#dialogo_mensajes").html("Por favor Escoger Codigo IES");
+							jQuery("#dialogo_mensajes").dialog("open");	
+						}
+				});
+		}
+		
+		
+		/*Proyecto de Investigacion Popup productos_de_investigacion*/
+		if(jQuery("#buscar_productos_de_investigacion")){
+
+			jQuery("#buscar_productos_de_investigacion").click(function(){
+					buscar_dialogo("productos_de_investigacion","true","true");
+			});
+			
+		}
+		
+		
+		/*Proyecto de Investigacion Popup productos_de_investigacion*/
+		if(jQuery("#buscar_tipo_productos_de_investigacion")){
+
+			jQuery("#buscar_tipo_productos_de_investigacion").click(function(){
+					buscar_dialogo("tipo_productos_de_investigacion","true","true");
+			});
+			
+		}
+		
+		
+		/*Proyecto de Investigacion Popup Ies*/
+		if(jQuery("#buscar_redes_de_cooperacion")){
+				jQuery("#buscar_redes_de_cooperacion").click(function(){
+					if(jQuery("#cod_ies").val()!=''){
+						buscar_dialogo("redes_de_cooperacion","cod_ies",jQuery("#cod_ies").val());
+					}else{
+						jQuery("#dialogo_mensajes").html("");
+						jQuery("#dialogo_mensajes").html("Por favor Escoger Codigo IES");
+						jQuery("#dialogo_mensajes").dialog("open");	
+					}
+				});
+		}
+		 
+		
+		/*Proyecto de Investigacion Popup fuentes_de_financiacion_nacional*/
+		if(jQuery("#buscar_fuentes_de_financiacion_nacional")){
+
+			jQuery("#buscar_fuentes_de_financiacion_nacional").click(function(){
+					buscar_dialogo("fuentes_de_financiacion_nacional","true","true");
+			});
+			
+		}
+		
+		
+		/*Proyecto de Investigacion Popup fuentes_de_financiacion_internacional*/
+		if(jQuery("#buscar_fuentes_de_financiacion_internacional")){
+
+			jQuery("#buscar_fuentes_de_financiacion_internacional").click(function(){
+					buscar_dialogo("fuentes_de_financiacion_internacional","true","true");
+			});
+			
+		}
+		
+		/*Proyecto de Investigacion Popup fuentes_de_financiacion_internacional*/
+		if(jQuery("#buscar_tipo_participacion_proyecto")){
+
+			jQuery("#buscar_tipo_participacion_proyecto").click(function(){
+					buscar_dialogo("tipo_participacion_proyecto","true","true");
+			});
+			
+		}
+
+		/*Proyecto de Investigacion Popup fuentes_de_financiacion_internacional*/
+		if(jQuery("#buscar_nivel_educativo")){
+
+			jQuery("#buscar_nivel_educativo").click(function(){
+					buscar_dialogo("nivel_educativo","true","true");
+			});
+			
+		}
+		
+		/*Proyecto de Investigacion Popup investigadores*/
+		if(jQuery("#buscar_investigadores")){
+
+			jQuery("#buscar_investigadores").click(function(){
+					buscar_dialogo("investigadores","true","true");
+			});
+			
+		}
+		
+			/*Proyecto de Investigacion Popup fuentes_de_financiacion_internacional*/
+		if(jQuery("#buscar_sector_entidad")){
+			
+			jQuery("#buscar_sector_entidad").click(function(){
+					if(jQuery("#codigo_pais").val()!='' && jQuery("#cod_ies").val()!=''){
+						buscar_dialogo("sector_entidad","codigo_pais",jQuery("#codigo_pais").val());
+					}else{
+						jQuery("#dialogo_mensajes").html("");
+						jQuery("#dialogo_mensajes").html("Por favor Escoger un Pais y/o Ies ");
+						jQuery("#dialogo_mensajes").dialog("open");	
+					}
+				});
+						
+		}
+		
+				/*Proyecto de Investigacion Popup fuentes_de_financiacion_internacional*/
+		if(jQuery("#buscar_entidades_integrantes_red")){
+			
+			jQuery("#buscar_entidades_integrantes_red").click(function(){
+					if(jQuery("#codigo_pais").val()!='' && jQuery("#cod_ies").val()!=''){
+						buscar_dialogo("entidades_integrantes_de_red","true","true");
+					}else{
+						jQuery("#dialogo_mensajes").html("");
+						jQuery("#dialogo_mensajes").html("Por favor Escoger un Pais y/o Ies ");
+						jQuery("#dialogo_mensajes").dialog("open");	
+					}
+				});
+						
+		}
+		
+				/*Proyecto de Investigacion Popup fuentes_de_financiacion_internacional*/
+		if(jQuery("#buscar_entidades_integrantes_red2")){
+			
+			jQuery("#codigo_pais").val("");
+			
+			jQuery("#buscar_entidades_integrantes_red2").click(function(){
+					if(jQuery("#cod_ies").val()!=''){
+						buscar_dialogo("entidades_integrantes_de_red","true","true");
+					}else{
+						jQuery("#dialogo_mensajes").html("");
+						jQuery("#dialogo_mensajes").html("Por favor Escoger un Ies ");
+						jQuery("#dialogo_mensajes").dialog("open");	
+					}
+				});
+						
+		}
+
+
+
+});
+
+</script>

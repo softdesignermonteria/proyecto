@@ -1,0 +1,399 @@
+<?php echo Tag::form(Router::getController()."/delete", "id: fx","name: fx"); ?>
+<h4>Ies</h4>
+<table id="tabla_ies" width="900px">
+	<tr>
+    	<td colspan="4"><!--BUSCAR IES <button type="button" id="buscar_ies" name="buscar_ies">Buscar</button>--></td>
+    </tr>
+    <tr>
+    	<td width="150px">CODIGO IES</td>
+        <td width="150px"><?php  echo Tag::textField("cod_ies","size: 10","maxlength: 50","readonly: readonly"); ?></td>
+        <td width="150px">NOMBRE IES</td>
+        <td width="400px"><?php  echo Tag::textField("nombre_ies","size: 50","maxlength: 50","readonly: readonly"); ?></td>
+    </tr>
+</table>
+<h4>Proyecto</h4>
+<table id="tabla_proyecto" width="900px">
+	<tr>
+    	<td width="150px" align="left">CODIGO PROYECTO</td>
+        <td width="150px" align="left"><?php  echo Tag::textField("cod_proyecto","size: 20","maxlength: 50"); ?></td>
+        <td width="150px" align="left">TITULO</td>
+        <td width="450px" align="left"><?php  echo Tag::textField("titulo_proyecto","size: 60"); ?></td>
+    </tr>
+    <tr>
+    	<td align="left">FECHA DE INICIO</td>
+        <td align="left"><?php  echo Tag::textField("fecha_inicio_proyecto","size: 20","maxlength: 10"); ?></td>
+        <td align="left">DURACION EN MESES</td>
+        <td align="left"><?php  echo Tag::textField("duracion_proyecto","size: 10","maxlength: 5"); ?></td>
+    </tr>
+    <tr>
+    	<td align="left">TIPO PROYECTO</td>
+        <td colspan="3" align="left">
+	        <?php  echo Tag::textField("codigo_tipo_proyecto","size: 10","maxlength: 50","readonly: readonly"); ?>
+    	    <?php  echo Tag::textField("nombre_tipo_proyecto","size: 50","maxlength: 50","readonly: readonly"); ?>
+            <!--<button type="button" id="buscar_tipo_proyecto">Buscar</button>-->
+       	</td>
+    </tr>
+    <tr>
+    	<td align="left">OBJETIVO SOCIOECNOMICO</td>
+        <td colspan="3" align="left">
+        	<?php  echo Tag::textField("cod_objetivo","size: 10","maxlength: 50","readonly: readonly"); ?>
+            <?php  echo Tag::textField("nombre_objetivo","size: 50","maxlength: 50","readonly: readonly"); ?>
+            <!--<button type="button" id="buscar_objetivo_socioeconomico">Buscar</button>-->
+        </td>
+    </tr>
+     <tr>
+    	<td align="left">OBJETIVO DEL PROYECTO</td>
+        <td colspan="3" align="left">
+       		 <?php  echo Tag::textArea("objetivo_proyecto","cols: 80","rows: 5"); ?>
+        </td>
+    </tr>
+     <tr>
+    	<td align="left">RESUMEN DEL PROYECTO</td>
+        <td colspan="3" align="left">
+        	<?php  echo Tag::textArea("resumen_proyecto","cols: 80","rows: 5"); ?>
+        </td>
+    </tr>
+  <tr>
+       <td align="left">RESULTADOS ESPERADOS</td>
+       <td colspan="3" align="left">
+	       <?php  echo Tag::textArea("resultados_esperados","cols: 80","rows: 5"); ?>
+        </td>
+     </tr>
+     <tr>
+       <td align="left">VALOR PROYECTO</td>
+       <td colspan="3" align="left">
+                <?php  echo Tag::textField("valor_proyecto","size: 30","maxlength: 50"); ?>
+        </td>
+     </tr>
+</table>
+<h4>FUENTES DE FINANCIACION NACIONAL</h4>
+<table id="tabla_fuentes_de_financiacion_nacional" width="900px">
+	<tr>
+    	<td width="200px">FUENTES DE FINANCIACION NACIONAL</td>
+        <td colspan="3"><!--<button type="button" id="buscar_fuentes_de_financiacion_nacional">Buscar</button>--></td>
+    </tr>
+</table>
+<table id="proyecto_fuentes_de_financiacion_nacional"> 
+	<tbody>
+        <tr id="pffn_encabezados" class="ui-dialog-titlebar ui-widget-header ui-corner-all">	
+            <td width="200px">Codigo</td>
+            <td colspan="2" width="450px">Nombre</td>
+            <td width="200px">borrar</td>
+        </tr>
+       <?php 
+	   		$fnac = new TblFuenteFinanciacionNacional();
+	   		foreach($fnacional as $filas): ?> 
+       <tr id="pffn_<?php echo $filas->getId(); ?>" >	
+            <td width="200px"><?php echo $filas->getFKCodFuenteFNacional(); ?></td>
+            <td colspan="2" width="450px"><?php echo utf8_encode($fnac->findFirst(" Cod_Fuente_Financiacion_Nacional = '".$filas->getFKCodFuenteFNacional()."' ")->getDescripcionFuenteFinanciacionNacional()); ?></td>
+            <td width="200px">
+            	<!--<button type="button" id='pffn_eliminar_<?php echo $filas->getId(); ?>' onClick='jQuery("#pffn_<?php echo $filas->getId(); ?>").remove();' >Borrar Fila</button> -->
+            </td>
+        </tr>
+        <script>/*jQuery("#pffn_eliminar_<?php echo $filas->getId(); ?>").button({ icons: {primary:'ui-icon ui-icon-circle-minus' ,secondary:'ui-icon ui-icon-trash'} });*/</script>        
+       <?php endforeach;?>
+    </tbody>
+</table>
+<h4>FUENTES DE FINANCIACION INTERNACIONAL</h4>
+<table id="tabla_grupos_investigacion" width="900px">
+	<tr>
+    	<td width="200px">FUENTES DE FINANCIACION INTERNACIONAL</td>
+        <td colspan="3"><!--<button type="button" id="buscar_fuentes_de_financiacion_internacional">Buscar</button>--></td>
+    </tr>
+</table>
+<table id="proyecto_fuentes_de_financiacion_internacional"> 
+	<tbody>
+        <tr id="pffi_encabezados" class="ui-dialog-titlebar ui-widget-header ui-corner-all">	
+            <td width="200px">Codigo</td>
+            <td colspan="2" width="450px">Nombre</td>
+            <td width="200px">borrar</td>
+        </tr>
+        <?php 
+	   		$fnac = new TblFuenteFinanciacionInternacional();
+	   		foreach($finternacional as $filas): ?> 
+       <tr id="pffi_<?php echo $filas->getId(); ?>" >	
+            <td width="200px"><?php echo $filas->getFKCodFuenteFInternacional(); ?></td>
+            <td colspan="2" width="450px"><?php echo utf8_encode($fnac->findFirst(" Cod_Fuente_Financiacion_Internacional = '".$filas->getFKCodFuenteFInternacional()."' ")->getDescripcionFuenteFinanciacionInternacional()); ?></td>
+            <td width="200px">
+            	<!--<button type="button" id='pffi_eliminar_<?php echo $filas->getId(); ?>' onClick='jQuery("#pffi_<?php echo $filas->getId(); ?>").remove();' >Borrar Fila</button> -->
+            </td>
+        </tr>
+        <script>/*jQuery("#pffi_eliminar_<?php echo $filas->getId(); ?>").button({ icons: {primary:'ui-icon ui-icon-circle-minus' ,secondary:'ui-icon ui-icon-trash'} });*/</script>        
+       <?php endforeach;?>
+    </tbody>
+</table>
+<h4>GASTOS</h4>
+<table id="tabla_gastos" width="900px">
+	<tr>
+    	<td width="100px" align="left">TIPO DE GATOS</td>
+        <td width="400px" align="left">
+			<?php echo Tag::textField("codigo_tipo_de_gastos","size: 10","readonly: readonly"); ?>
+            <?php echo Tag::textField("nombre_tipo_de_gastos","size: 40","readonly: readonly"); ?>
+    		 <!--button type="button" id="buscar_tipos_de_gastos">Buscar</button>-->
+        </td>
+        <td width="100px" align="left">VALOR GASTO:</td>
+        <td width="200px" align="left"><?php echo Tag::textField("valor_gastos","size: 30"); ?></td>
+    </tr>
+     
+    <tr>
+    	<td colspan="4">&nbsp;</td>
+    </tr>
+    <tr>
+    	<td align="center" colspan="4"><!--<button type="button" id="agregar_gasto" name="agregar_gasto">Agregar Gasto</button>--></td>
+    </tr>
+</table>
+<table id="proyecto_gastos"> 
+	<tbody>
+        <tr id="pgastos_encabezados" class="ui-dialog-titlebar ui-widget-header ui-corner-all">	
+            <td width="150px">Codigo</td>
+            <td width="400px">Nombre</td>
+            <td width="100px">Valor</td>
+            <td width="150px">borrar</td>
+        </tr>
+        <?php 
+	   		$fnac = new TblTipoGasto();
+	   		foreach($gastos as $filas): ?> 
+       		<tr id="pgastos_<?php echo $filas->getCodGasto(); ?>" >	
+                <td><?php echo $filas->getFKCodTipoGastos(); ?></td>
+                <td><?php echo utf8_encode($fnac->findFirst(" Cod_Tipo_Gasto = '".$filas->getFKCodTipoGastos()."' ")->getDescripcionTipoGasto()); ?></td>
+                <td><?php echo $filas->getValorGastos(); ?></td>
+                <td>
+                    <!--<button type="button" id='pgastos_eliminar_<?php echo $filas->getCodGasto(); ?>' onClick='jQuery("#pgastos_<?php echo $filas->getCodGasto(); ?>").remove();' >Borrar Fila</button>--> 
+                </td>
+        	</tr>
+        <script>/*jQuery("#pgastos_eliminar_<?php echo $filas->getCodGasto(); ?>").button({ icons: {primary:'ui-icon ui-icon-circle-minus' ,secondary:'ui-icon ui-icon-trash'} });*/</script>        
+       <?php endforeach;?>
+    </tbody>
+</table>
+<h4>GRUPOS DE INVESTIGACION</h4>
+<table id="tabla_grupos_investigacion" width="900px">
+	<tr>
+    	<td width="200px">GRUPOS DE INVESTIGACION</td>
+        <td colspan="3"><!--<button type="button" id="buscar_grupos_de_investigacion">Buscar</button>--></td>
+    </tr>
+</table>
+<table id="proyecto_grupos_investigacion"> 
+	<tbody>
+        <tr id="pgi_encabezados" class="ui-dialog-titlebar ui-widget-header ui-corner-all">	
+            <td width="200px">Codigo</td>
+            <td colspan="2" width="450px">Nombre</td>
+            <td width="200px">borrar</td>
+        </tr>
+        <?php 
+	   		$fnac = new TblGrupoInvestigacion();
+	   		foreach($grupos as $filas): ?> 
+       <tr id="pgi_<?php echo $filas->getId(); ?>" >	
+            <td width="200px"><?php echo $filas->getCodGrupoInvestigacion(); ?></td>
+            <td colspan="2" width="450px"><?php echo utf8_encode($fnac->findFirst(" Cod_Grupo = '".$filas->getCodGrupoInvestigacion()."' ")->getNombreGrupo()); ?></td>
+            <td width="200px">
+            	<!--<button type="button" id='pgi_eliminar_<?php echo $filas->getId(); ?>' onClick='jQuery("#pgi_<?php echo $filas->getId(); ?>").remove();' >Borrar Fila</button> -->
+            </td>
+        </tr>
+        	<script>/*jQuery("#pgi_eliminar_<?php echo $filas->getId(); ?>").button({ icons: {primary:'ui-icon ui-icon-circle-minus' ,secondary:'ui-icon ui-icon-trash'} });*/</script>        
+       <?php endforeach;?>
+    </tbody>
+</table>
+<h4>CENTROS DE INVESTIGACION</h4>
+<table id="tabla_centros_investigacion" width="900px">
+	<tr>
+    	<td width="200px">CODIGO CENTRO DE INVESTIGACION</td>
+       <td colspan="3"><!--<button  type="button" id="buscar_centros_de_investigacion">Buscar</button>--></td>
+    </tr>
+</table>
+<table id="proyecto_centros_investigacion"> 
+	<tbody>
+        <tr id="pci_encabezados" class="ui-dialog-titlebar ui-widget-header ui-corner-all">	
+            <td width="200px">Codigo</td>
+            <td colspan="2" width="450px">Nombre</td>
+            <td width="200px">borrar</td>
+        </tr>
+        <?php 
+	   		$fnac = new TblCentrosInvestigacion();
+	   		foreach($centros as $filas): ?> 
+       <tr id="pci_<?php echo $filas->getId(); ?>" >	
+            <td width="200px"><?php echo $filas->getCodCentroInvestigacion(); ?></td>
+            <td colspan="2" width="450px"><?php echo utf8_encode($fnac->findFirst(" Cod_Centro_Investigacion = '".$filas->getCodCentroInvestigacion()."' ")->getNombreCentroInvestigacion()); ?></td>
+            <td width="200px">
+            	<!--<button type="button" id='pci_eliminar_<?php echo $filas->getId(); ?>' onClick='jQuery("#pci_<?php echo $filas->getId(); ?>").remove();' >Borrar Fila</button> -->
+            </td>
+        </tr>
+        	<script>/*jQuery("#pci_eliminar_<?php echo $filas->getId(); ?>").button({ icons: {primary:'ui-icon ui-icon-circle-minus' ,secondary:'ui-icon ui-icon-trash'} });*/</script>        
+       <?php endforeach;?>
+    </tbody>
+</table>
+
+<h4>REDES DE COOPERACION</h4>
+<table id="tabla_redes_cooperacion" width="900px">
+	<tr>
+    	<td width="200px">CODIGO RED DE COOPERACION</td>
+       <td colspan="3"><!--<button  type="button" id="buscar_redes_de_cooperacion">Buscar</button>--></td>
+    </tr>
+</table>
+<table id="proyecto_redes_cooperacion"> 
+	<tbody>
+        <tr id="prc_encabezados" class="ui-dialog-titlebar ui-widget-header ui-corner-all">	
+            <td width="200px">Codigo</td>
+            <td colspan="2" width="450px">Nombre</td>
+            <td width="200px">borrar</td>
+        </tr>
+        <?php 
+	   		$fnac = new TblRedCooperacionProyecto();
+	   		foreach($redes as $filas): ?> 
+       <tr id="prc_<?php echo $filas->getId(); ?>" >	
+            <td width="200px"><?php echo $filas->getCodRedCooperacion(); ?></td>
+            <td colspan="2" width="450px"><?php echo utf8_encode($fnac->findFirst(" Cod_Red_Cooperacion = '".$filas->getCodRedCooperacion()."' ")->getNombreRedCooperacion()); ?></td>
+            <td width="200px">
+            	<!--<button type="button" id='prc_eliminar_<?php echo $filas->getId(); ?>' onClick='jQuery("#prc_<?php echo $filas->getId(); ?>").remove();' >Borrar Fila</button> -->
+            </td>
+        </tr>
+        <script>/*jQuery("#prc_eliminar_<?php echo $filas->getId(); ?>").button({ icons: {primary:'ui-icon ui-icon-circle-minus' ,secondary:'ui-icon ui-icon-trash'} });*/</script>        
+       <?php endforeach;?>
+    </tbody>
+</table>
+
+<h4>PRODUCTOS DE INVESTIGACION</h4>
+<table id="tabla_productos_investigacion" width="900px">
+	<tr>
+    	<td width="200px">CODIGO PRODUCTO DE INVESTIGACION</td>
+       <td colspan="3"><!--<button  type="button" id="buscar_productos_de_investigacion">Buscar</button>--></td>
+    </tr>
+</table>
+<table id="proyecto_productos_investigacion"> 
+	<tbody>
+        <tr id="ppi_encabezados" class="ui-dialog-titlebar ui-widget-header ui-corner-all">	
+            <td width="200px">Codigo</td>
+            <td colspan="2" width="450px">Nombre</td>
+            <td width="200px">borrar</td>
+        </tr>
+        <?php 
+	   		$fnac = new TblProductoInvestigacion();
+	   		foreach($productos as $filas): ?> 
+       <tr id="ppi_<?php echo $filas->getId(); ?>" >	
+            <td width="200px"><?php echo $filas->getCodProductoInvestigacion(); ?></td>
+            <td colspan="2" width="450px"><?php echo utf8_encode($fnac->findFirst(" Cod_Producto_Investigacion = '".$filas->getCodProductoInvestigacion()."' ")->getDescripcionProductoInvestigacion()); ?></td>
+            <td width="200px">
+            	<!--<button type="button" id='ppi_eliminar_<?php echo $filas->getId(); ?>' onClick='jQuery("#ppi_<?php echo $filas->getId(); ?>").remove();' >Borrar Fila</button> -->
+            </td>
+        </tr>
+        <script>/*jQuery("#ppi_eliminar_<?php echo $filas->getId(); ?>").button({ icons: {primary:'ui-icon ui-icon-circle-minus' ,secondary:'ui-icon ui-icon-trash'} });*/</script>        
+       <?php endforeach;?>
+    </tbody>
+</table>
+
+<br />
+<div align="center"><button  type="submit" id="guardar" name="guardar2">Eliminar Este Proyecto de Investigacion</button></div>
+<br />
+<div id="mensajes"></div>
+<br />
+
+  <div align="center" id="progressbarWrapper" style="height:30px; width:100% " class="ui-widget-default">
+    <div id="progressbar" style="height:100%;"></div>
+ </div>
+<?php echo Tag::endForm(); ?>
+
+<script>
+jQuery(document).ready(function(e) {
+
+	jQuery('#fx').submit(function(event) {  
+	  event.preventDefault();  
+	  var url = jQuery(this).attr('action');  
+	  var datos = jQuery(this).serialize();
+	  
+	  //var srv = JSON.stringify(detalles);
+	  	var grupos_investigacion = JSON.stringify(tableToJson( document.getElementById("proyecto_grupos_investigacion") ) );
+		var centros_investigacion = JSON.stringify(tableToJson( document.getElementById("proyecto_centros_investigacion") ) );
+		var redes_cooperacion = JSON.stringify(tableToJson( document.getElementById("proyecto_redes_cooperacion") ) );
+		var productos_investigacion = JSON.stringify(tableToJson( document.getElementById("proyecto_productos_investigacion") ) );
+		var fuentes_de_financiacion_nacional = JSON.stringify(tableToJson( document.getElementById("proyecto_fuentes_de_financiacion_nacional") ) );
+		var fuentes_de_financiacion_internacional = JSON.stringify(tableToJson( document.getElementById("proyecto_fuentes_de_financiacion_internacional") ) );
+		var gastos = JSON.stringify(tableToJson( document.getElementById("proyecto_gastos") ) );
+		//var srv = tableToJson( document.getElementById("proyecto_grupos_investigacion") ) ;
+		jQuery( "#progressbar" ).progressbar({ value: 50 });	
+		//jQuery("#guardar").attr("disabled","disabled");
+		
+			//$('#resumen').html('Cargando....');
+			
+			var jqXHR = jQuery.ajax({
+				type: "post",
+				url: url,
+				data: {
+						cod_ies:                jQuery("#cod_ies").val(),
+						cod_proyecto:           jQuery("#cod_proyecto").val(),
+						titulo_proyecto:        jQuery("#titulo_proyecto").val(),
+						fecha_inicio_proyecto:  jQuery("#fecha_inicio_proyecto").val(),
+						duracion_proyecto:      jQuery("#duracion_proyecto").val(),
+						codigo_tipo_proyecto:   jQuery("#codigo_tipo_proyecto").val(),
+						cod_objetivo:           jQuery("#cod_objetivo").val(),
+						objetivo_proyecto:      jQuery("#objetivo_proyecto").val(),
+						resumen_proyecto:       jQuery("#resumen_proyecto").val(),
+						resultados_esperados:   jQuery("#resultados_esperados").val(),
+						valor_proyecto:         jQuery("#valor_proyecto").val(),
+						grupos_investigacion:    grupos_investigacion,
+						centros_investigacion:   centros_investigacion,
+						redes_cooperacion:       redes_cooperacion,
+						productos_investigacion: productos_investigacion,
+						fuentes_de_financiacion_nacional: fuentes_de_financiacion_nacional,
+						fuentes_de_financiacion_internacional: fuentes_de_financiacion_internacional,
+						gastos:                 gastos
+				},
+				success: function(data) {
+					jQuery( '#mensajes' ).html("");
+					jQuery( "#progressbar" ).progressbar({ value: 90 });
+					jQuery( '#mensajes' ).html(data);
+				},
+				error: function(data) {
+					jQuery('#dialogo_mensajes').html("Error Enviando parametros.....");
+					jQuery( "#progressbar" ).progressbar({ value: 0 });
+					jQuery('#dialogo_mensajes').dialog("open");
+					
+				}
+			});
+			
+			 jqXHR.done(function(data){
+				jQuery( "#progressbar" ).progressbar({ value: 0 });
+			});  
+	 
+	});  
+/*	
+	jQuery("#agregar_gasto").click(function(event){
+			event.preventDefault();
+			var sw=0;
+			var msg = "";
+			if( jQuery("#codigo_tipo_de_gastos").val() =='' ){ sw=1; msg+= "Seleccione un tipo de gastos <br />"; } 
+			if( jQuery("#valor_gastos").val() == ''          ){ sw=1; msg+= "Valor del Gasto no puede ser vacio <br />"; } 
+			
+				if(jQuery("#proyecto_gastos")){
+							if( sw==0 ){
+									if( jQuery("#prc_" + jQuery("#codigo_tipo_de_gastos").val() ).length ){
+											
+											jQuery("#dialogo_mensajes").html("");
+											jQuery("#dialogo_mensajes").html("<strong>Error Tipo de Gastos ya Agreado para este Proyecto</strong>" );
+											jQuery("#dialogo_mensajes").dialog("open");
+											
+									}else{
+											html ="";
+											html +="<tr id=pgastos_" + jQuery("#codigo_tipo_de_gastos").val() + ">"
+												html += "<td>" + jQuery("#codigo_tipo_de_gastos").val() + "</td>"
+												html += "<td>" + jQuery("#nombre_tipo_de_gastos").val() + "</td>"
+												html += "<td>" + jQuery("#valor_gastos").val() + "</td>"
+												html += "<td><button type=\"button\" id='pgastos_eliminar_"+jQuery("#codigo_tipo_de_gastos").val()+"' onClick='jQuery(\"#pgastos_" + jQuery("#codigo_tipo_de_gastos").val() + "\").remove();' >Borrar Fila</button> </td>"
+											html +="</tr>"
+											jQuery('#proyecto_gastos tr:last').after(html);
+											jQuery("#pgastos_eliminar_"+jQuery("#codigo_tipo_de_gastos").val()).button({ icons: {primary:'ui-icon ui-icon-circle-minus' ,secondary:'ui-icon ui-icon-trash'} });
+											jQuery("#codigo_tipo_de_gastos").val("");
+											jQuery("#nombre_tipo_de_gastos").val("");
+											jQuery("#valor_gastos").val("");
+											
+											
+										}
+							}else{
+										jQuery("#dialogo_mensajes").html("");
+										jQuery("#dialogo_mensajes").html("<strong>"+msg+"</strong>" );
+										jQuery("#dialogo_mensajes").dialog("open");
+							}
+					}
+			});
+	*/
+	
+});
+</script>

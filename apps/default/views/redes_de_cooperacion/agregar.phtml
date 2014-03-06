@@ -1,0 +1,291 @@
+<?php echo Tag::form(Router::getController()."/add", "update: mensajes", "id: fx","name: fx"); ?>
+
+<h1>AGREGAR <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?></h1>
+
+<table width="100%">
+    	<tr>
+    	  <th height="25" colspan="4">FORMULARIO PARA AGREGAR <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?></th>
+   	  </tr>
+    	<tr>
+    	  
+    	  <th width="30%" align="right">CODIGO <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?>:</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("codigo_redes_de_cooperacion","size: 50","maxlength: 50","readonly: readonly"); ?></td>
+    	  
+   	  </tr>
+        <tr>
+    	  
+    	  <th width="30%" align="right">NOMBRE <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?>:</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("nombre_redes_de_cooperacion","size: 50"); ?></td>
+    	  
+   	  </tr>
+      <tr>
+    	  
+    	  <th width="30%" align="right">CODIGO IES:</th>
+    	  <td width="64%" align="left">
+		  	<?php  echo Tag::textField("cod_ies","size: 20","maxlength: 50","readonly: readonly"); ?>
+            <?php  echo Tag::textField("nombre_ies","size: 50","maxlength: 50","readonly: readonly"); ?>
+            <button type="button" id="buscar_ies" name="buscar_ies">buscar</button>
+            </td>
+    	  
+   	  </tr>
+      
+       <tr>
+    	  
+    	  <th width="30%" align="right">CODIGO NBC:</th>
+    	  <td width="64%" align="left">
+		  	<?php  echo Tag::textField("codigo_nbc","size: 20","maxlength: 50","readonly: readonly"); ?>
+            <?php  echo Tag::textField("nombre_nbc","size: 50","maxlength: 50","readonly: readonly"); ?>
+            <button type="button" id="buscar_nbc" name="buscar_nbc">buscar</button>
+            </td>
+    	  
+   	  </tr>
+        
+        
+       <tr>
+    	  
+    	  <th width="30%" align="right">FECHA CREACION:</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("fecha_creacion","size: 20","maxlength: 50","readonly: readonly","value: ".date("Y-m-d")); ?></td>
+    	  
+   	  </tr>
+     
+</table>
+<!--<h4>ENTIDADES INTEGRANTES DE LA RED</h4>
+<table id="tabla_entidades_integrantes_de_red" width="900px">
+	<tr>
+	  <td>NOMBRE</td>
+	  <td colspan="3"><?php  echo Tag::textField("nombre_entidades_red","size: 50","maxlength: 200"); ?></td>
+  </tr>
+  <tr>
+	  <td>PAIS</td>
+	  <td colspan="3"><?php  echo Tag::textField("codigo_pais","size: 10","maxlength: 50","readonly: readonly"); ?>
+      <?php  echo Tag::textField("nombre_pais","size: 50","maxlength: 50","readonly: readonly"); ?>
+      <button type="button" id="buscar_pais" name="buscar_ies">buscar</button></td>
+  </tr>
+	<tr>
+	  <td>SECTOR</td>
+	  <td colspan="3"><?php  echo Tag::textField("codigo_sector_entidad","size: 10","maxlength: 50","readonly: readonly"); ?>
+      <?php  echo Tag::textField("nombre_sector_entidad","size: 50","maxlength: 50","readonly: readonly"); ?>
+      <button type="button" id="buscar_sector_entidad" name="buscar_sector_entidad">buscar</button></td>
+  </tr>
+	
+	<tr>
+	  <td>FECHA ADICION A LA RED</td>
+	  <td colspan="3"><?php  echo Tag::textField("fecha_adicion_red","size: 20","maxlength: 10"); ?></td>
+  </tr>
+	<tr>
+    	<td width="200px">FECHA RETIRO A LA RED</td>
+        <td colspan="3"><?php  echo Tag::textField("fecha_retiro_red","size: 20","maxlength: 10"); ?></td>
+    </tr>
+    <tr>
+    	<td align="center" colspan="4"><button  type="button" id="agregar_entidad" name="agregar_entidad">Agregar</button></td>
+    </tr>
+</table>
+<table id="proyecto_entidades_integrantes_de_red"> 
+	<tbody>
+        <tr id="peer_encabezados" class="ui-dialog-titlebar ui-widget-header ui-corner-all">	
+            <td width="200px">Codigo</td>
+            <td colspan="2" width="450px">Nombre</td>
+            <td width="450px">CodSector</td>
+            <td width="450px">SectorEnt</td>
+            <td width="450px">CodPais</td>
+            <td width="450px">NombrePais</td>
+            <td width="450px">FechaAdicion</td>
+            <td width="450px">FechaRetiro</td>
+            <td width="200px">borrar</td>
+        </tr>
+    </tbody>
+</table>
+-->
+<h4>IES NACIONALES INTEGRANTES DE LA RED</h4>
+<table id="tabla_ies_nacionales_integrantes_de_red" width="900px">
+	<tr>
+	  <td>IES NACIONALES INTEGRANTES DE LA RED</td>
+	  <td colspan="3">
+	  		<?php  echo Tag::textField("codigo_entidades_integrantes_red","size: 10","maxlength: 200","readonly: readonly"); ?>
+            <?php  echo Tag::textField("nombre_entidades_integrantes_red","size: 50","maxlength: 200","readonly: readonly"); ?>
+            <button id="buscar_entidades_integrantes_red2" name="buscar_entidades_integrantes_red2" type="button">Buscar</button>
+       </td>
+  </tr>
+	<tr>
+	  <td>FECHA ADICION A LA RED</td>
+	  <td colspan="3"><?php  echo Tag::textField("fecha_adicion_red2","size: 20","maxlength: 10"); ?></td>
+  </tr>
+	<tr>
+    	<td width="200px">FECHA RETIRO A LA RED</td>
+        <td colspan="3"><?php  echo Tag::textField("fecha_retiro_red2","size: 20","maxlength: 10"); ?></td>
+    </tr>
+    <tr>
+    	<td align="center" colspan="4"><button  type="button" id="agregar_entidad2" name="agregar_entidad2">Guardar Entidad</button></td>
+    </tr>
+</table>
+<table id="proyecto_ies_nacionales_integrantes_de_red"> 
+	<tbody>
+        <tr id="pinidr_encabezados" class="ui-dialog-titlebar ui-widget-header ui-corner-all">	
+            <td width="100px">Codigo</td>
+            <td colspan="2" width="450px">Nombre</td>
+            <td width="100px">FechaAdicion</td>
+            <td width="100px">FechaRetiro</td>
+            <td width="100px">borrar</td>
+        </tr>
+    </tbody>
+</table>
+
+<br />
+
+<br />
+<br />
+<div align="center">
+  <button  type="submit" id="guardar" name="guardar">Guardar Red de Cooperacion</button>
+</div>
+<br />
+<div id="mensajes"></div>
+<br />
+
+  <div align="center" id="progressbarWrapper" style="height:30px; width:100% " class="ui-widget-default">
+    <div id="progressbar" style="height:100%;"></div>
+ </div>
+<?php echo Tag::endForm(); ?>
+<div id="mensajes"></div>
+<?php echo view::getContent(); ?>
+
+
+<script>
+jQuery(document).ready(function(e) {
+
+	jQuery('#fx').submit(function(event) {  
+	  event.preventDefault();  
+	  var url = jQuery(this).attr('action');  
+	  var datos = jQuery(this).serialize();
+	  
+	  //var srv = JSON.stringify(detalles);
+	  	//var entidades_integrantes_de_red = JSON.stringify(tableToJson( document.getElementById("proyecto_entidades_integrantes_de_red") ) );
+		var ies_nacionales_integrantes_de_red = JSON.stringify(tableToJson( document.getElementById("proyecto_ies_nacionales_integrantes_de_red") ) );
+		//var srv = tableToJson( document.getElementById("proyecto_grupos_investigacion") ) ;
+		jQuery( "#progressbar" ).progressbar({ value: 50 });	
+		//jQuery("#guardar").attr("disabled","disabled");
+		
+			//$('#resumen').html('Cargando....');
+			
+			var jqXHR = jQuery.ajax({
+				type: "post",
+				url: url,
+				data: {
+						codigo_redes_de_cooperacion:     jQuery("#codigo_redes_de_cooperacion").val(),
+						nombre_redes_de_cooperacion:     jQuery("#nombre_redes_de_cooperacion").val(),
+						cod_ies:                         jQuery("#cod_ies").val(),
+						codigo_nbc:                      jQuery("#codigo_nbc").val(),
+						fecha_creacion:                  jQuery("#fecha_creacion").val(),
+						/*entidades_integrantes_de_red:    entidades_integrantes_de_red,*/
+						ies_nacionales_integrantes_de_red: ies_nacionales_integrantes_de_red
+				},
+				success: function(data) {
+					jQuery( '#mensajes' ).html("");
+					jQuery( "#progressbar" ).progressbar({ value: 90 });
+					jQuery( '#mensajes' ).html(data);
+				},
+				error: function(data) {
+					jQuery('#dialogo_mensajes').html("Error Enviando parametros.....");
+					jQuery( "#progressbar" ).progressbar({ value: 0 });
+					jQuery('#dialogo_mensajes').dialog("open");
+					
+				}
+			});
+			
+			 jqXHR.done(function(data){
+				jQuery( "#progressbar" ).progressbar({ value: 0 });
+			});  
+	 
+	});  
+	
+	/*jQuery("#agregar_entidad").click(function(event){
+			event.preventDefault();
+			var sw=0;
+			var msg = "";
+			if( jQuery("#codigo_pais").val() ==''             ){ sw=1; msg+= "Seleccione un Pais <br />"; } 
+			if( jQuery("#codigo_sector_entidad").val() == ''  ){ sw=1; msg+= "Escoja un Sector Entidad <br />"; } 
+			if( jQuery("#fecha_adicion_red").val() ==''       ){ sw=1; msg+= "Fecha de Adicion no puede ser vacio <br />"; } 
+			if( jQuery("#fecha_retiro_red").val() == ''       ){ sw=1; msg+= "Fecha de Retiro no puede ser vacio <br />"; } 
+			if( jQuery("#nombre_entidades_red").val() == ''   ){ sw=1; msg+= "Nombre Entiddad Red no Puede ser Vacio <br />"; } 
+			
+				if(jQuery("#proyecto_entidades_integrantes_de_red")){
+							if( sw==0 ){
+									if( jQuery("#peer_" + jQuery("#codigo_entidades_red").val() ).length ){
+											
+											jQuery("#dialogo_mensajes").html("");
+											jQuery("#dialogo_mensajes").html("<strong>Error Tipo de Gastos ya Agreado para este Proyecto</strong>" );
+											jQuery("#dialogo_mensajes").dialog("open");
+											
+									}else{
+											indice = jQuery("#peer_" + jQuery("#codigo_entidades_red").val() ).length + 1;
+											html ="";
+											html +="<tr id=peer_" + indice + ">"
+												html += "<td>" + jQuery("#codigo_pais").val() + "</td>"
+												html += "<td>" + jQuery("#nombre_pais").val() + "</td>"
+												html += "<td>" + jQuery("#codigo_sector_entidad").val() + "</td>"
+												html += "<td>" + jQuery("#nombre_sector_entidad").val() + "</td>"
+												html += "<td>" + jQuery("#fecha_adicion_red").val() + "</td>"
+												html += "<td>" + jQuery("#fecha_retiro_red").val() + "</td>"
+												html += "<td><button type=\"button\" id='peer_eliminar_"+indice+"' onClick='jQuery(\"#peer_" + indice + "\").remove();' >Borrar Fila</button> </td>"
+											html +="</tr>"
+											jQuery('#proyecto_entidades_integrantes_de_red tr:last').after(html);
+											jQuery("#peer_eliminar_"+indice).button({ icons: {primary:'ui-icon ui-icon-circle-minus' ,secondary:'ui-icon ui-icon-trash'} });
+											jQuery("#codigo_entidades_red").val("");
+											jQuery("#nombre_tipo_de_gastos").val("");
+											jQuery("#valor_gastos").val("");
+											
+											
+										}
+							}else{
+										jQuery("#dialogo_mensajes").html("");
+										jQuery("#dialogo_mensajes").html("<strong>"+msg+"</strong>" );
+										jQuery("#dialogo_mensajes").dialog("open");
+							}
+					}
+			});*/
+			
+			jQuery("#agregar_entidad2").click(function(event){
+			event.preventDefault();
+			var sw=0;
+			var msg = "";
+			if( jQuery("#codigo_entidades_integrantes_red").val() ==''   ){ sw=1; msg+= "Seleccione una Entidad Integrante de Red <br />"; } 
+			if( jQuery("#fecha_adicion_red2").val() ==''                 ){ sw=1; msg+= "Fecha de Adicion no puede ser vacio <br />"; } 
+			if( jQuery("#fecha_retiro_red2").val() == ''                 ){ sw=1; msg+= "Fecha de Retiro no puede ser vacio <br />"; } 
+			
+				if(jQuery("#proyecto_ies_nacionales_integrantes_de_red")){
+							if( sw==0 ){
+									if( jQuery("#pinidr_" + jQuery("#codigo_entidades_integrantes_red").val() ).length ){
+											
+											jQuery("#dialogo_mensajes").html("");
+											jQuery("#dialogo_mensajes").html("<strong>Error  Entidad Integrante de Red ya Agreado para este Proyecto</strong>" );
+											jQuery("#dialogo_mensajes").dialog("open");
+											
+									}else{
+											indice = jQuery("#codigo_entidades_integrantes_red").val();
+											html ="";
+											html +="<tr id=pinidr_" + indice + ">"
+												html += "<td>" + jQuery("#codigo_entidades_integrantes_red").val() + "</td>"
+												html += "<td colspan='2'>" + jQuery("#nombre_entidades_integrantes_red").val() + "</td>"
+												html += "<td>" + jQuery("#fecha_adicion_red2").val() + "</td>"
+												html += "<td>" + jQuery("#fecha_retiro_red2").val() + "</td>"
+												html += "<td><button type=\"button\" id='pinidr_eliminar_"+indice+"' onClick='jQuery(\"#pinidr_" + indice + "\").remove();' >Borrar Fila</button> </td>"
+											html +="</tr>"
+											jQuery('#proyecto_ies_nacionales_integrantes_de_red tr:last').after(html);
+											jQuery("#pinidr_eliminar_"+indice).button({ icons: {primary:'ui-icon ui-icon-circle-minus' ,secondary:'ui-icon ui-icon-trash'} });
+											jQuery("#codigo_entidades_integrantes_red").val("");
+											jQuery("#nombre_entidades_integrantes_red").val("");
+											jQuery("#fecha_adicion_red2").val("");
+											jQuery("#fecha_retiro_red2").val("");
+											
+											
+										}
+							}else{
+										jQuery("#dialogo_mensajes").html("");
+										jQuery("#dialogo_mensajes").html("<strong>"+msg+"</strong>" );
+										jQuery("#dialogo_mensajes").dialog("open");
+							}
+					}
+			});
+	
+	
+});
+</script>

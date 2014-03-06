@@ -1,0 +1,87 @@
+<?php 
+	if(isset($_REQUEST["opcion"])){
+		Flash::notice("Doble Click en la Fila para ".$_REQUEST["opcion"]); 
+	}
+?>
+<table id="tablaflujo_caja"></table>
+<div id="pagerflujo_caja"></div>
+<script>
+jQuery(document).ready(function(){
+			/* flujo_caja.id,
+			  flujo_caja.Cod_Proyecto,
+			  tbl_investigador.Identificacion,
+			  tbl_investigador.PrimerNombre,
+			  tbl_investigador.SegundoNombre,
+			  tbl_investigador.PrimerApellido,
+			  tbl_investigador.SegundoApellido,
+			  tbl_proyecto.Titulo_Proyecto,
+			  tbl_proyecto.Fecha_Inicio_Proyecto,
+			  tbl_proyecto.Duracion_Proyecto,
+			  tbl_proyecto.Valor_Proyecto,
+			  tbl_ies.Cod_IES,
+			  tbl_ies.Nombre_IES*/
+		/*	 $row[id]
+			,$row[Cod_IES],
+			$row[Nombre_IES],
+			$row[Cod_Proyecto],
+			$row[Titulo_Proyecto],
+			$row[Fecha_Inicio_Proyecto],
+			$row[Duracion_Proyecto],
+			$row[Valor_Proyecto],
+			$row[Identificacion],
+			$row[nombre]
+			*/
+		jQuery("#tablaflujo_caja").jqGrid(
+		{ 
+			ajaxGridOptions : {type:"POST"},
+			url:'<?php echo core::getInstancePath(); ?>flujo_de_caja/find_detalle_buscar', 
+			datatype: "json", 
+			colNames:['Codigo Flujo Caja','Codigo Ies','Nombre IES','Cod Proyecto','Titulo','Fecha Inicio','Duracion','Valor','Identificacion','nombre'], 
+			colModel:[ 
+				{ name:'id'                    ,index:'id'                     , width:200}, 
+				{ name:'Cod_IES'               ,index:'Cod_IES'                , width:100},
+				{ name:'Nombre_IES'            ,index:'Nombre_IES'             , width:300},
+				{ name:'Cod_Proyecto'          ,index:'Cod_Proyecto'           , width:100},
+				{ name:'Titulo_Proyecto'       ,index:'Titulo_Proyecto'        , width:300},
+				{ name:'Fecha_Inicio_Proyecto' ,index:'Fecha_Inicio_Proyecto'  , width:100},
+				{ name:'Duracion_Proyecto'     ,index:'Duracion_Proyecto'      , width:50},
+				{ name:'Valor_Proyecto'        ,index:'Valor_Proyecto'         , width:100},
+				{ name:'Identificacion'        ,index:'Identificacion'         , width:100},
+				{ name:'nombre'                ,index:'nombre'                 , width:100}
+			], 
+			autoWidth:true,
+			width: 850,
+			height: 250,
+			rowNum:50, 
+			/*rowList:[10,20,30,40,50], */
+			pager: '#pagerflujo_caja', 
+			sortname: 'id', 
+			/*shrinkToFit :false,*/
+			viewrecords: true, 
+			sortorder: "asc", 
+			caption:"listado de los Flujo Caja Registradas",
+			ondblClickRow:function(rowid,iRow,iCol,e){
+				
+				var fila = jQuery(this).jqGrid('getRowData',rowid);
+					
+					/*if( jQuery("#cod_ies")    ){ jQuery("#cod_ies").val(fila['cod_ies']); }
+					if( jQuery("#nombre_ies") ){ jQuery("#nombre_ies").val(fila['nombre_ies']); } */
+					
+					<?php if(isset($_REQUEST["opcion"]) ){ ?>
+						redireccionar_action("flujo_de_caja/<?php echo $_REQUEST["opcion"]; ?>/" + fila['id'] );
+					<?php }else{?>	
+						jQuery("#dialogo_flujo_caja").dialog("close");
+					<?php } ?>
+					
+       		 }
+		}); 
+		/*jQuery("#tablaies").jqGrid('navGrid','#pageries',{edit:false,add:false,del:false}); 
+		jQuery("#tablaies").jqGrid('navButtonAdd','#pageries',{
+		caption: "Columnas",
+		title: "Reordena Columnas",
+		onClickButton : function (){
+			jQuery("#tablaies").jqGrid('columnChooser');
+		
+	});}*/
+});
+</script>

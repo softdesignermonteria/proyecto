@@ -1,0 +1,46 @@
+<table id="tablanbc"></table>
+<div id="pagernbc"></div>
+<script>
+jQuery(document).ready(function(){
+
+		
+		jQuery("#tablanbc").jqGrid(
+		{ 
+			ajaxGridOptions : {type:"POST"},
+			url:'<?php echo core::getInstancePath().Router::getController(); ?>/find_detalle_buscar', 
+			datatype: "json", 
+			colNames:['Codigo Nbc','Nombre Nbc'], 
+			colModel:[ 
+				{ name:'codigo_nbc',index:'codigo_nbc', width:200}, 
+				{ name:'nombre_nbc',index:'nombre_nbc', width:350}
+			], 
+			autoWidth:true,
+			width: 550,
+			height: 250,
+			rowNum:50, 
+			/*rowList:[10,20,30,40,50], */
+			pager: '#pagernbc', 
+			sortname: 'Cod_NBC', 
+			/*shrinkToFit :false,*/
+			viewrecords: true, 
+			sortorder: "asc", 
+			caption:"listado de los Nbc Registrados",
+			ondblClickRow:function(rowid,iRow,iCol,e){
+				
+				var fila = jQuery(this).jqGrid('getRowData',rowid);
+					
+					if( jQuery("#codigo_nbc")    ){ jQuery("#codigo_nbc").val(fila['codigo_nbc']); }
+					if( jQuery("#nombre_nbc") ){ jQuery("#nombre_nbc").val(fila['nombre_nbc']); } 
+					jQuery("#dialogo_nbc").dialog("close");											
+       		 }
+		}); 
+		/*jQuery("#tablanbc").jqGrid('navGrid','#pagernbc',{edit:false,add:false,del:false}); 
+		jQuery("#tablanbc").jqGrid('navButtonAdd','#pagernbc',{
+		caption: "Columnas",
+		title: "Reordena Columnas",
+		onClickButton : function (){
+			jQuery("#stablanbc").jqGrid('columnChooser');
+		
+	});}*/
+});
+</script>

@@ -1,0 +1,48 @@
+<table id="tablaies"></table>
+<div id="pageries"></div>
+<script>
+jQuery(document).ready(function(){
+
+		
+		jQuery("#tablaies").jqGrid(
+		{ 
+			ajaxGridOptions : {type:"POST"},
+			url:'<?php echo core::getInstancePath(); ?>ies/find_detalle_buscar', 
+			datatype: "json", 
+			colNames:['Codigo Ies','Nombre Ies'], 
+			colModel:[ 
+				{ name:'cod_ies',index:'cod_ies', width:200}, 
+				{ name:'nombre_ies',index:'nombre_ies', width:350}
+			], 
+			autoWidth:true,
+			width: 550,
+			height: 250,
+			rowNum:50, 
+			/*rowList:[10,20,30,40,50], */
+			pager: '#pageries', 
+			sortname: 'Cod_IES', 
+			/*shrinkToFit :false,*/
+			viewrecords: true, 
+			sortorder: "asc", 
+			caption:"listado de las Ies Registradas",
+			ondblClickRow:function(rowid,iRow,iCol,e){
+				
+				var fila = jQuery(this).jqGrid('getRowData',rowid);
+					
+					if( jQuery("#cod_ies")    ){ jQuery("#cod_ies").val(fila['cod_ies']); }
+					if( jQuery("#nombre_ies") ){ jQuery("#nombre_ies").val(fila['nombre_ies']); } 
+					jQuery("#dialogo_ies").dialog("close");
+					
+					
+       		 }
+		}); 
+		/*jQuery("#tablaies").jqGrid('navGrid','#pageries',{edit:false,add:false,del:false}); 
+		jQuery("#tablaies").jqGrid('navButtonAdd','#pageries',{
+		caption: "Columnas",
+		title: "Reordena Columnas",
+		onClickButton : function (){
+			jQuery("#tablaies").jqGrid('columnChooser');
+		
+	});}*/
+});
+</script>

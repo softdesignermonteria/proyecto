@@ -1,0 +1,252 @@
+<?php echo Tag::form(Router::getController()."/update", "update: mensajes", "id: fx","name: fx"); ?>
+
+<h1>Modificar <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?></h1>
+
+<table width="100%">
+      <tr>
+    	  <th height="25" colspan="4">FORMULARIO PARA AGREGAR <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?></th>
+   	  </tr>
+    	<tr>
+    	  
+    	  <th width="30%" align="right">CODIGO <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?>:</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("codigo_actividades_investigacion","size: 50","maxlength: 50","readonly: readonly"); ?></td>
+    	  
+   	  </tr>
+      
+        <tr>
+    	  
+    	  <th width="30%" align="right">NOMBRE <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?>:</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("nombre_actividades_investigacion","size: 50"); ?></td>
+    	  
+   	  </tr>
+      
+       <tr>
+    	<th align="right">CODIGO IES</th>
+        <th align="left"><?php  echo Tag::textField("cod_ies","size: 10","maxlength: 50","readonly: readonly"); ?>
+          NOMBRE IES
+<?php  echo Tag::textField("nombre_ies","size: 50","maxlength: 50","readonly: readonly"); ?>          <button type="button" id="buscar_ies" name="buscar_ies">Buscar</button></th>
+    </tr>
+      <tr>
+    	  <th width="30%" align="right"  >AÑO</th>
+    	  <td width="64%" align="left" ><?php  echo Tag::textField("annos","size: 6","maxlength: 4","value: ".date("Y"),"onkeyup: solonumeros(this);"); ?></td>
+   	  </tr>
+      <tr>
+    	  <th width="30%" align="right" >SEMESTRE</th>
+    	  <td width="64%" align="left" >
+                <select id="semestre" name="semestre">
+                    <option value="1">SEMESTRE 1</option>
+                    <option value="2">SEMESTRE 2</option>
+                </select>
+          </td>
+   	  </tr>
+      
+  </table>
+  
+  <h4>FUENTES DE FINANCIACION NACIONAL</h4>
+<table id="tabla_fuentes_de_financiacion_nacional" width="900px">
+	<tr>
+    	<td width="200px">FUENTES DE FINANCIACION NACIONAL</td>
+        <td colspan="2">VALOR <input type="text" id="valor_fuentes_de_financiacion_nacional" name="valor_fuentes_de_financiacion_nacional" value="0" onkeyup="solonumeros(this)" /></td>
+        <td colspan="2"><button type="button" id="buscar_fuentes_de_financiacion_nacional">Buscar</button></td>
+    </tr>
+</table>
+<table id="proyecto_fuentes_de_financiacion_nacional"> 
+	<tbody>
+        <tr id="pffn_encabezados" class="ui-dialog-titlebar ui-widget-header ui-corner-all">	
+            <td width="200px">Codigo</td>
+            <td colspan="2" width="450px">Nombre</td>
+            <td width="200px">borrar</td>
+        </tr>
+        <?php 
+	   		$fnac = new TblFuenteFinanciacionNacional();
+	   		foreach($fnacional as $filas): ?> 
+       <tr id="pffn_<?php echo $filas->getId(); ?>" >	
+            <td width="200px"><?php echo $filas->getFKCodFuenteFNacional(); ?></td>
+            <td colspan="2" width="450px"><?php echo utf8_encode($fnac->findFirst("  Cod_Fuente_Financiacion_Nacional = '".$filas->getFKCodFuenteFNacional()."' ")->getDescripcionFuenteFinanciacionNacional()); ?></td>
+            <td width="200px">
+            	<button type="button" id='pffn_eliminar_<?php echo $filas->getId(); ?>' onClick='jQuery("#pffn_<?php echo $filas->getId(); ?>").remove();' >Borrar Fila</button> 
+            </td>
+        </tr>
+        <script>jQuery("#pffn_eliminar_<?php echo $filas->getId(); ?>").button({ icons: {primary:'ui-icon ui-icon-circle-minus' ,secondary:'ui-icon ui-icon-trash'} });</script>        
+       <?php endforeach;?>
+    </tbody>
+</table>
+<h4>FUENTES DE FINANCIACION INTERNACIONAL</h4>
+<table id="tabla_grupos_investigacion" width="900px">
+	<tr>
+    	<td width="200px">FUENTES DE FINANCIACION INTERNACIONAL</td>
+         <td colspan="2">VALOR <input type="text" id="valor_fuentes_de_financiacion_internacional" name="valor_fuentes_de_financiacion_internacional" value="0" onkeyup="solonumeros(this)"  /></td>
+        <td colspan="2"><button type="button" id="buscar_fuentes_de_financiacion_internacional">Buscar</button></td>
+    </tr>
+</table>
+<table id="proyecto_fuentes_de_financiacion_internacional"> 
+	<tbody>
+        <tr id="pffi_encabezados" class="ui-dialog-titlebar ui-widget-header ui-corner-all">	
+            <td width="200px">Codigo</td>
+            <td colspan="2" width="450px">Nombre</td>
+            <td width="200px">borrar</td>
+        </tr>
+         <?php 
+	   		$fnac = new TblFuenteFinanciacionInternacional();
+	   		foreach($finternacional as $filas): ?> 
+       <tr id="pffi_<?php echo $filas->getId(); ?>" >	
+            <td width="200px"><?php echo $filas->getFKCodFuenteFInternacional(); ?></td>
+            <td colspan="2" width="450px"><?php echo utf8_encode($fnac->findFirst(" Cod_Fuente_Financiacion_Internacional = '".$filas->getFKCodFuenteFInternacional()."' ")->getDescripcionFuenteFinanciacionInternacional()); ?></td>
+            <td width="200px">
+            	<button type="button" id='pffi_eliminar_<?php echo $filas->getId(); ?>' onClick='jQuery("#pffi_<?php echo $filas->getId(); ?>").remove();' >Borrar Fila</button> 
+            </td>
+        </tr>
+        <script>jQuery("#pffi_eliminar_<?php echo $filas->getId(); ?>").button({ icons: {primary:'ui-icon ui-icon-circle-minus' ,secondary:'ui-icon ui-icon-trash'} });</script>        
+       <?php endforeach;?>
+    </tbody>
+</table>
+<h4>GASTOS</h4>
+<table id="tabla_gastos" width="900px">
+	<tr>
+    	<td width="100px" align="left">TIPO DE GATOS</td>
+        <td width="400px" align="left">
+			<?php echo Tag::textField("codigo_tipo_de_gastos","size: 10","readonly: readonly"); ?>
+            <?php echo Tag::textField("nombre_tipo_de_gastos","size: 40","readonly: readonly"); ?>
+    		 <button type="button" id="buscar_tipos_de_gastos">Buscar</button>
+        </td>
+        <td width="100px" align="left">VALOR GASTO:</td>
+        <td width="200px" align="left"><?php echo Tag::textField("valor_gastos","size: 30"); ?></td>
+    </tr>
+     
+    <tr>
+    	<td colspan="4">&nbsp;</td>
+    </tr>
+    <tr>
+    	<td align="center" colspan="4"><button type="button" id="agregar_gasto" name="agregar_gasto">Agregar Gasto</button></td>
+    </tr>
+</table>
+<table id="proyecto_gastos"> 
+	<tbody>
+        <tr id="pgastos_encabezados" class="ui-dialog-titlebar ui-widget-header ui-corner-all">	
+            <td width="150px">Codigo</td>
+            <td width="400px">Nombre</td>
+            <td width="100px">Valor</td>
+            <td width="150px">borrar</td>
+        </tr>
+        <?php 
+	   		$fnac = new TblTipoGasto();
+	   		foreach($gastos as $filas): ?> 
+       		<tr id="pgastos_<?php echo $filas->getCodGasto(); ?>" >	
+                <td><?php echo $filas->getFKCodTipoGastos(); ?></td>
+                <td><?php echo utf8_encode($fnac->findFirst(" Cod_Tipo_Gasto = '".$filas->getFKCodTipoGastos()."' ")->getDescripcionTipoGasto()); ?></td>
+                <td><?php echo $filas->getValorGastos(); ?></td>
+                <td>
+                    <button type="button" id='pgastos_eliminar_<?php echo $filas->getCodGasto(); ?>' onClick='jQuery("#pgastos_<?php echo $filas->getCodGasto(); ?>").remove();' >Borrar Fila</button> 
+                </td>
+        	</tr>
+        <script>jQuery("#pgastos_eliminar_<?php echo $filas->getCodGasto(); ?>").button({ icons: {primary:'ui-icon ui-icon-circle-minus' ,secondary:'ui-icon ui-icon-trash'} });</script>        
+       <?php endforeach;?>
+    </tbody>
+</table>
+<?php echo view::getContent(); ?>
+<br />
+<div align="center"><button  type="submit" id="guardar" name="guardar2">Modificar Esta Actividad</button></div>
+<br />
+<div id="mensajes"></div>
+<br />
+
+  <div align="center" id="progressbarWrapper" style="height:30px; width:100% " class="ui-widget-default">
+    <div id="progressbar" style="height:100%;"></div>
+ </div>
+ 
+<?php echo Tag::endForm(); ?>
+
+<script>
+jQuery(document).ready(function(e) {
+
+	jQuery('#fx').submit(function(event) {  
+	  event.preventDefault();  
+	  var url = jQuery(this).attr('action');  
+	  var datos = jQuery(this).serialize();
+	  
+	  //var srv = JSON.stringify(detalles);
+	var fuentes_de_financiacion_nacional = JSON.stringify(tableToJson( document.getElementById("proyecto_fuentes_de_financiacion_nacional") ) );
+	var fuentes_de_financiacion_internacional = JSON.stringify(tableToJson( document.getElementById("proyecto_fuentes_de_financiacion_internacional") ) );
+	var gastos = JSON.stringify(tableToJson( document.getElementById("proyecto_gastos") ) );
+		//var srv = tableToJson( document.getElementById("proyecto_grupos_investigacion") ) ;
+		jQuery( "#progressbar" ).progressbar({ value: 50 });	
+		//jQuery("#guardar").attr("disabled","disabled");
+		
+			//$('#resumen').html('Cargando....');
+			
+			var jqXHR = jQuery.ajax({
+				type: "post",
+				url: url,
+				data: {
+						codigo_actividades_investigacion:    jQuery("#codigo_actividades_investigacion").val(),
+						nombre_actividades_investigacion:    jQuery("#nombre_actividades_investigacion").val(),
+						cod_ies:    jQuery("#cod_ies").val(),
+						annos:    jQuery("#annos").val(),
+						semestre:    jQuery("#semestre").val(),
+						fuentes_de_financiacion_nacional: fuentes_de_financiacion_nacional,
+						fuentes_de_financiacion_internacional: fuentes_de_financiacion_internacional,
+						gastos: gastos
+						
+				},
+				success: function(data) {
+					jQuery( '#mensajes' ).html("");
+					jQuery( "#progressbar" ).progressbar({ value: 90 });
+					jQuery( '#mensajes' ).html(data);
+				},
+				error: function(data) {
+					jQuery('#dialogo_mensajes').html("Error Enviando parametros.....");
+					jQuery( "#progressbar" ).progressbar({ value: 0 });
+					jQuery('#dialogo_mensajes').dialog("open");
+					
+				}
+			});
+			
+			 jqXHR.done(function(data){
+				jQuery( "#progressbar" ).progressbar({ value: 0 });
+			});  
+	 
+	});  
+	
+	jQuery("#agregar_gasto").click(function(event){
+			event.preventDefault();
+			var sw=0;
+			var msg = "";
+			if( jQuery("#codigo_tipo_de_gastos").val() =='' ){ sw=1; msg+= "Seleccione un tipo de gastos <br />"; } 
+			if( jQuery("#valor_gastos").val() == ''          ){ sw=1; msg+= "Valor del Gasto no puede ser vacio <br />"; } 
+			
+				if(jQuery("#proyecto_gastos")){
+							if( sw==0 ){
+									if( jQuery("#prc_" + jQuery("#codigo_tipo_de_gastos").val() ).length ){
+											
+											jQuery("#dialogo_mensajes").html("");
+											jQuery("#dialogo_mensajes").html("<strong>Error Tipo de Gastos ya Agreado para este Proyecto</strong>" );
+											jQuery("#dialogo_mensajes").dialog("open");
+											
+									}else{
+											html ="";
+											html +="<tr id=pgastos_" + jQuery("#codigo_tipo_de_gastos").val() + ">"
+												html += "<td>" + jQuery("#codigo_tipo_de_gastos").val() + "</td>"
+												html += "<td>" + jQuery("#nombre_tipo_de_gastos").val() + "</td>"
+												html += "<td>" + jQuery("#valor_gastos").val() + "</td>"
+												html += "<td><button type=\"button\" id='pgastos_eliminar_"+jQuery("#codigo_tipo_de_gastos").val()+"' onClick='jQuery(\"#pgastos_" + jQuery("#codigo_tipo_de_gastos").val() + "\").remove();' >Borrar Fila</button> </td>"
+											html +="</tr>"
+											jQuery('#proyecto_gastos tr:last').after(html);
+											jQuery("#pgastos_eliminar_"+jQuery("#codigo_tipo_de_gastos").val()).button({ icons: {primary:'ui-icon ui-icon-circle-minus' ,secondary:'ui-icon ui-icon-trash'} });
+											jQuery("#codigo_tipo_de_gastos").val("");
+											jQuery("#nombre_tipo_de_gastos").val("");
+											jQuery("#valor_gastos").val("");
+											
+											
+										}
+							}else{
+										jQuery("#dialogo_mensajes").html("");
+										jQuery("#dialogo_mensajes").html("<strong>"+msg+"</strong>" );
+										jQuery("#dialogo_mensajes").dialog("open");
+							}
+					}
+			});
+	
+	
+	
+});
+</script>

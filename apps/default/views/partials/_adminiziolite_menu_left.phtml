@@ -1,0 +1,65 @@
+
+<?php if( Router::getApplication() == 'default' ){ ?>
+
+<?php if(Session::get("usuario_autenticado")==true){ ?>
+
+<!-- Beginning of compulsory code below -->
+<br />
+<br />
+
+<ul class=" ui-menu ui-widget ui-widget-content ui-corner-all" role="menu" >
+	 <?php 
+        $menu = new Menu();
+        $s_menu = new Menu();
+		$url='';
+        $i=0;
+        foreach($menu->find("aplicacion = '".Router::getApplication()."' and posicion='left' and posicion_x<>0","order: orden") as $menu):
+        //Flash::error($menu->getUrl());
+		if($menu->getUrl()!='#'){
+			$url1 = core::getInstancePath().$menu->getUrl();
+		}else{
+				$url1 = "#";
+			}
+		
+        echo "<li id='submenu-active' onClick='ocultar($i);'  class=\"ui-menu-item \" >  <a href='".$url1."' title='".$menu->getTittle()."' >".$menu->getDescripcion()."</a>
+                    <ul class='toggler menu_left_admiziolite' id='ul_$i'>";
+                    if($s_menu->count("aplicacion = '".Router::getApplication()."' and posicion='left' and posicion_y='".$menu->getPosicion_x()."'")){			
+                            foreach($s_menu->find("posicion_y='".$menu->getPosicion_x()."'","order: orden") as $s_menu):
+                            echo "<li class=\"ui-menu-item \"> ";
+                                echo "<a href='".core::getInstancePath().$s_menu->getUrl()."' title='".$s_menu->getTittle()."'>".$s_menu->getDescripcion()."</a> ";
+                            echo "</li>";
+                            endforeach;
+                    }
+                echo "</ul>";
+        echo "</li>";
+		
+      	$i++;
+        endforeach;
+        ?>			
+</ul>
+
+<script>
+
+var i = <?php echo $i; ?>;
+
+jQuery(document).ready(function(){
+		jQuery(".menu_left_admiziolite").toggle("slow");
+		
+		
+});
+function ocultar(id){
+			jQuery("#ul_"+id).toggle("slow");
+			for(i=0;i<=<?php echo $i-1; ?>;i<=i++){
+				if(i!=id){
+					//jQuery("#ul_"+i).css("display","none");
+					//alert(jQuery("#ul_"+i).css("display"));
+					if( jQuery("#ul_"+i).css("display") == 'block' ){jQuery("#ul_"+i).toggle("slow");}
+				}
+			}
+	}
+	
+</script>
+<?php
+	 }// fin usuario autenticado
+ } // fin aplication diferente a default
+?>

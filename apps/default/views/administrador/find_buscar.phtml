@@ -1,0 +1,55 @@
+<table id="tablapais"></table>
+<div id="pagerpais"></div>
+<script>
+jQuery(document).ready(function(){
+
+		
+		jQuery("#tablapais").jqGrid(
+		{ 
+			ajaxGridOptions : {type:"POST"},
+			url:'<?php echo core::getInstancePath().Router::getController(); ?>/find_detalle_buscar', 
+			datatype: "json", 
+			colNames:['Codigo Pais','Nombre Pais'], 
+			colModel:[ 
+				{ name:'codigo_pais',index:'codigo_pais', width:200}, 
+				{ name:'nombre_pais',index:'nombre_pais', width:350}
+			], 
+			autoWidth:true,
+			width: 550,
+			height: 250,
+			rowNum:50, 
+			/*rowList:[10,20,30,40,50], */
+			pager: '#pagerpais', 
+			sortname: 'Cod_Pais', 
+			/*shrinkToFit :false,*/
+			viewrecords: true, 
+			sortorder: "asc", 
+			caption:"listado de los Paises Registrados",
+			ondblClickRow:function(rowid,iRow,iCol,e){
+				
+				var fila = jQuery(this).jqGrid('getRowData',rowid);
+					
+					if( jQuery("#codigo_pais")    ){ jQuery("#codigo_pais").val(fila['codigo_pais']); }
+					if( jQuery("#nombre_pais") ){ jQuery("#nombre_pais").val(fila['nombre_pais']); } 
+					
+					if( jQuery("#codigo_departamento") ){ jQuery("#codigo_departamento").val(""); }
+					if( jQuery("#nombre_departamento") ){ jQuery("#nombre_departamento").val(""); } 
+					
+					if( jQuery("#codigo_municipio") ){ jQuery("#codigo_municipio").val(""); }
+					if( jQuery("#nombre_municipio") ){ jQuery("#nombre_municipio").val(""); } 
+					
+					
+					
+					jQuery("#dialogo_pais").dialog("close");											
+       		 }
+		}); 
+		/*jQuery("#tablapais").jqGrid('navGrid','#pagerpais',{edit:false,add:false,del:false}); 
+		jQuery("#tablapais").jqGrid('navButtonAdd','#pagerpais',{
+		caption: "Columnas",
+		title: "Reordena Columnas",
+		onClickButton : function (){
+			jQuery("#stablapais").jqGrid('columnChooser');
+		
+	});}*/
+});
+</script>

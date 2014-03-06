@@ -1,0 +1,141 @@
+<?php 
+// require_once 'Classes/PHPExcel.php';
+$objPHPExcel = new PHPExcel();
+
+//Informacion del excel
+$objPHPExcel->
+getProperties()
+	->setCreator("Proyecto Sies")
+	->setLastModifiedBy("Proyecto Sies")
+	->setTitle("Exportar excel desde Proyecto Sies")
+	->setSubject("Proyecto Sies")
+	->setDescription("Documento generado de Proyecto Sies")
+	->setKeywords("Proyecto Sies")
+	->setCategory("reportes");    
+
+ 
+
+/*detallejson json*/
+/*$filter = new Filter();
+$detallejson = $filter->apply($_POST["detalles"], array("Striptags")); 
+$detallejson = str_replace("]\"","]",str_replace("\"[","[",str_replace("\\","",$detallejson)));
+
+if($detallejson!='[]'){	
+	if(json_decode($detallejson)){
+		//Flash::success("Json Correcto: detallejson");
+		$detallejson = json_decode($detallejson);*/
+		
+$styleArray = array(
+	'font' => array(
+		'bold' => true,
+	),
+	'alignment' => array(
+		'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+	),
+	'borders' => array(
+		'allborders' => array(
+			'style' => PHPExcel_Style_Border::BORDER_THIN,
+			'color' => array('argb' => 'FF9900')
+		),
+	),
+	'fill' => array(
+		'type' => PHPExcel_Style_Fill::FILL_SOLID,
+		'rotation' => 90,
+		'startcolor' => array(
+			'argb' => 'FF9900',
+		),
+		'endcolor' => array(
+			'argb' => 'FF9900',
+		),
+	),
+);
+     
+
+$i=1;
+$objPHPExcel->setActiveSheetIndex(0)->mergeCells("C1:G1");
+$objPHPExcel->setActiveSheetIndex(0)->mergeCells("H1:J1");
+
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("C1", "INFORMACION DEL CENTRO DE INVESTIGACION");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("H1", "GRUPOS DE INVESTIGACION");
+
+$objPHPExcel->getActiveSheet()->getStyle('C1')->applyFromArray($styleArray);		
+$objPHPExcel->getActiveSheet()->getStyle('H1')->applyFromArray($styleArray);		
+
+$i=2;		
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("A".$i, "CÓDIGO DE LA IES");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("B".$i, "NOMBRE DE LA IES");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("C".$i, "CODIGO DEL CENTRO");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("D".$i, "NOMBRE DEL CENTRO");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("E".$i, "DEPARTAMENTO");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("F".$i, "MUNICIPIO");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("G".$i, "FECHA DE CREACIÓN DEL CENTRO");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("H".$i, "NOMBRE DEL GRUPO");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("I".$i, "FECHA DE ADICIÓN A LA RED");
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue("J".$i, "FECHA DE RETIRO DE LA RED");
+
+$objPHPExcel->getActiveSheet()->getStyle('A2:J2')->applyFromArray($styleArray);	
+
+
+//$db = DbBase::rawConnect();
+$i=3;
+
+$ies  = new TblIes();
+$cinv = new TblCentrosInvestigacion();
+$grupos = new TblGruposInvCentrosInv();
+$gruposenc = new TblGrupoInvestigacion();
+$dpto = new TblDepartamento();
+$mun  = new TblMunicipio();
+
+$condicion_ies = "";
+if($_REQUEST["cod_ies"]!=''){ $condicion_ies = $_REQUEST["cod_ies"]; }
+
+foreach($ies->find(" 1 = 1 $condicion_ies ") as $ies):
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("A".$i, $ies->getCodIES());
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("B".$i, ($ies->getNombreIES()));
+	$i++;
+	foreach($cinv->find(" FK_Cod_IES = '".$ies->getCodIES()."' ") as $cinv):
+		
+		$objPHPExcel->setActiveSheetIndex(0)->setCellValue("C".$i, $cinv->getCodCentroInvestigacion());
+		$objPHPExcel->setActiveSheetIndex(0)->setCellValue("D".$i, $cinv->getNombreCentroInvestigacion());
+		
+		$mun->findFirst("Cod_Municipio = '".$cinv->getFKCodMunicipio()."' ");
+		$dpto->findFirst("Cod_Departamento = '".$mun->getFKCodDepartamento()."' ");
+		
+		$objPHPExcel->setActiveSheetIndex(0)->setCellValue("E".$i, $dpto->getDepartamento());
+		$objPHPExcel->setActiveSheetIndex(0)->setCellValue("F".$i, $mun->getMunicipio());
+		$objPHPExcel->setActiveSheetIndex(0)->setCellValue("G".$i, $cinv->getFechaCreacionCentroInvestigacion());
+		foreach($grupos->find(" Cod_Centro_Inv = '".$cinv->getCodCentroInvestigacion()."' ") as $grupos):		
+			$gruposenc->findFirst(" Cod_Grupo = '".$grupos->getCodGrupoInv()."' ");
+			$objPHPExcel->setActiveSheetIndex(0)->setCellValue("H".$i, $gruposenc->Nombre_Grupo());
+			$objPHPExcel->setActiveSheetIndex(0)->setCellValue("I".$i, $gruposenc->getFechaCreacionGrupoI());
+			$objPHPExcel->setActiveSheetIndex(0)->setCellValue("J".$i, $gruposenc->getFechaVigenciaGrupoI());
+		endforeach;	
+	endforeach; //fin centros de investigacion
+endforeach; //fin ies
+
+$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('F')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('G')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('H')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('I')->setAutoSize('true');
+$objPHPExcel->getActiveSheet()->getColumnDimension('J')->setAutoSize('true');
+
+
+
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment;filename="reportes.xlsx"');
+header('Cache-Control: max-age=0');
+ 
+$objWriter=PHPExcel_IOFactory::createWriter($objPHPExcel,'Excel2007');
+$objWriter->save('php://output');
+exit;
+
+
+
+
+
+?>

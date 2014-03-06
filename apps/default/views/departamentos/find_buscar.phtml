@@ -1,0 +1,48 @@
+<table id="tabladepartamentos"></table>
+<div id="pagernbc"></div>
+<script>
+jQuery(document).ready(function(){
+
+		
+		jQuery("#tabladepartamentos").jqGrid(
+		{ 
+			ajaxGridOptions : {type:"POST"},
+			url:'<?php echo core::getInstancePath().Router::getController(); ?>/find_detalle_buscar/?codigo_pais=<?php echo $_REQUEST["codigo_pais"] ?>', 
+			datatype: "json", 
+			colNames:['Codigo Departamento','Nombre Departamento'], 
+			colModel:[ 
+				{ name:'codigo_departamento',index:'codigo_departamento', width:200}, 
+				{ name:'nombre_departamento',index:'nombre_departamento', width:350}
+			], 
+			autoWidth:true,
+			width: 550,
+			height: 250,
+			rowNum:50, 
+			/*rowList:[10,20,30,40,50], */
+			pager: '#pagernbc', 
+			sortname: 'Cod_Departamento', 
+			/*shrinkToFit :false,*/
+			viewrecords: true, 
+			sortorder: "asc", 
+			caption:"listado de los Nbc Registrados",
+			ondblClickRow:function(rowid,iRow,iCol,e){
+				
+				var fila = jQuery(this).jqGrid('getRowData',rowid);
+					
+					if( jQuery("#codigo_departamentos")    ){ jQuery("#codigo_departamentos").val(fila['codigo_departamento']); }
+					if( jQuery("#nombre_departamentos") ){ jQuery("#nombre_departamentos").val(fila['nombre_departamento']); } 
+					if( jQuery("#codigo_departamento")    ){ jQuery("#codigo_departamento").val(fila['codigo_departamento']); }
+					if( jQuery("#nombre_departamento") ){ jQuery("#nombre_departamento").val(fila['nombre_departamento']); } 
+					jQuery("#dialogo_departamentos").dialog("close");											
+       		 }
+		}); 
+		/*jQuery("#tabladepartamentos").jqGrid('navGrid','#pagernbc',{edit:false,add:false,del:false}); 
+		jQuery("#tabladepartamentos").jqGrid('navButtonAdd','#pagernbc',{
+		caption: "Columnas",
+		title: "Reordena Columnas",
+		onClickButton : function (){
+			jQuery("#stabladepartamentos").jqGrid('columnChooser');
+		
+	});}*/
+});
+</script>

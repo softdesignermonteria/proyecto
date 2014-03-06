@@ -1,0 +1,56 @@
+<?php echo Tag::formRemote(Router::getController()."/add", "update: mensajes", "id: fx","name: fx"); ?>
+
+<h1>AGREGAR <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?></h1>
+
+<table width="100%">
+      <tr>
+    	  <th height="25" colspan="4">FORMULARIO PARA AGREGAR <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?></th>
+   	  </tr>
+    	<tr>
+    	  
+    	  <th width="30%" align="right">CODIGO <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?>:</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("codigo_municipio","size: 50","maxlength: 50"); ?></td>
+    	  
+   	  </tr>
+      <tr>
+    	  
+    	  <th width="30%" align="right">PAIS:</th>
+    	  <td width="64%" align="left">
+		    <?php  echo Tag::textField("codigo_pais","size: 10","readonly: readonly"); ?>
+         	<?php  echo Tag::textField("nombre_pais","size: 50","readonly: readonly"); ?>
+            <button id="buscar_pais" name="buscar_pais" type="button" >Buscar</button>
+          </td>
+    	  
+   	  </tr>
+     
+        <tr>
+    	  
+    	  <th width="30%" align="right">DEPARTAMENTO:</th>
+    	  <td width="64%" align="left">
+		    <?php  echo Tag::textField("codigo_departamento","size: 10","readonly: readonly"); ?>
+         	<?php  echo Tag::textField("nombre_departamento","size: 50","readonly: readonly"); ?>
+            <button id="buscar_departamentos" name="buscar_departamentos" type="button" >Buscar</button>
+          </td>
+    	  
+   	  </tr>
+      
+        <tr>
+    	  
+    	  <th width="30%" align="right">NOMBRE <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?>:</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("nombre_municipio","size: 50"); ?></td>
+    	  
+   	  </tr>
+      <tr>
+    	  <td colspan="4" align="center"><button id="guardar" name="guardar">Guardar</button></td>
+   	  </tr>
+  </table>
+
+<?php echo Tag::endForm(); ?>
+<div id="mensajes"></div>
+<?php echo view::getContent(); ?>
+
+<script>
+jQuery(document).ready(function(e) {
+        jQuery("#codigo_municipio").attr("readOnly","ReadOnly");
+});
+</script>

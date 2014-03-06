@@ -1,0 +1,66 @@
+<table id="tablagrupoinv"></table>
+<div id="pagergrupoinv"></div>
+
+<script>
+jQuery(document).ready(function(){
+
+		
+		jQuery("#tablagrupoinv").jqGrid(
+		{ 
+			ajaxGridOptions : {type:"POST"},
+			url:'<?php echo core::getInstancePath().Router::getController(); ?>/find_detalle_buscar', 
+			datatype: "json", 
+			colNames:['Codigo Grupo Investigacion','Nombre Grupo Investigacion'], 
+			colModel:[ 
+				{ name:'codigo_grupo_investigacion',index:'codigo_grupo_investigacion', width:200}, 
+				{ name:'nombre_grupo_investigacion',index:'nombre_grupo_investigacion', width:350}
+			], 
+			autoWidth:true,
+			width: 550,
+			height: 250,
+			rowNum:50, 
+			/*rowList:[10,20,30,40,50], */
+			pager: '#pagergrupoinv', 
+			sortname: 'Cod_Grupo', 
+			/*shrinkToFit :false,*/
+			viewrecords: true, 
+			sortorder: "asc", 
+			caption:"listado de los Grupos de Investigacion Registrados",
+			ondblClickRow:function(rowid,iRow,iCol,e){
+				
+				var fila = jQuery(this).jqGrid('getRowData',rowid);
+					
+					if( jQuery("#codigo_grupo_investigacion") ){ jQuery("#codigo_grupo_investigacion").val(fila['codigo_grupo_investigacion']); }
+					if( jQuery("#nombre_grupo_investigacion") ){ jQuery("#nombre_grupo_investigacion").val(fila['nombre_grupo_investigacion']); } 
+					if(jQuery("#proyecto_grupos_investigacion")){
+
+								if( jQuery("#pgi_" + fila['codigo_grupo_investigacion'] ).length ){
+										
+										jQuery("#dialogo_mensajes").html("");
+										jQuery("#dialogo_mensajes").html("<strong>Error Grupo de Invetigacion ya Agreado para este Proyecto</strong>" );
+										jQuery("#dialogo_mensajes").dialog("open");
+										
+								}else{
+										html ="";
+										html +="<tr id=pgi_" + fila['codigo_grupo_investigacion'] + ">"
+											html += "<td>" + fila['codigo_grupo_investigacion'] + "</td>"
+											html += "<td colspan='2'>" + fila['nombre_grupo_investigacion'] + "</td>"
+											html += "<td><button id='eliminar_"+fila['codigo_grupo_investigacion']+"' onClick='jQuery(\"#pgi_" + fila['codigo_grupo_investigacion'] + "\").remove();' >Borrar Fila</button> </td>"
+										html +="</tr>"
+										jQuery('#proyecto_grupos_investigacion tr:last').after(html);
+										jQuery("#eliminar_"+fila['codigo_grupo_investigacion']).button({ icons: {primary:'ui-icon ui-icon-circle-minus' ,secondary:'ui-icon ui-icon-trash'} });
+									}
+						}
+					jQuery("#dialogo_grupos_de_investigacion").dialog("close");											
+       		 }
+		}); 
+		/*jQuery("#tablagrupoinv").jqGrid('navGrid','#pagergrupoinv',{edit:false,add:false,del:false}); 
+		jQuery("#tablagrupoinv").jqGrid('navButtonAdd','#pagergrupoinv',{
+		caption: "Columnas",
+		title: "Reordena Columnas",
+		onClickButton : function (){
+			jQuery("#tablagrupoinv").jqGrid('columnChooser');
+		
+	});}*/
+});
+</script>

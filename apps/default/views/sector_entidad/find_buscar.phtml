@@ -1,0 +1,48 @@
+<table id="tablasectorentidad"></table>
+<div id="pagersectorentidad"></div>
+<script>
+jQuery(document).ready(function(){
+
+		
+		jQuery("#tablasectorentidad").jqGrid(
+		{ 
+			ajaxGridOptions : {type:"POST"},
+			url:'<?php echo core::getInstancePath().Router::getController(); ?>/find_detalle_buscar/?codigo_pais=<?php echo $_REQUEST["codigo_pais"] ?>&cod_ies='+jQuery("#cod_ies").val(), 
+			datatype: "json", 
+			colNames:['Codigo Sector Entidad','Nombre Sector Entidad'], 
+			colModel:[ 
+				{ name:'codigo_sector_entidad',index:'codigo_sector_entidad', width:200}, 
+				{ name:'nombre_sector_entidad',index:'nombre_sector_entidad', width:500}
+				
+			], 
+			autoWidth:true,
+			width: 550,
+			height: 250,
+			rowNum:50, 
+			/*rowList:[10,20,30,40,50], */
+			pager: '#pagersectorentidad', 
+			sortname: 'Cod_Sector_Entidad', 
+			/*shrinkToFit :false,*/
+			viewrecords: true, 
+			sortorder: "asc", 
+			caption:"listado de los Paises Registrados",
+			ondblClickRow:function(rowid,iRow,iCol,e){
+				
+				var fila = jQuery(this).jqGrid('getRowData',rowid);
+					
+					if( jQuery("#codigo_sector_entidad")    ){ jQuery("#codigo_sector_entidad").val(fila['codigo_sector_entidad']); }
+					if( jQuery("#nombre_sector_entidad") ){ jQuery("#nombre_sector_entidad").val(fila['nombre_sector_entidad']); } 
+					
+					jQuery("#dialogo_<?php echo Router::getController(); ?>").dialog("close");								
+       		 }
+		}); 
+		/*jQuery("#tablasectorentidad").jqGrid('navGrid','#pagersectorentidad',{edit:false,add:false,del:false}); 
+		jQuery("#tablasectorentidad").jqGrid('navButtonAdd','#pagersectorentidad',{
+		caption: "Columnas",
+		title: "Reordena Columnas",
+		onClickButton : function (){
+			jQuery("#stablasectorentidad").jqGrid('columnChooser');
+		
+	});}*/
+});
+</script>

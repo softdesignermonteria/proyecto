@@ -1,0 +1,72 @@
+<table id="tabla<?php echo Router::getController(); ?>"></table>
+<div id="pager<?php echo Router::getController(); ?>"></div>
+<script>
+jQuery(document).ready(function(){
+
+		
+		jQuery("#tabla<?php echo Router::getController(); ?>").jqGrid(
+		{ 
+			ajaxGridOptions : {type:"POST"},
+			url:'<?php echo core::getInstancePath().Router::getController(); ?>/find_detalle_buscar', 
+			datatype: "json", 
+			colNames:['Codigo Fuente de Financiacion Nacional','Nombre Fuente de financiacion Nacional'], 
+			colModel:[ 
+				{ name:'codigo_fuentes_de_financiacion_nacional',index:'codigo_fuentes_de_financiacion_nacional', width:200}, 
+				{ name:'nombre_fuentes_de_financiacion_nacional',index:'nombre_fuentes_de_financiacion_nacional', width:350}
+			], 
+			autoWidth:true,
+			width: 550,
+			height: 250,
+			rowNum:50, 
+			/*rowList:[10,20,30,40,50], */
+			pager: '#pager<?php echo Router::getController(); ?>', 
+			sortname: 'Cod_Fuente_Financiacion_Nacional', 
+			/*shrinkToFit :false,*/
+			viewrecords: true, 
+			sortorder: "asc", 
+			caption:"listado de los Paises Registrados",
+			ondblClickRow:function(rowid,iRow,iCol,e){
+				
+				var fila = jQuery(this).jqGrid('getRowData',rowid);
+					
+					if( jQuery("#codigo_fuentes_de_financiacion_nacional")    ){ jQuery("#codigo_fuentes_de_financiacion_nacional").val(fila['codigo_fuentes_de_financiacion_nacional']); }
+					if( jQuery("#nombre_fuentes_de_financiacion_nacional") ){ jQuery("#nombre_fuentes_de_financiacion_nacional").val(fila['nombre_fuentes_de_financiacion_nacional']); } 
+					
+					if(jQuery("#proyecto_fuentes_de_financiacion_nacional")){
+	
+									if( jQuery("#prc_" + fila['codigo_fuentes_de_financiacion_nacional'] ).length ){
+											
+											jQuery("#dialogo_mensajes").html("");
+											jQuery("#dialogo_mensajes").html("<strong>Error Productos de Invetigacion ya Agreado para este Proyecto</strong>" );
+											jQuery("#dialogo_mensajes").dialog("open");
+											
+									}else{
+											html ="";
+											html +="<tr id=pffn_" + fila['codigo_fuentes_de_financiacion_nacional'] + ">"
+												html += "<td>" + fila['codigo_fuentes_de_financiacion_nacional'] + "</td>"
+												html += "<td colspan='2'>" + fila['nombre_fuentes_de_financiacion_nacional'] + "</td>"
+												if(jQuery('#valor_fuentes_de_financiacion_nacional')){ 
+													html += "<td>" + jQuery('#valor_fuentes_de_financiacion_nacional').val() + "</td>" 
+													jQuery('#valor_fuentes_de_financiacion_nacional').val("0");
+												}
+												html += "<td><button type=\"button\" id='pffn_eliminar_"+fila['codigo_fuentes_de_financiacion_nacional']+"' onClick='jQuery(\"#pffn_" + fila['codigo_fuentes_de_financiacion_nacional'] + "\").remove();' >Borrar Fila</button> </td>"
+											html +="</tr>"
+											jQuery('#proyecto_fuentes_de_financiacion_nacional tr:last').after(html);
+											jQuery("#pffn_eliminar_"+fila['codigo_fuentes_de_financiacion_nacional']).button({ icons: {primary:'ui-icon ui-icon-circle-minus' ,secondary:'ui-icon ui-icon-trash'} });
+										}
+							}
+								
+					
+					jQuery("#dialogo_fuentes_de_financiacion_nacional").dialog("close");											
+       		 }
+		}); 
+		/*jQuery("#tabla<?php echo Router::getController(); ?>").jqGrid('navGrid','#pager<?php echo Router::getController(); ?>',{edit:false,add:false,del:false}); 
+		jQuery("#tabla<?php echo Router::getController(); ?>").jqGrid('navButtonAdd','#pager<?php echo Router::getController(); ?>',{
+		caption: "Columnas",
+		title: "Reordena Columnas",
+		onClickButton : function (){
+			jQuery("#stabla<?php echo Router::getController(); ?>").jqGrid('columnChooser');
+		
+	});}*/
+});
+</script>

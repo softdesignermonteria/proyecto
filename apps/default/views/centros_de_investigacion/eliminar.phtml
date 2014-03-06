@@ -1,0 +1,136 @@
+<?php echo Tag::formRemote(Router::getController()."/delete", "update: mensajes", "id: fx","name: fx"); ?>
+
+<h1>MODIFICAR <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?></h1>
+
+<table width="100%">
+    	<tr>
+    	  <th height="25" colspan="4">FORMULARIO PARA AGREGAR <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?></th>
+   	  </tr>
+    	<tr>
+    	  
+    	  <th width="30%" align="right">CODIGO <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?>:</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("codigo_centros_investigacion","size: 50","maxlength: 50"); ?></td>
+    	  
+   	  </tr>
+        <tr>
+    	  
+    	  <th width="30%" align="right">NOMBRE <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?>:</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("nombre_centros_investigacion","size: 50","maxlength: 50"); ?></td>
+    	  
+   	  </tr>
+      <tr>
+    	  
+    	  <th width="30%" align="right">CODIGO IES:</th>
+    	  <td width="64%" align="left">
+          		<?php  echo Tag::textField("cod_ies","size: 10","maxlength: 50","readonly: readonly"); ?>
+                <?php  echo Tag::textField("nombre_ies","size: 50","maxlength: 50","readonly: readonly"); ?>
+          		
+                <button type="button" id="buscar_ies" name="buscar_ies">Buscar</button>
+          </td>
+    	  
+   	  </tr>
+        <tr>
+    	  
+    	  <th width="30%" align="right">PAIS</th>
+    	  <td width="64%" align="left">
+                <?php  echo Tag::textField("codigo_pais","size: 10","maxlength: 50","readonly: readonly"); ?>
+                <?php  echo Tag::textField("nombre_pais","size: 50","maxlength: 50","readonly: readonly"); ?>
+                <button type="button" id="buscar_pais" name="buscar_pais">Buscar</button></td>
+    	  
+   	  </tr>
+        <tr>
+    	  
+    	  <th width="30%" align="right">DEPARTAMENTOS</th>
+    	  <td width="64%" align="left">
+          		<?php  echo Tag::textField("codigo_departamentos","size: 10","maxlength: 50","readonly: readonly"); ?>
+                <?php  echo Tag::textField("nombre_departamentos","size: 50","maxlength: 50","readonly: readonly"); ?>
+                
+                <button type="button" id="buscar_departamentos" name="buscar_departamentos">Buscar</button></td>
+    	  
+   	  </tr>
+      <tr>
+    	  
+    	  <th width="30%" align="right">MUNICIPIOS:</th>
+    	  <td width="64%" align="left">
+	            <?php  echo Tag::textField("codigo_municipios","size: 10","maxlength: 50","readonly: readonly"); ?>
+                <?php  echo Tag::textField("nombre_municipios","size: 50","maxlength: 50","readonly: readonly"); ?>
+          		
+                <button type="button" id="buscar_municipios" name="buscar_municipios">Buscar</button>
+         </td>
+    	  
+   	  </tr>
+        <tr>
+    	  
+    	  <th width="30%" align="right">FECHA CREACION <?php echo  strtoupper( str_replace("_"," ",Router::getController()) ); ?>:</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("fecha_creacion","size: 20","maxlength: 50",""); ?></td>
+    	  
+   	  </tr>
+       <tr>
+    	  
+    	  <th width="30%" align="right">FECHA ADICION GRUPO:</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("fecha_adicion_grupo","size: 20","maxlength: 10"); ?></td>
+    	  
+   	  </tr>
+        <tr>
+    	  
+    	  <th width="30%" align="right">FECHA RETIRO GRUPO:</th>
+    	  <td width="64%" align="left"><?php  echo Tag::textField("fecha_retiro_grupo","size: 20","maxlength: 10"); ?></td>
+    	  
+   	  </tr>
+      <tr>
+    	  <td colspan="4" align="center"></td>
+   	  </tr>
+  </table>
+  
+<h4>GRUPOS DE INVESTIGACION</h4>
+<table id="tabla_grupos_investigacion" width="900px">
+	<tr>
+    	<td width="200px">GRUPOS DE INVESTIGACION</td>
+        <td colspan="3"><button type="button" id="buscar_grupos_de_investigacion">Buscar</button></td>
+    </tr>
+</table>
+<table id="proyecto_grupos_investigacion"> 
+	<tbody>
+        <tr id="pgi_encabezados" class="ui-dialog-titlebar ui-widget-header ui-corner-all">	
+            <td width="200px">Codigo</td>
+            <td colspan="2" width="450px">Nombre</td>
+            <td width="200px">borrar</td>
+        </tr>
+         <?php 
+	   		$fnac = new TblGrupoInvestigacion();
+	   		foreach($grupos as $filas): ?> 
+      		 <tr id="pgi_<?php echo $filas->getId(); ?>" >	
+            <td width="200px"><?php echo $filas->getCodGrupoInv(); ?></td>
+            <td colspan="2" width="450px"><?php echo utf8_encode($fnac->findFirst(" Cod_Grupo = '".$filas->getCodGrupoInv()."' ")->getNombreGrupo()); ?></td>
+            <td width="200px">
+            	<button type="button" id='pgi_eliminar_<?php echo $filas->getId(); ?>' onClick='jQuery("#pgi_<?php echo $filas->getId(); ?>").remove();' >Borrar Fila</button> 
+            </td>
+        </tr>
+        <script>jQuery("#pgi_eliminar_<?php echo $filas->getId(); ?>").button({ icons: {primary:'ui-icon ui-icon-circle-minus' ,secondary:'ui-icon ui-icon-trash'} });</script>        
+       <?php endforeach;?>
+    </tbody>
+</table>
+
+<br />
+<div align="center"><button  type="submit" id="guardar" name="guardar2">Eliminar Centro de Investigacion</button></div>
+<br />
+<div id="mensajes"></div>
+<br />
+
+  <div align="center" id="progressbarWrapper" style="height:30px; width:100% " class="ui-widget-default">
+    <div id="progressbar" style="height:100%;"></div>
+ </div>
+<br /><br /> 
+<?php echo Tag::endForm(); ?>
+
+<?php echo view::getContent(); ?>
+
+<script>
+jQuery(document).ready(function(e) {
+	
+        jQuery("#codigo_centros_investigacion").attr("readOnly","ReadOnly");
+		jQuery("fx").find("button").attr("disabled","disabled");
+		jQuery("fx").find("input,textarea,select").attr("readonly","readonly");
+		
+});
+</script>
