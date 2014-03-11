@@ -23,6 +23,14 @@ if($searchOn=='true') {
 	
 }
 
+$condicion = "";
+if(isset($_REQUES["desde"])){ if($_REQUES["desde"]!=''){ $condicion .= " tbl_proyecto.Fecha_Inicio_Proyecto >= '".$_REQUES["desde"]."' "; } }
+if(isset($_REQUES["hasta"])){ if($_REQUES["hasta"]!=''){ $condicion .= " tbl_proyecto.Fecha_Inicio_Proyecto <= '".$_REQUES["hasta"]."' "; } }
+if(isset($_REQUES["cod_ies"])){ if($_REQUES["cod_ies"]!=''){ $condicion .= " tbl_ies.Cod_IES = '".$_REQUES["cod_ies"]."' "; } }
+if(isset($_REQUES["cedula"])){ if($_REQUES["cedula"]!=''){ $condicion .= " tbl_investigador.Identificacion = '".$_REQUES["cedula"]."' "; } }
+$sq_nombre = "concat_ws(' ',tbl_investigador.PrimerNombre,tbl_investigador.SegundoNombre,tbl_investigador.PrimerApellido,tbl_investigador.SegundoApellido)";
+if(isset($_REQUES["nombre"])){ if($_REQUES["nombre"]!=''){ $condicion .= " $sq_nombre like '%".str_replace(' ','%',$_REQUES["nombre"])."%' "; } }
+
 // connect to the database 
 //$db = mysql_connect($dbhost, $dbuser, $dbpassword) or die("Connection Error: " . mysql_error()); 
 //mysql_select_db($database) or die("Error conecting to db."); 
