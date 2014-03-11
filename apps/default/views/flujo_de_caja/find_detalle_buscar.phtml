@@ -24,12 +24,12 @@ if($searchOn=='true') {
 }
 
 $condicion = "";
-if(isset($_REQUES["desde"])){ if($_REQUES["desde"]!=''){ $condicion .= " tbl_proyecto.Fecha_Inicio_Proyecto >= '".$_REQUES["desde"]."' "; } }
-if(isset($_REQUES["hasta"])){ if($_REQUES["hasta"]!=''){ $condicion .= " tbl_proyecto.Fecha_Inicio_Proyecto <= '".$_REQUES["hasta"]."' "; } }
-if(isset($_REQUES["cod_ies"])){ if($_REQUES["cod_ies"]!=''){ $condicion .= " tbl_ies.Cod_IES = '".$_REQUES["cod_ies"]."' "; } }
-if(isset($_REQUES["cedula"])){ if($_REQUES["cedula"]!=''){ $condicion .= " tbl_investigador.Identificacion = '".$_REQUES["cedula"]."' "; } }
+if(isset($_REQUES["desde"])){ if($_REQUES["desde"]!=''){ $condicion .= " and tbl_proyecto.Fecha_Inicio_Proyecto >= '".$_REQUES["desde"]."' "; } }
+if(isset($_REQUES["hasta"])){ if($_REQUES["hasta"]!=''){ $condicion .= " and tbl_proyecto.Fecha_Inicio_Proyecto <= '".$_REQUES["hasta"]."' "; } }
+if(isset($_REQUES["cod_ies"])){ if($_REQUES["cod_ies"]!=''){ $condicion .= " and tbl_ies.Cod_IES = '".$_REQUES["cod_ies"]."' "; } }
+if(isset($_REQUES["cedula"])){ if($_REQUES["cedula"]!=''){ $condicion .= " and tbl_investigador.Identificacion = '".$_REQUES["cedula"]."' "; } }
 $sq_nombre = "concat_ws(' ',tbl_investigador.PrimerNombre,tbl_investigador.SegundoNombre,tbl_investigador.PrimerApellido,tbl_investigador.SegundoApellido)";
-if(isset($_REQUES["nombre"])){ if($_REQUES["nombre"]!=''){ $condicion .= " $sq_nombre like '%".str_replace(' ','%',$_REQUES["nombre"])."%' "; } }
+if(isset($_REQUES["nombre"])){ if($_REQUES["nombre"]!=''){ $condicion .= " and $sq_nombre like '%".str_replace(' ','%',$_REQUES["nombre"])."%' "; } }
 
 // connect to the database 
 //$db = mysql_connect($dbhost, $dbuser, $dbpassword) or die("Connection Error: " . mysql_error()); 
@@ -58,6 +58,8 @@ $result = $db->query("SELECT COUNT(*) AS count
 								  INNER JOIN flujo_caja ON (tbl_proyecto.Cod_Proyecto = flujo_caja.Cod_Proyecto)
 								  INNER JOIN tbl_investigador ON (flujo_caja.Identificacion = tbl_investigador.Identificacion)
 								  INNER JOIN tbl_ies ON (tbl_proyecto.FK_Cod_IES = tbl_ies.Cod_IES)
+							where 1=1
+									$condicion	  
 								  ) tb where 1 = 1 ".$wr); 
 
 $row = $db->fetchArray($result); 
@@ -92,7 +94,10 @@ if ($page > $total_pages) $page=$total_pages;
 			  INNER JOIN flujo_caja ON (tbl_proyecto.Cod_Proyecto = flujo_caja.Cod_Proyecto)
 			  INNER JOIN tbl_investigador ON (flujo_caja.Identificacion = tbl_investigador.Identificacion)
 			  INNER JOIN tbl_ies ON (tbl_proyecto.FK_Cod_IES = tbl_ies.Cod_IES)
-			where 1 = 1 ".$wh."
+			  
+			where 1 = 1 
+				$condicion	  
+			".$wh."
 			ORDER BY $sidx $sord 
 			LIMIT $start , $limit"; 
 	$result = $db->query( $SQL ); 
