@@ -56,6 +56,8 @@ jQuery(document).ready(function(){
 	jQuery( "#progressbarWrapper" ).resizable();
 
 	/*Date Picker utilizados en el sistema*/
+	if( jQuery( "#desde"      ) ){ jQuery( "#desde"      ).datepicker({ dateFormat: "yy-mm-dd"}); 	}
+	if( jQuery( "#hasta"      ) ){ jQuery( "#hasta"      ).datepicker({ dateFormat: "yy-mm-dd"}); 	}
 	if( jQuery( "#fecha_inicio_proyecto"      ) ){ jQuery( "#fecha_inicio_proyecto"      ).datepicker({ dateFormat: "yy-mm-dd"}); 	}
 	if( jQuery( "#fecha_adicion_red"          ) ){ jQuery( "#fecha_adicion_red"      ).datepicker({ dateFormat: "yy-mm-dd"}); 	}
 	if( jQuery( "#fecha_retiro_red"           ) ){ jQuery( "#fecha_retiro_red"      ).datepicker({ dateFormat: "yy-mm-dd"}); 	}
