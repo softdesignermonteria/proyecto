@@ -99,38 +99,72 @@ $objPHPExcel->getActiveSheet()->getStyle('A2:W2')->applyFromArray($styleArray);
 $i=3;
 
 $ies  = new TblIes();
-$cinv = new TblCentrosInvestigacion();
-$grupos = new TblGruposInvCentrosInv();
-$gruposenc = new TblGrupoInvestigacion();
+$nbc  = new TblNbc();
+$grupos = new TblGrupoInvestigacion();
+$gruposinv = new TblGrupoInvestigacionInvestigadores();
+$gruposinvex = new TblGrupoInvestigacionInvestigadoresExternos();
+$inv = new TblInvestigador();
+$invex = new TblInvestigadorExterno();
+$tp = new TblTipoParticipacionProyecto();
+
 $dpto = new TblDepartamento();
 $mun  = new TblMunicipio();
 
 $condicion_ies = "";
+$condicion_grupos = "";
 if($_REQUEST["cod_ies"]!=''){ $condicion_ies = " and Cod_IES = '".$_REQUEST["cod_ies"]."' "; }
+
+if($_REQUEST["desde"]!=''){ $condicion_grupos .= " and Fecha_Creacion_Grupo_I >= '".$_REQUEST["desde"]."' "; }
+
+if($_REQUEST["hasta"]!=''){ $condicion_grupos .= " and Fecha_Vigencia_Grupo_I <= '".$_REQUEST["hasta"]."' "; }
 
 foreach($ies->find(" 1 = 1 $condicion_ies ") as $ies):
 	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("A".$i, $ies->getCodIES());
 	$objPHPExcel->setActiveSheetIndex(0)->setCellValue("B".$i, ($ies->getNombreIES()));
-	$i++;
-	foreach($cinv->find(" FK_Cod_IES = '".$ies->getCodIES()."' ") as $cinv):
-		
-		$objPHPExcel->setActiveSheetIndex(0)->setCellValue("C".$i, $cinv->getCodCentroInvestigacion());
-		$objPHPExcel->setActiveSheetIndex(0)->setCellValue("D".$i, $cinv->getNombreCentroInvestigacion());
-		
-		$mun->findFirst("Cod_Municipio = '".$cinv->getFKCodMunicipio()."' ");
-		$dpto->findFirst("Cod_Departamento = '".$mun->getFKCodDepartamento()."' ");
-		
-		$objPHPExcel->setActiveSheetIndex(0)->setCellValue("E".$i, $dpto->getDepartamento());
-		$objPHPExcel->setActiveSheetIndex(0)->setCellValue("F".$i, $mun->getMunicipio());
-		$objPHPExcel->setActiveSheetIndex(0)->setCellValue("G".$i, $cinv->getFechaCreacionCentroInvestigacion());
-		foreach($grupos->find(" Cod_Centro_Inv = '".$cinv->getCodCentroInvestigacion()."' ") as $grupos):		
-			$gruposenc->findFirst(" Cod_Grupo = '".$grupos->getCodGrupoInv()."' ");
-			$objPHPExcel->setActiveSheetIndex(0)->setCellValue("H".$i, $gruposenc->getNombreGrupo());
-			$objPHPExcel->setActiveSheetIndex(0)->setCellValue("I".$i, $gruposenc->getFechaCreacionGrupoI());
-			$objPHPExcel->setActiveSheetIndex(0)->setCellValue("J".$i, $gruposenc->getFechaVigenciaGrupoI());
-			$i = $objPHPExcel->getActiveSheet()->getHighestRow();	
-		endforeach;	
-	endforeach; //fin centros de investigacion
+	
+	foreach($grupos->find(" FK_Cod_IES = '".$ies->getCodIES()."' $condicion_grupos ") as $grupos):		
+			
+			$objPHPExcel->setActiveSheetIndex(0)->setCellValue("C".$i, $grupos->getCodGrupo());
+			$objPHPExcel->setActiveSheetIndex(0)->setCellValue("D".$i, $grupos->getNombreGrupo());
+			$nbc = $nbc->findFirst( " Cod_NBC = '".$grupos->getFKCodNBC()."' " );
+			$objPHPExcel->setActiveSheetIndex(0)->setCellValue("E".$i, $nbc->getDescripcionNBC());
+			$objPHPExcel->setActiveSheetIndex(0)->setCellValue("F".$i, $grupos->getFechaCreacionGrupoI());
+			$objPHPExcel->setActiveSheetIndex(0)->setCellValue("G".$i, $grupos->getFechaVigenciaGrupoI());
+			/*investigadores de la h a o*/
+			$k=$i;
+			foreach($gruposinv->find(" Cod_Grupo_Investigacion = '".$grupos->getCodGrupo()."' ") as $gruposinv):		
+					$inv = $inv->findFirst( " Identificacion = '".$gruposinv->getIdentificacionInvestigador()."'" );
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue("H".$k, $inv->getTipoIdentificacion());
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue("I".$k, $inv->getIdentificacion());
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue("J".$k, $inv->getPrimerNombre());
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue("K".$k, $inv->getSegundoNombre());
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue("L".$k, $inv->getPrimerApellido());
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue("M".$k, $inv->getSegundoApellido());
+					$nbc = $nbc->findFirst( " Cod_NBC = '".$inv->getFKCodNBC()."' " );
+					$tp = $tp->findFirst( " Cod_Tipo_Participacion_Proyecto = '".$inv->getFKCodTipoParticipacionProyecto()."' " );
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue("N".$k, $tp->getDescripcionTipoParticipacionProyecto());
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue("O".$k, $nbc->getDescripcionNBC());
+					$k++;
+			endforeach;		
+			$j=$i;
+			/*investigadores de la p a w*/
+			foreach($gruposinvex->find(" Cod_Grupo_Investigacion = '".$grupos->getCodGrupo()."' ") as $gruposinvex):		
+					$invex = $invex->findFirst( " Identificacion_Externo = '".$gruposinvex->getIdentificacionInvestigador()."'" );
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue("P".$j, $invex->getTipoIdentificacion());
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue("Q".$j, $invex->getIdentificacion());
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue("R".$j, $invex->getPrimerNombre());
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue("S".$j, $invex->getSegundoNombre());
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue("T".$j, $invex->getPrimerApellido());
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue("U".$j, $invex->getSegundoApellido());
+					$nbc = $nbc->findFirst( " Cod_NBC = '".$invex->getFKCodNBC()."' " );
+					$tp = $tp->findFirst( " Cod_Tipo_Participacion_Proyecto = '".$invex->getFKCodTipoParticipacionProyecto()."' " );
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue("V".$j, $tp->getDescripcionTipoParticipacionProyecto());
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue("W".$j, $nbc->getDescripcionNBC());
+					$j++;
+			endforeach;		
+			$i = $objPHPExcel->getActiveSheet()->getHighestRow()+1;	
+	endforeach;	
+		$i = $objPHPExcel->getActiveSheet()->getHighestRow() + 1;	
 endforeach; //fin ies
 
 $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize('true');
