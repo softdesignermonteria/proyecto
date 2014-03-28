@@ -43,9 +43,11 @@ class ControllerBase {
 			}
 			catch(DbException $e){
 				Flash::notice("Error.. comuniquese con el administrador");
+				Router::routeTo("controller: home", "action: error");
 			}
 			catch(DbSQLGrammarException $e){
 				Flash::notice("Error.. comuniquese con el administrador");
+				Router::routeTo("controller: home", "action: error");
 			}
 			     /*}*/
 			/*FIN*/ /*CODIGO DE PERIMISOS DE USUARIO*/
@@ -57,21 +59,27 @@ class ControllerBase {
 			
 			if($e->getCode()==Dispatcher::NOT_FOUND_ACTION){
 				Flash::notice("Lo sentimos la página no existe");
+				Router::routeTo("controller: home", "action: error");
 			}
 			if($e->getCode()==Dispatcher::NOT_FOUND_CONTROLLER){
 				Flash::notice("Lo sentimos la Controlador no existe");
+				Router::routeTo("controller: home", "action: error");
 			}
 			if($e->getCode()==Dispatcher::NOT_FOUND_FILE_CONTROLLER){
 				Flash::notice("Lo sentimos la Archivo no existe");
+				Router::routeTo("controller: home", "action: error");
 			}
 			if($e->getCode()==Dispatcher::NOT_FOUND_INIT_ACTION){
 				Flash::notice("Lo sentimos la Init  no existe");
+				Router::routeTo("controller: home", "action: error");
 			}
 			if($e->getCode()==Dispacher::INVALID_METHOD_CALLBACK){
 				Flash::notice("Lo sentimos la Metodo  no existe");
+				Router::routeTo("controller: home", "action: error");
 			}
 			if($e->getCode()==Dispatcher::INVALID_ACTION_VALUE_PARAMETER){
 				Flash::notice("Lo sentimos la parametros  no existe");
+				Router::routeTo("controller: home", "action: error");
 			}
 			
 		} else {
