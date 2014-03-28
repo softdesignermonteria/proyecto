@@ -43,5 +43,35 @@ class ControllerBase {
 			     /*}*/
 			/*FIN*/ /*CODIGO DE PERIMISOS DE USUARIO*/
 	}
+	
+	
+	public function onException($e){
+		if($e instanceof DispatcherException){
+			
+			if($e->getCode()==Dispatcher::NOT_FOUND_ACTION){
+				Flash::notice("Lo sentimos la página no existe");
+			}
+			if($e->getCode()==Dispatcher::NOT_FOUND_CONTROLLER){
+				Flash::notice("Lo sentimos la Controlador no existe");
+			}
+			if($e->getCode()==Dispatcher::NOT_FOUND_FILE_CONTROLLER){
+				Flash::notice("Lo sentimos la Archivo no existe");
+			}
+			if($e->getCode()==Dispatcher::NOT_FOUND_INIT_ACTION){
+				Flash::notice("Lo sentimos la Init  no existe");
+			}
+			if($e->getCode()==Dispacher:: INVALID_METHOD_CALLBACK){
+				Flash::notice("Lo sentimos la Metodo  no existe");
+			}
+			if($e->getCode()==Dispatcher::INVALID_ACTION_VALUE_PARAMETER){
+				Flash::notice("Lo sentimos la parametros  no existe");
+			}
+			
+		} else {
+		//Se relanza la excepción
+			throw $e;
+		}
+		
+	}
 
 }
