@@ -84,7 +84,7 @@ class ControllerBase {
 			
 		} else {
 		//Se relanza la excepción
-			//throw $e;
+			throw $e;
 			Router::routeTo("controller: home", "action: error");
 		}
 		

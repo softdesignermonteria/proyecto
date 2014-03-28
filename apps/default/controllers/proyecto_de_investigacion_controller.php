@@ -1034,6 +1034,42 @@
 		}
 		
 
+	public function onException($e){
+		if($e instanceof DispatcherException){
+			
+			if($e->getCode()==Dispatcher::NOT_FOUND_ACTION){
+				Flash::notice("Lo sentimos la página no existe");
+				Router::routeTo("controller: home", "action: error");
+			}
+			if($e->getCode()==Dispatcher::NOT_FOUND_CONTROLLER){
+				Flash::notice("Lo sentimos la Controlador no existe");
+				Router::routeTo("controller: home", "action: error");
+			}
+			if($e->getCode()==Dispatcher::NOT_FOUND_FILE_CONTROLLER){
+				Flash::notice("Lo sentimos la Archivo no existe");
+				Router::routeTo("controller: home", "action: error");
+			}
+			if($e->getCode()==Dispatcher::NOT_FOUND_INIT_ACTION){
+				Flash::notice("Lo sentimos la Init  no existe");
+				Router::routeTo("controller: home", "action: error");
+			}
+			if($e->getCode()==Dispacher::INVALID_METHOD_CALLBACK){
+				Flash::notice("Lo sentimos la Metodo  no existe");
+				Router::routeTo("controller: home", "action: error");
+			}
+			if($e->getCode()==Dispatcher::INVALID_ACTION_VALUE_PARAMETER){
+				Flash::notice("Lo sentimos la parametros  no existe");
+				Router::routeTo("controller: home", "action: error");
+			}
+			
+		} else {
+		//Se relanza la excepción
+			throw $e;
+			Router::routeTo("controller: home", "action: error");
+		}
+		
+	}
+
 
 
 	}
