@@ -263,6 +263,10 @@
 		
 	}
 
+public function notFoundAction($actionName=''){
+				$logger = new Logger("File", "notFoundReports.txt");
+				$logger->log("No se encontró la acción $actionName");
+			}
 
 	}
 
