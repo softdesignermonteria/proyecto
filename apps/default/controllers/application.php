@@ -67,7 +67,7 @@ class ControllerBase {
 			if($e->getCode()==Dispatcher::NOT_FOUND_INIT_ACTION){
 				Flash::notice("Lo sentimos la Init  no existe");
 			}
-			if($e->getCode()==Dispacher:: INVALID_METHOD_CALLBACK){
+			if($e->getCode()==Dispacher::INVALID_METHOD_CALLBACK){
 				Flash::notice("Lo sentimos la Metodo  no existe");
 			}
 			if($e->getCode()==Dispatcher::INVALID_ACTION_VALUE_PARAMETER){
